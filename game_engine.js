@@ -453,7 +453,6 @@ class KaraokeEngine {
         // --- CÁLCULO NORMALIZADO DE PONTUAÇÃO (TETO MÁXIMO DE 10.000 PONTOS) ---
         const baseRate = this.basePointsPerSecond || 45;
         const comboBonusRate = this.comboBonusPerSecond || 11.25;
-        // Bônus de combo progride suavemente até 30 hits (0 a 100% de bônus) sem punir drasticamente pequenas quebras
         const comboRatio = Math.min(1.0, this.combo / 30);
 
         let hitRate = 0;
@@ -468,11 +467,35 @@ class KaraokeEngine {
         }
 
         this.scoreFloat += hitRate * dt;
-        this.score = Math.min(10000, Math.max(0, Math.floor(this.scoreFloat)));
 
       } else if (isConsonantInPhrase) {
         // Consoante rápida durante verso cantado: mantém o fluxo sem pontuação gratuita de ruído
         this.unpitchedSeconds += dt;
+      }
+
+      // --- BALANCEAMENTO DINÂMICO DE VIDEOKÊ POR PROGRESSÃO DA MÚSICA ---
+      // Garante que baladas, músicas rápidas ou lentas progridam proporcionalmente
+      const rawDur = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
+      const progress = Math.min(1.0, Math.max(0.01, songTime / rawDur));
+
+      // Meta de canto de referência (~14s a 26s na música toda é uma performance completa)
+      const targetVocalTotal = Math.min(26, Math.max(12, rawDur * 0.10));
+      const expectedVocalNow = Math.max(1.0, targetVocalTotal * progress);
+
+      const effectiveVocalSoFar = this.perfectSeconds + (this.goodSeconds * 0.9) + (this.waverSeconds * 0.5);
+      const presenceFactor = Math.min(1.0, effectiveVocalSoFar / expectedVocalNow);
+
+      const currentAcc = this.calculateAccuracy(songTime);
+      const comboFactor = Math.min(1.0, this.maxCombo / 25);
+
+      const expectedFullScore = (currentAcc * 80) + (comboFactor * 2000);
+      const dynamicLiveScore = Math.floor(expectedFullScore * progress * presenceFactor);
+
+      // A pontuação na tela avança monotonicamente sem sobressaltos e sem ficar presa
+      const candidateScore = Math.max(Math.floor(this.scoreFloat), dynamicLiveScore);
+      if (candidateScore > this.score) {
+        this.score = Math.min(10000, candidateScore);
+        this.scoreFloat = Math.max(this.scoreFloat, this.score);
       }
 
       // Incremento de combo por cadência musical (a cada 0.28s de canto afinado)
@@ -692,11 +715,23 @@ class KaraokeEngine {
     this.stop();
 
     const config = DIFFICULTY_CONFIG[this.difficulty] || DIFFICULTY_CONFIG.medium;
-    const songDuration = (this.currentSong && this.currentSong.duration) ? this.currentSong.duration : 0;
+    const songDuration = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
     const accuracy = this.calculateAccuracy(songDuration);
 
-    // Garantir teto estrito normalizado de 10.000 pontos
-    this.score = Math.min(10000, Math.max(0, Math.floor(this.scoreFloat)));
+    // Avaliação final de videokê profissional
+    const effectiveVocalSeconds = this.perfectSeconds + (this.goodSeconds * 0.9) + (this.waverSeconds * 0.5);
+    const targetTotalVocal = Math.min(26, Math.max(12, songDuration * 0.10));
+    // Se cantou pelo menos 12 a 15s na música toda, presença é 100%. Abaixo disso, escala com engajamento.
+    const presenceRatio = Math.min(1.0, Math.max(0.08, effectiveVocalSeconds / targetTotalVocal));
+
+    const comboFactor = Math.min(1.0, this.maxCombo / 25);
+    const comboBonus = Math.round(comboFactor * 2000);
+    const accuracyBase = Math.round((accuracy / 100) * 8000);
+
+    const finalCalculatedScore = Math.round((accuracyBase + comboBonus) * presenceRatio);
+
+    // A pontuação final é o maior valor entre o acumulado dinâmico e o cálculo da performance
+    this.score = Math.min(10000, Math.max(this.score, finalCalculatedScore));
 
     // Determinar estrelas (1 a 5) de acordo com os limiares da dificuldade
     const [t1, t2, t3, t4, t5] = config.starThresholds;
