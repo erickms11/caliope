@@ -1411,7 +1411,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 14. Sistema de Microfone no Celular (WebRTC PeerJS Host)
+  function updateRemoteMicDisplay(id) {
+    if (roomCodeDisplay) {
+      roomCodeDisplay.textContent = id.toUpperCase().replace('CALI-', 'SALA ');
+    }
+
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    let micUrl;
+
+    if (isLocalhost) {
+      micUrl = `https://erickms11.github.io/caliope/mic.html?room=${id}`;
+    } else {
+      const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
+      micUrl = `${window.location.origin}${currentPath}/mic.html?room=${id}`;
+    }
+
+    if (remoteMicLinkInput) {
+      remoteMicLinkInput.value = micUrl;
+    }
+
+    if (remoteMicQrcode && typeof QRCode !== 'undefined') {
+      try {
+        remoteMicQrcode.innerHTML = '';
+        new QRCode(remoteMicQrcode, {
+          text: micUrl,
+          width: 160,
+          height: 160,
+          colorDark: '#080c16',
+          colorLight: '#ffffff',
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      } catch (err) {
+        console.warn("Erro renderizando QRCode:", err);
+      }
+    }
+  }
+
   function initRemoteMicHost() {
+    // Renderiza dados e QR Code imediatamente com a sala atual
+    updateRemoteMicDisplay(currentRoomId);
+
     if (typeof Peer === 'undefined') {
       console.warn("PeerJS não carregado. Microfone remoto desabilitado.");
       return;
@@ -1425,40 +1464,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       remotePeer.on('open', (id) => {
         console.log("Servidor PeerJS de Microfone Aberto:", id);
-        if (roomCodeDisplay) {
-          roomCodeDisplay.textContent = id.toUpperCase().replace('CALI-', 'SALA ');
-        }
-
-        // Construir link para o celular
-        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-        let micUrl;
-
-        if (isLocalhost) {
-          // No localhost do computador, o celular não consegue abrir "http://localhost:3000"
-          // e browsers móveis exigem HTTPS para liberar o microfone.
-          // Por isso o QR Code aponta para o mic.html com HTTPS no GitHub Pages, conectando à mesma sala!
-          micUrl = `https://erickms11.github.io/caliope/mic.html?room=${id}`;
-        } else {
-          const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-          micUrl = `${window.location.origin}${currentPath}/mic.html?room=${id}`;
-        }
-
-        if (remoteMicLinkInput) {
-          remoteMicLinkInput.value = micUrl;
-        }
-
-        // Gerar QR Code para a TV / Celular
-        if (remoteMicQrcode && typeof QRCode !== 'undefined') {
-          remoteMicQrcode.innerHTML = '';
-          new QRCode(remoteMicQrcode, {
-            text: micUrl,
-            width: 160,
-            height: 160,
-            colorDark: '#080c16',
-            colorLight: '#ffffff',
-            correctLevel: QRCode.CorrectLevel.M
-          });
-        }
+        updateRemoteMicDisplay(id);
       });
 
       remotePeer.on('connection', (conn) => {
@@ -1540,12 +1546,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Abertura e Fechamento do Modal de Microfone Remoto
   if (btnOpenRemoteMic) {
     btnOpenRemoteMic.addEventListener('click', () => {
+      updateRemoteMicDisplay(currentRoomId);
       if (modalRemoteMic) modalRemoteMic.classList.add('active');
     });
   }
 
   if (hudRemoteBadge) {
     hudRemoteBadge.addEventListener('click', () => {
+      updateRemoteMicDisplay(currentRoomId);
       if (modalRemoteMic) modalRemoteMic.classList.add('active');
     });
   }
@@ -1553,6 +1561,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnCloseRemoteMic) {
     btnCloseRemoteMic.addEventListener('click', () => {
       if (modalRemoteMic) modalRemoteMic.classList.remove('active');
+    });
+  }
+
+  if (modalRemoteMic) {
+    modalRemoteMic.addEventListener('click', (e) => {
+      if (e.target === modalRemoteMic) {
+        modalRemoteMic.classList.remove('active');
+      }
     });
   }
 

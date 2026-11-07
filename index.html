@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Caliope • O Jogo de Videokê Oficial</title>
-  <link rel="stylesheet" href="style.css?v=23">
+  <link rel="stylesheet" href="style.css?v=26">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -30,12 +30,12 @@
       </nav>
 
       <div class="header-actions">
-        <button id="btn-open-remote-mic" class="btn btn-primary" title="Conectar microfone do celular via QR Code">
-          <span id="remote-mic-header-icon">📱</span> <span id="remote-mic-header-label">Microfone no Celular</span>
-        </button>
-
         <button id="btn-open-import" class="btn btn-accent">
           <span id="btn-import-icon">✨</span> <span id="btn-import-label">+ Adicionar do YouTube</span>
+        </button>
+
+        <button id="btn-open-remote-mic" class="btn btn-primary" title="Conectar microfone do celular via QR Code">
+          <span id="remote-mic-header-icon">📱</span> <span id="remote-mic-header-label">Microfone no Celular</span>
         </button>
 
         <button id="btn-open-settings" class="btn btn-secondary" title="Configurações de Áudio e Microfone">
@@ -531,6 +531,8 @@
           </button>
         </div>
       </div>
+    </div>
+
     <!-- Modal Conectar Celular como Microfone (WebRTC PeerJS) -->
     <div class="modal-backdrop" id="modal-remote-mic">
       <div class="modal-card modal-remote-mic-card">
@@ -588,11 +590,11 @@
   <script src="vendor/peerjs.min.js"></script>
   <script src="vendor/qrcode.min.js"></script>
 
-  <script src="pitch.js?v=25"></script>
-  <script src="calibrator.js?v=25"></script>
-  <script src="songs.js?v=25"></script>
-  <script src="sequencer.js?v=25"></script>
-  <script src="game_engine.js?v=25"></script>
-  <script src="app.js?v=25"></script>
+  <script src="pitch.js?v=26"></script>
+  <script src="calibrator.js?v=26"></script>
+  <script src="songs.js?v=26"></script>
+  <script src="sequencer.js?v=26"></script>
+  <script src="game_engine.js?v=26"></script>
+  <script src="app.js?v=26"></script>
 </body>
 </html>

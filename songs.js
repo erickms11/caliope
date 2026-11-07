@@ -395,6 +395,34 @@ const SONGS_CATALOG = [
     "audioUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
+  },
+  {
+    "id": "__Te_Esperando_Luan_Santana_3nBAoA",
+    "title": "Te Esperando",
+    "artist": "Luan Santana",
+    "genre": "Sertanejo",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 251,
+    "thumbnail": "https://i.ytimg.com/vi/3nBAoA5sZC4/maxresdefault.jpg",
+    "videoUrl": "/songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
+    "audioUrl": "/songs/__Te_Esperando_Luan_Santana_3nBAoA/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "__Te_Vivo_Luan_Santana_uiZQt3",
+    "title": "Te Vivo",
+    "artist": "Luan Santana",
+    "genre": "Sertanejo",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 200,
+    "thumbnail": "https://i.ytimg.com/vi/uiZQt3_COMk/maxresdefault.jpg",
+    "videoUrl": "/songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
+    "audioUrl": "/songs/__Te_Vivo_Luan_Santana_uiZQt3/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
   }
 ];
 
