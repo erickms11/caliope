@@ -123,6 +123,36 @@ document.addEventListener('DOMContentLoaded', () => {
     "date": "2026-11-07T01:02:05.910Z"
   },
   {
+    "id": "mw6vtzzgsrsy",
+    "singer": "Priscila Moraes",
+    "songTitle": "Como nossos pais",
+    "songArtist": "Elis Regina",
+    "songId": "Elis_Regina_Como_nossos_pais_f0zT_J",
+    "score": 8640,
+    "accuracy": 83,
+    "maxCombo": 30,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T20:55:09.676Z"
+  },
+  {
+    "id": "mw6wrdxhfk6j",
+    "singer": "Erick Moraes",
+    "songTitle": "Lady Laura",
+    "songArtist": "Roberto Carlos",
+    "songId": "Roberto_Carlos_Lady_Laura_aNZqP4",
+    "score": 8640,
+    "accuracy": 83,
+    "maxCombo": 29,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T21:21:07.397Z"
+  },
+  {
     "id": "mw5n7knz5cs4",
     "singer": "Erick Moraes",
     "songTitle": "Minha Estrela Perdida",
@@ -153,6 +183,21 @@ document.addEventListener('DOMContentLoaded', () => {
     "date": "2026-11-07T00:47:08.173Z"
   },
   {
+    "id": "mw6wxfrk74vb",
+    "singer": "Emerson e Valdevino",
+    "songTitle": "Boate azul",
+    "songArtist": "Bruno e Marrone",
+    "songId": "Bruno_e_Marrone_Boate_azul_CCSeIh",
+    "score": 8560,
+    "accuracy": 83,
+    "maxCombo": 24,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T21:25:49.712Z"
+  },
+  {
     "id": "mw6u1ly9as9w",
     "singer": "Erick Moraes",
     "songTitle": "GUSTAVO MIOTO",
@@ -181,6 +226,21 @@ document.addEventListener('DOMContentLoaded', () => {
     "difficulty": "Médio",
     "difficultyId": "medium",
     "date": "2026-11-07T00:26:43.287Z"
+  },
+  {
+    "id": "mw6wk8zgxtgv",
+    "singer": "Erick Kinoshita",
+    "songTitle": "Minha Estrela Perdida",
+    "songArtist": "João Paulo e Daniel",
+    "songId": "Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE",
+    "score": 8182,
+    "accuracy": 81,
+    "maxCombo": 21,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T21:15:34.397Z"
   },
   {
     "id": "mw5oimrzie81",
@@ -228,6 +288,21 @@ document.addEventListener('DOMContentLoaded', () => {
     "date": "2026-11-07T19:44:58.999Z"
   },
   {
+    "id": "mw6w8ad57nke",
+    "singer": "Valdevino e Priscila",
+    "songTitle": "Dona",
+    "songArtist": "Roupa Nova",
+    "songId": "Roupa_Nova_Dona__AvqUg",
+    "score": 7600,
+    "accuracy": 82,
+    "maxCombo": 13,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T21:06:16.313Z"
+  },
+  {
     "id": "mw6tmsp9komu",
     "singer": "Erick Moraes",
     "songTitle": "Ainda Ontem Chorei De Saudade",
@@ -256,6 +331,21 @@ document.addEventListener('DOMContentLoaded', () => {
     "difficulty": "Médio",
     "difficultyId": "medium",
     "date": "2026-11-07T18:01:43.471Z"
+  },
+  {
+    "id": "mw6w1gdmsipq",
+    "singer": "Valdevino e Priscila",
+    "songTitle": "Estou Apaixonado",
+    "songArtist": "João Paulo & Daniel",
+    "songId": "Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9",
+    "score": 6960,
+    "accuracy": 80,
+    "maxCombo": 7,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T21:00:57.514Z"
   },
   {
     "id": "mw6u70x65l01",
@@ -301,6 +391,51 @@ document.addEventListener('DOMContentLoaded', () => {
     "difficulty": "Médio",
     "difficultyId": "medium",
     "date": "2026-11-07T19:31:58.719Z"
+  },
+  {
+    "id": "mw6we75qenoc",
+    "singer": "Valdevino e Priscila",
+    "songTitle": "Mastruz Com Leite",
+    "songArtist": "3885 Moto Táxi",
+    "songId": "3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl",
+    "score": 6320,
+    "accuracy": 79,
+    "maxCombo": 0,
+    "stars": 3,
+    "rank": "B",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T21:10:52.094Z"
+  },
+  {
+    "id": "mw6vnpdatrx1",
+    "singer": "Priscila Moraes",
+    "songTitle": "POEMA",
+    "songArtist": "NEY MATOGROSSO",
+    "songId": "NEY_MATOGROSSO_POEMA_ZvVruy",
+    "score": 6212,
+    "accuracy": 84,
+    "maxCombo": 44,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T20:50:15.982Z"
+  },
+  {
+    "id": "mw6vhy53qb6j",
+    "singer": "Priscila Moraes",
+    "songTitle": "Thiaguinho",
+    "songArtist": "Ainda Bem",
+    "songId": "Ainda_Bem_Thiaguinho_kyTDGR",
+    "score": 2979,
+    "accuracy": 79,
+    "maxCombo": 6,
+    "stars": 3,
+    "rank": "B",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T20:45:47.415Z"
   }
 ];
   let caliopeRankings = [...DEFAULT_RANKINGS];

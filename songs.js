@@ -1,9 +1,23 @@
 /**
  * Catálogo Oficial Integrado de Videokês do Caliope
- * Total: 47 faixas com playback sincronizado e letras dinâmicas
+ * Total: 53 faixas com playback sincronizado e letras dinâmicas
  */
 
 const SONGS_CATALOG = [
+  {
+    "id": "3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl",
+    "title": "Mastruz Com Leite",
+    "artist": "3885 Moto Táxi",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 212,
+    "thumbnail": "https://i.ytimg.com/vi_webp/SsEpSlriogA/maxresdefault.webp",
+    "videoUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/video.mp4",
+    "audioUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
   {
     "id": "Ainda_Bem_Thiaguinho_kyTDGR",
     "title": "Thiaguinho",
@@ -85,6 +99,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/kdtWMjCEwSw/maxresdefault.webp",
     "videoUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/video.mp4",
     "audioUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Bruno_e_Marrone_Boate_azul_CCSeIh",
+    "title": "Boate azul",
+    "artist": "Bruno e Marrone",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 201,
+    "thumbnail": "https://i.ytimg.com/vi/CCSeIhntmBA/maxresdefault.jpg",
+    "videoUrl": "songs/Bruno_e_Marrone_Boate_azul_CCSeIh/video.mp4",
+    "audioUrl": "songs/Bruno_e_Marrone_Boate_azul_CCSeIh/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -187,6 +215,20 @@ const SONGS_CATALOG = [
     "notes": []
   },
   {
+    "id": "Folha_Seca_Amado_Batista_VO6TKT",
+    "title": "Amado Batista",
+    "artist": "Folha Seca",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 216,
+    "thumbnail": "https://i.ytimg.com/vi/VO6TKTtErwY/maxresdefault.jpg",
+    "videoUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/video.mp4",
+    "audioUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
     "id": "Frank_Sinatra_My_Way_tAEek8",
     "title": "My Way",
     "artist": "Frank Sinatra",
@@ -281,6 +323,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/_C62mLmeGu0/maxresdefault.webp",
     "videoUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/video.mp4",
     "audioUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9",
+    "title": "Estou Apaixonado",
+    "artist": "João Paulo & Daniel",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 270,
+    "thumbnail": "https://i.ytimg.com/vi/r68Ak9v7DFc/maxresdefault.jpg",
+    "videoUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/video.mp4",
+    "audioUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -477,6 +533,34 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/40QgJjmfTBw/maxresdefault.webp",
     "videoUrl": "songs/Robbie_Williams_Feel_40QgJj/video.mp4",
     "audioUrl": "songs/Robbie_Williams_Feel_40QgJj/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Roberto_Carlos_Lady_Laura_aNZqP4",
+    "title": "Lady Laura",
+    "artist": "Roberto Carlos",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 248,
+    "thumbnail": "https://i.ytimg.com/vi/aNZqP4ouvG0/maxresdefault.jpg",
+    "videoUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/video.mp4",
+    "audioUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Roupa_Nova_Dona__AvqUg",
+    "title": "Dona",
+    "artist": "Roupa Nova",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 197,
+    "thumbnail": "https://i.ytimg.com/vi/_AvqUg5CMm0/maxresdefault.jpg",
+    "videoUrl": "songs/Roupa_Nova_Dona__AvqUg/video.mp4",
+    "audioUrl": "songs/Roupa_Nova_Dona__AvqUg/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
