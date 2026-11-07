@@ -1,6 +1,6 @@
 /**
  * Catálogo Oficial Integrado de Videokês do Caliope
- * Total: 53 faixas com playback sincronizado e letras dinâmicas
+ * Total: 55 faixas com playback sincronizado e letras dinâmicas
  */
 
 const SONGS_CATALOG = [
@@ -155,6 +155,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi/cdgU8YmD3Kc/maxresdefault.jpg",
     "videoUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/video.mp4",
     "audioUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Chico_Mineiro_Tonico_e_Tinoco_C4V2TT",
+    "title": "Tonico e Tinoco",
+    "artist": "Chico Mineiro",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 196,
+    "thumbnail": "https://i.ytimg.com/vi_webp/C4V2TT2PcOg/maxresdefault.webp",
+    "videoUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/video.mp4",
+    "audioUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -673,6 +687,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/Hjx9TJQlBsM/maxresdefault.webp",
     "videoUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
     "audioUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n",
+    "title": "Mentes Tao Bem",
+    "artist": "Zeze di Camargo & Luciano",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 228,
+    "thumbnail": "https://i.ytimg.com/vi/fUl3-nkH7io/maxresdefault.jpg",
+    "videoUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/video.mp4",
+    "audioUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
