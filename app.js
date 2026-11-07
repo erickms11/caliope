@@ -581,6 +581,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const stepSep = document.getElementById('step-sep');
   const stepLyr = document.getElementById('step-lyr');
 
+  // Botão de Tela Cheia
+  const btnToggleFullscreen = document.getElementById('btn-toggle-fullscreen');
+  const fullscreenIcon = document.getElementById('fullscreen-icon');
+  const fullscreenLabel = document.getElementById('fullscreen-label');
+
   // Elementos do Microfone no Celular (WebRTC PeerJS)
   const btnOpenRemoteMic = document.getElementById('btn-open-remote-mic');
   const remoteMicHeaderIcon = document.getElementById('remote-mic-header-icon');
@@ -1200,7 +1205,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnOpenImport.classList.add('disabled');
         btnOpenImport.title = 'A importação de novos vídeos do YouTube requer o Caliope rodando com o servidor Python no computador.';
       }
-      if (btnImportLabel) btnImportLabel.textContent = '+ Adicionar (Requer Servidor)';
+      if (btnImportLabel) btnImportLabel.innerHTML = '<span class="hide-mobile">+ Adicionar (Servidor)</span><span class="show-mobile">+ Vídeo</span>';
       if (btnImportIcon) btnImportIcon.textContent = '🔒';
     } else {
       if (btnOpenImport) {
@@ -1208,7 +1213,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnOpenImport.classList.remove('disabled');
         btnOpenImport.title = 'Adicionar novo vídeo de Karaokê do YouTube';
       }
-      if (btnImportLabel) btnImportLabel.textContent = '+ Adicionar do YouTube';
+      if (btnImportLabel) btnImportLabel.innerHTML = '<span class="hide-mobile">+ Adicionar do YouTube</span><span class="show-mobile">+ Vídeo</span>';
       if (btnImportIcon) btnImportIcon.textContent = '✨';
     }
   }
@@ -1216,7 +1221,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // 10. Modal de Importação do YouTube
   btnOpenImport.addEventListener('click', () => {
     if (isStaticHosting) {
-      alert("🔒 Modo Catálogo Oficial Online\n\nA importação de novos vídeos do YouTube requer o Caliope rodando com o servidor Python no computador.\n\nNo GitHub Pages, você tem acesso imediato a todas as 26 músicas do catálogo oficial!");
+      alert("🔒 Modo Catálogo Oficial Online\n\nA importação de novos vídeos do YouTube requer o Caliope rodando com o servidor Python no computador.\n\nNo GitHub Pages, você tem acesso imediato a todas as 40 músicas do catálogo oficial!");
       return;
     }
     importModal.classList.add('active');
@@ -1319,6 +1324,70 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 1000);
   }
 
+  // 10.1 Alternar Tela Cheia (Fullscreen API Cross-Browser)
+  function isFullscreen() {
+    return !!(
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.mozFullScreenElement ||
+      document.msFullscreenElement
+    );
+  }
+
+  function toggleFullscreen() {
+    const docEl = document.documentElement;
+    if (!isFullscreen()) {
+      if (docEl.requestFullscreen) {
+        docEl.requestFullscreen().catch((err) => console.warn('Aviso fullscreen:', err));
+      } else if (docEl.webkitRequestFullscreen) {
+        docEl.webkitRequestFullscreen();
+      } else if (docEl.mozRequestFullScreen) {
+        docEl.mozRequestFullScreen();
+      } else if (docEl.msRequestFullscreen) {
+        docEl.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch((err) => console.warn('Aviso exit fullscreen:', err));
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
+  }
+
+  function updateFullscreenUI() {
+    const active = isFullscreen();
+    if (fullscreenIcon) {
+      fullscreenIcon.textContent = active ? '🗗' : '⛶';
+    }
+    if (fullscreenLabel) {
+      fullscreenLabel.innerHTML = active
+        ? '<span class="hide-mobile">Sair da Tela Cheia</span><span class="show-mobile">Sair Cheia</span>'
+        : '<span class="hide-mobile">Tela Cheia</span><span class="show-mobile">Tela Cheia</span>';
+    }
+    if (btnToggleFullscreen) {
+      btnToggleFullscreen.title = active ? 'Sair da Tela Cheia (Esc ou F)' : 'Alternar Tela Cheia (F ou F11)';
+      if (active) {
+        btnToggleFullscreen.classList.add('fullscreen-active');
+      } else {
+        btnToggleFullscreen.classList.remove('fullscreen-active');
+      }
+    }
+  }
+
+  if (btnToggleFullscreen) {
+    btnToggleFullscreen.addEventListener('click', toggleFullscreen);
+  }
+
+  document.addEventListener('fullscreenchange', updateFullscreenUI);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
+  document.addEventListener('mozfullscreenchange', updateFullscreenUI);
+  document.addEventListener('MSFullscreenChange', updateFullscreenUI);
+
   // 11. Carregar Músicas Salvas do Servidor
   async function loadImportedSongs() {
     if (isStaticHosting) {
@@ -1367,6 +1436,9 @@ document.addEventListener('DOMContentLoaded', () => {
       if (viewStage.style.display !== 'none' && selectedSong) {
         startSongWithCountdown(selectedSong);
       }
+    } else if (e.code === 'KeyF' || e.code === 'F11') {
+      e.preventDefault();
+      toggleFullscreen();
     } else if (e.code === 'Escape') {
       if (prestartModal && prestartModal.classList.contains('active')) {
         prestartModal.classList.remove('active');
