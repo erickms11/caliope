@@ -482,7 +482,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let remotePeer = null;
   let remoteConnection = null;
   let isStaticHosting = window.location.hostname.includes('github.io') || window.location.protocol === 'file:';
-  const currentRoomId = 'cali-' + Math.floor(1000 + Math.random() * 9000);
+  let currentRoomId = 'cali-' + Math.floor(1000 + Math.random() * 9000);
 
   // 3. Formatação Auxiliar
   function formatTime(seconds) {
@@ -1418,6 +1418,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     try {
+      if (remotePeer) {
+        try { remotePeer.destroy(); } catch (_) {}
+      }
       remotePeer = new Peer(currentRoomId);
 
       remotePeer.on('open', (id) => {
@@ -1427,8 +1430,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         // Construir link para o celular
-        const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
-        const micUrl = `${window.location.origin}${currentPath}/mic.html?room=${id}`;
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        let micUrl;
+
+        if (isLocalhost) {
+          // No localhost do computador, o celular não consegue abrir "http://localhost:3000"
+          // e browsers móveis exigem HTTPS para liberar o microfone.
+          // Por isso o QR Code aponta para o mic.html com HTTPS no GitHub Pages, conectando à mesma sala!
+          micUrl = `https://erickms11.github.io/caliope/mic.html?room=${id}`;
+        } else {
+          const currentPath = window.location.pathname.replace(/\/index\.html$/, '').replace(/\/$/, '');
+          micUrl = `${window.location.origin}${currentPath}/mic.html?room=${id}`;
+        }
 
         if (remoteMicLinkInput) {
           remoteMicLinkInput.value = micUrl;
@@ -1486,6 +1499,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
       remotePeer.on('error', (err) => {
         console.warn("Aviso PeerJS Host:", err);
+        if (err && err.type === 'unavailable-id') {
+          currentRoomId = 'cali-' + Math.floor(1000 + Math.random() * 9000);
+          setTimeout(initRemoteMicHost, 400);
+        }
       });
     } catch (e) {
       console.warn("Falha iniciando PeerJS Host:", e);

@@ -337,6 +337,69 @@
       margin-top: 6px;
       cursor: pointer;
     }
+
+    /* Card de Digitação Manual da Sala */
+    .room-prompt-card {
+      background: linear-gradient(135deg, #161e33 0%, #0d1424 100%);
+      border: 1px solid var(--primary);
+      border-radius: 18px;
+      padding: 18px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.25);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .room-prompt-icon { font-size: 1.8rem; }
+    .room-prompt-title { font-size: 1.05rem; font-weight: 800; color: #fff; }
+    .room-prompt-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; }
+    .room-input-row { display: flex; gap: 8px; justify-content: center; }
+    
+    .manual-room-input {
+      background: #090e1a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--cyan);
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      width: 140px;
+    }
+
+    .manual-room-input:focus {
+      outline: none;
+      border-color: var(--cyan);
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+    }
+
+    .btn-submit-room {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 18px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-submit-room:active { transform: scale(0.96); }
+
+    .room-badge {
+      cursor: pointer;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -355,6 +418,17 @@
         <span id="room-text">CONECTANDO...</span>
       </div>
     </header>
+
+    <!-- Card de Digitação Manual da Sala (caso não venha na URL) -->
+    <div class="room-prompt-card" id="room-prompt-card" style="display: none;">
+      <div class="room-prompt-icon">📺</div>
+      <h3 class="room-prompt-title">Digite o Código da Sala</h3>
+      <p class="room-prompt-desc">Confira o código de 4 números exibido no telão da TV ou no computador:</p>
+      <div class="room-input-row">
+        <input type="text" id="manual-room-input" class="manual-room-input" placeholder="Ex: 4821" maxlength="10" autocomplete="off" autocapitalize="characters">
+        <button id="btn-submit-room" class="btn-submit-room">Conectar</button>
+      </div>
+    </div>
 
     <!-- Barra de Alerta de Conexão -->
     <div class="reconnect-bar" id="reconnect-bar">
@@ -417,13 +491,17 @@
   <script>
     // Parâmetros da Sala via URL
     const urlParams = new URLSearchParams(window.location.search);
-    const targetRoom = urlParams.get('room') || '';
+    let targetRoom = (urlParams.get('room') || '').trim();
 
     // Elementos da Interface
     const roomText = document.getElementById('room-text');
+    const roomBadge = document.getElementById('room-badge');
     const statusDot = document.getElementById('status-dot');
     const reconnectBar = document.getElementById('reconnect-bar');
     const btnReconnect = document.getElementById('btn-reconnect');
+    const roomPromptCard = document.getElementById('room-prompt-card');
+    const manualRoomInput = document.getElementById('manual-room-input');
+    const btnSubmitRoom = document.getElementById('btn-submit-room');
     const singerInput = document.getElementById('singer-input');
     const btnToggleMic = document.getElementById('btn-toggle-mic');
     const micGlyph = document.getElementById('mic-glyph');
@@ -443,6 +521,41 @@
     let isMicActive = false;
     let sendInterval = null;
 
+    // Clicar no distintivo de sala permite trocar de sala
+    if (roomBadge) {
+      roomBadge.addEventListener('click', () => {
+        if (roomPromptCard) {
+          const isShown = roomPromptCard.style.display !== 'none';
+          roomPromptCard.style.display = isShown ? 'none' : 'flex';
+          if (!isShown && manualRoomInput) manualRoomInput.focus();
+        }
+      });
+    }
+
+    // Submissão manual de código de sala
+    if (btnSubmitRoom && manualRoomInput) {
+      const applyManualRoom = () => {
+        let val = manualRoomInput.value.trim().toLowerCase();
+        if (!val) return;
+        if (!val.startsWith('cali-')) {
+          val = 'cali-' + val;
+        }
+        targetRoom = val;
+
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('room', targetRoom);
+        window.history.replaceState({}, '', newUrl);
+
+        if (roomPromptCard) roomPromptCard.style.display = 'none';
+        connectToHost();
+      };
+
+      btnSubmitRoom.addEventListener('click', applyManualRoom);
+      manualRoomInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') applyManualRoom();
+      });
+    }
+
     // Atualização do Nome do Cantor
     singerInput.addEventListener('input', () => {
       const name = singerInput.value.trim() || 'Cantor(a)';
@@ -455,13 +568,14 @@
     // 1. Conexão WebRTC PeerJS com a TV
     function connectToHost() {
       if (!targetRoom) {
-        roomText.textContent = 'SEM SALA';
+        roomText.textContent = 'DIGITE A SALA';
         statusDot.className = 'status-dot disconnected';
-        alert('Código de sala não informado na URL!');
+        if (roomPromptCard) roomPromptCard.style.display = 'flex';
         return;
       }
 
-      roomText.textContent = `SALA: ${targetRoom.toUpperCase().replace('CALIOPE-', '')}`;
+      const displayCode = targetRoom.toUpperCase().replace('CALIOPE-', '').replace('CALI-', 'SALA ');
+      roomText.textContent = displayCode;
       statusDot.className = 'status-dot';
       reconnectBar.style.display = 'none';
 

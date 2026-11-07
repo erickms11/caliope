@@ -367,6 +367,34 @@ const SONGS_CATALOG = [
     "audioUrl": "/songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
+  },
+  {
+    "id": "Hamilton_Wait_for_It_Uj9-4x",
+    "title": "Wait for It",
+    "artist": "Hamilton Musical",
+    "genre": "Musical",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 196,
+    "thumbnail": "https://i.ytimg.com/vi_webp/Uj9-4xxTlsU/maxresdefault.webp",
+    "videoUrl": "/songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
+    "audioUrl": "/songs/Hamilton_Wait_for_It_Uj9-4x/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT",
+    "title": "Just Give Me A Reason",
+    "artist": "P!nk ft. Nate Ruess",
+    "genre": "Pop",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 245,
+    "thumbnail": "https://i.ytimg.com/vi_webp/7YSYFTez9Sg/sddefault.webp",
+    "videoUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
+    "audioUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
   }
 ];
 

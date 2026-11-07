@@ -104,7 +104,12 @@ class PitchDetector {
       constraints.audio.deviceId = { exact: deviceId };
     }
 
-    this.mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+    try {
+      this.mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+    } catch (err) {
+      console.warn("Restrições avançadas de áudio não suportadas neste dispositivo, usando fallback padrão:", err);
+      this.mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    }
 
     this.analyser = this.audioCtx.createAnalyser();
     this.analyser.fftSize = 2048; // ~46ms @ 44.1kHz
