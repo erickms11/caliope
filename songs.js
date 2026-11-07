@@ -1,6 +1,6 @@
 /**
- * Caliope Song Catalog
- * Catálogo Oficial Padrão de Músicas do Videokê Caliope
+ * Catálogo Oficial Integrado de Videokês do Caliope
+ * Total: 40 faixas com playback sincronizado e letras dinâmicas
  */
 
 const SONGS_CATALOG = [
@@ -29,6 +29,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/pGFEj-Dv3-0/maxresdefault.webp",
     "videoUrl": "/songs/Robbie_Williams_Angels_pGFEj-/video.mp4",
     "audioUrl": "/songs/Robbie_Williams_Angels_pGFEj-/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j",
+    "title": "Até Que Durou",
+    "artist": "Péricles",
+    "genre": "Pagode",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 208,
+    "thumbnail": "https://i.ytimg.com/vi/7Jrl7jGm_Cw/maxresdefault.jpg",
+    "videoUrl": "/songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/video.mp4",
+    "audioUrl": "/songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -103,6 +117,48 @@ const SONGS_CATALOG = [
     "notes": []
   },
   {
+    "id": "Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi",
+    "title": "Cheia de Manias",
+    "artist": "Raça Negra",
+    "genre": "Pagode",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 249,
+    "thumbnail": "https://i.ytimg.com/vi/wp_BRiRiOHo/maxresdefault.jpg",
+    "videoUrl": "/songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/video.mp4",
+    "audioUrl": "/songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Creep_Radiohead_iPy2YP",
+    "title": "Creep",
+    "artist": "Radiohead",
+    "genre": "Rock",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 246,
+    "thumbnail": "https://i.ytimg.com/vi_webp/iPy2YPjlrrY/sddefault.webp",
+    "videoUrl": "/songs/Creep_Radiohead_iPy2YP/video.mp4",
+    "audioUrl": "/songs/Creep_Radiohead_iPy2YP/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Diamonds___Rihanna_GTmvRL",
+    "title": "Diamonds",
+    "artist": "Rihanna",
+    "genre": "Pop",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 225,
+    "thumbnail": "https://i.ytimg.com/vi_webp/GTmvRLyu0mk/sddefault.webp",
+    "videoUrl": "/songs/Diamonds___Rihanna_GTmvRL/video.mp4",
+    "audioUrl": "/songs/Diamonds___Rihanna_GTmvRL/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
     "id": "SKANK_DOIS_RIOS_NSve9N",
     "title": "DOIS RIOS",
     "artist": "SKANK",
@@ -113,6 +169,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi/NSve9NpTjuA/maxresdefault.jpg",
     "videoUrl": "/songs/SKANK_DOIS_RIOS_NSve9N/video.mp4",
     "audioUrl": "/songs/SKANK_DOIS_RIOS_NSve9N/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH",
+    "title": "Essa Tal Liberdade",
+    "artist": "Só Pra Contrariar",
+    "genre": "Pagode",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 240,
+    "thumbnail": "https://i.ytimg.com/vi/NwHWsH2vNrM/maxresdefault.jpg",
+    "videoUrl": "/songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/video.mp4",
+    "audioUrl": "/songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -141,6 +211,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/40QgJjmfTBw/maxresdefault.webp",
     "videoUrl": "/songs/Robbie_Williams_Feel_40QgJj/video.mp4",
     "audioUrl": "/songs/Robbie_Williams_Feel_40QgJj/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk",
+    "title": "How Deep Is Your Love",
+    "artist": "Take That",
+    "genre": "Pop",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 223,
+    "thumbnail": "https://i.ytimg.com/vi_webp/iXYKvkDtA3M/maxresdefault.webp",
+    "videoUrl": "/songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/video.mp4",
+    "audioUrl": "/songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -183,6 +267,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/0g_hKVYa6No/maxresdefault.webp",
     "videoUrl": "/songs/Bruno_Mars_It_Will_Rain_0g_hKV/video.mp4",
     "audioUrl": "/songs/Bruno_Mars_It_Will_Rain_0g_hKV/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT",
+    "title": "Just Give Me A Reason",
+    "artist": "P!nk ft. Nate Ruess",
+    "genre": "Pop",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 245,
+    "thumbnail": "https://i.ytimg.com/vi_webp/7YSYFTez9Sg/sddefault.webp",
+    "videoUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
+    "audioUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -257,6 +355,48 @@ const SONGS_CATALOG = [
     "notes": []
   },
   {
+    "id": "Celine_Dion_My_Heart_Will_Go_On_cdgU8Y",
+    "title": "My Heart Will Go On",
+    "artist": "Céline Dion",
+    "genre": "Pop",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 309,
+    "thumbnail": "https://i.ytimg.com/vi/cdgU8YmD3Kc/maxresdefault.jpg",
+    "videoUrl": "/songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/video.mp4",
+    "audioUrl": "/songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Frank_Sinatra_My_Way_tAEek8",
+    "title": "My Way",
+    "artist": "Frank Sinatra",
+    "genre": "Jazz",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 292,
+    "thumbnail": "https://i.ytimg.com/vi_webp/tAEek8nO11c/maxresdefault.webp",
+    "videoUrl": "/songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
+    "audioUrl": "/songs/Frank_Sinatra_My_Way_tAEek8/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Take_That_Patience_IFX1Dq",
+    "title": "Patience",
+    "artist": "Take That",
+    "genre": "Pop",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 198,
+    "thumbnail": "https://i.ytimg.com/vi/IFX1Dqo9Gls/maxresdefault.jpg",
+    "videoUrl": "/songs/Take_That_Patience_IFX1Dq/video.mp4",
+    "audioUrl": "/songs/Take_That_Patience_IFX1Dq/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
     "id": "__Que_Nem_Mar__Jorge_Vercillo_yZRSFb",
     "title": "Que Nem Maré",
     "artist": "Jorge Vercillo",
@@ -295,6 +435,34 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/kdtWMjCEwSw/maxresdefault.webp",
     "videoUrl": "/songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/video.mp4",
     "audioUrl": "/songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "__Te_Esperando_Luan_Santana_3nBAoA",
+    "title": "Te Esperando",
+    "artist": "Luan Santana",
+    "genre": "Sertanejo",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 251,
+    "thumbnail": "https://i.ytimg.com/vi/3nBAoA5sZC4/maxresdefault.jpg",
+    "videoUrl": "/songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
+    "audioUrl": "/songs/__Te_Esperando_Luan_Santana_3nBAoA/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "__Te_Vivo_Luan_Santana_uiZQt3",
+    "title": "Te Vivo",
+    "artist": "Luan Santana",
+    "genre": "Sertanejo",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 200,
+    "thumbnail": "https://i.ytimg.com/vi/uiZQt3_COMk/maxresdefault.jpg",
+    "videoUrl": "/songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
+    "audioUrl": "/songs/__Te_Vivo_Luan_Santana_uiZQt3/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -355,6 +523,20 @@ const SONGS_CATALOG = [
     "notes": []
   },
   {
+    "id": "Hamilton_Wait_for_It_Uj9-4x",
+    "title": "Wait for It",
+    "artist": "Hamilton",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 196,
+    "thumbnail": "https://i.ytimg.com/vi_webp/Uj9-4xxTlsU/maxresdefault.webp",
+    "videoUrl": "/songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
+    "audioUrl": "/songs/Hamilton_Wait_for_It_Uj9-4x/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
     "id": "When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ",
     "title": "When I Was Your Man",
     "artist": "Bruno Mars",
@@ -369,58 +551,16 @@ const SONGS_CATALOG = [
     "notes": []
   },
   {
-    "id": "Hamilton_Wait_for_It_Uj9-4x",
-    "title": "Wait for It",
-    "artist": "Hamilton Musical",
-    "genre": "Musical",
+    "id": "__Tarde_Demais_Ra_a_Negra_GBRLY5",
+    "title": "É Tarde Demais",
+    "artist": "Raça Negra",
+    "genre": "Pagode",
     "difficulty": "Dinâmica",
     "bpm": 120,
-    "duration": 196,
-    "thumbnail": "https://i.ytimg.com/vi_webp/Uj9-4xxTlsU/maxresdefault.webp",
-    "videoUrl": "/songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
-    "audioUrl": "/songs/Hamilton_Wait_for_It_Uj9-4x/audio.mp3",
-    "hasVideoLyrics": true,
-    "notes": []
-  },
-  {
-    "id": "Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT",
-    "title": "Just Give Me A Reason",
-    "artist": "P!nk ft. Nate Ruess",
-    "genre": "Pop",
-    "difficulty": "Dinâmica",
-    "bpm": 120,
-    "duration": 245,
-    "thumbnail": "https://i.ytimg.com/vi_webp/7YSYFTez9Sg/sddefault.webp",
-    "videoUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
-    "audioUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
-    "hasVideoLyrics": true,
-    "notes": []
-  },
-  {
-    "id": "__Te_Esperando_Luan_Santana_3nBAoA",
-    "title": "Te Esperando",
-    "artist": "Luan Santana",
-    "genre": "Sertanejo",
-    "difficulty": "Dinâmica",
-    "bpm": 120,
-    "duration": 251,
-    "thumbnail": "https://i.ytimg.com/vi/3nBAoA5sZC4/maxresdefault.jpg",
-    "videoUrl": "/songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
-    "audioUrl": "/songs/__Te_Esperando_Luan_Santana_3nBAoA/audio.mp3",
-    "hasVideoLyrics": true,
-    "notes": []
-  },
-  {
-    "id": "__Te_Vivo_Luan_Santana_uiZQt3",
-    "title": "Te Vivo",
-    "artist": "Luan Santana",
-    "genre": "Sertanejo",
-    "difficulty": "Dinâmica",
-    "bpm": 120,
-    "duration": 200,
-    "thumbnail": "https://i.ytimg.com/vi/uiZQt3_COMk/maxresdefault.jpg",
-    "videoUrl": "/songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
-    "audioUrl": "/songs/__Te_Vivo_Luan_Santana_uiZQt3/audio.mp3",
+    "duration": 226,
+    "thumbnail": "https://i.ytimg.com/vi_webp/GBRLY5DnL3M/sddefault.webp",
+    "videoUrl": "/songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/video.mp4",
+    "audioUrl": "/songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   }
