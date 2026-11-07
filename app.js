@@ -698,15 +698,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Card Especial para Adicionar do YouTube
     const addCard = document.createElement('div');
-    addCard.className = 'song-card song-card-add-special';
-    addCard.innerHTML = `
-      <div class="add-icon">✨</div>
-      <h3>Adicionar Novo Karaokê</h3>
-      <p>Cole o link de qualquer vídeo do YouTube para cantar agora!</p>
-    `;
-    addCard.addEventListener('click', () => {
-      importModal.classList.add('active');
-    });
+    if (isStaticHosting) {
+      addCard.className = 'song-card song-card-add-special is-coming-soon';
+      addCard.title = 'A importação de novos vídeos online estará disponível em breve!';
+      addCard.innerHTML = `
+        <div class="coming-soon-badge">⏳ EM BREVE</div>
+        <div class="add-icon">✨</div>
+        <h3>Adicionar Novo Karaokê</h3>
+        <p>A importação de novos vídeos do YouTube estará disponível em breve online!</p>
+        <div class="coming-soon-note">Disponível no app local do Caliope 💻</div>
+      `;
+      addCard.addEventListener('click', () => {
+        alert("⏳ Em Breve na Versão Online!\n\nA importação e separação de faixas de novos vídeos do YouTube requer processamento local via Python.\n\nNo seu computador local, você já pode importar qualquer link do YouTube!");
+      });
+    } else {
+      addCard.className = 'song-card song-card-add-special';
+      addCard.innerHTML = `
+        <div class="add-icon">✨</div>
+        <h3>Adicionar Novo Karaokê</h3>
+        <p>Cole o link de qualquer vídeo do YouTube para cantar agora!</p>
+      `;
+      addCard.addEventListener('click', () => {
+        importModal.classList.add('active');
+      });
+    }
     songsGrid.appendChild(addCard);
   }
 
@@ -1208,6 +1223,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (btnImportLabel) btnImportLabel.innerHTML = '<span class="hide-mobile">+ Adicionar (Servidor)</span><span class="show-mobile">+ Vídeo</span>';
       if (btnImportIcon) btnImportIcon.textContent = '🔒';
     } else {
+      isStaticHosting = false;
       if (btnOpenImport) {
         btnOpenImport.disabled = false;
         btnOpenImport.classList.remove('disabled');
