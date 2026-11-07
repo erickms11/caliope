@@ -7,8 +7,8 @@
   "bpm": 120,
   "duration": 220,
   "thumbnail": "https://i.ytimg.com/vi/IjFeGYAT-5E/maxresdefault.jpg",
-  "videoUrl": "/songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
-  "audioUrl": "/songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/audio.mp3",
+  "videoUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
+  "audioUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/audio.mp3",
   "hasVideoLyrics": true,
   "notes": []
 }

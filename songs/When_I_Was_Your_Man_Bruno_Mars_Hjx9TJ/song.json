@@ -7,8 +7,8 @@
   "bpm": 120,
   "duration": 216,
   "thumbnail": "https://i.ytimg.com/vi_webp/Hjx9TJQlBsM/maxresdefault.webp",
-  "videoUrl": "/songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
-  "audioUrl": "/songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/audio.mp3",
+  "videoUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
+  "audioUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/audio.mp3",
   "hasVideoLyrics": true,
   "notes": []
 }

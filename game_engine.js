@@ -177,6 +177,9 @@ class KaraokeEngine {
   loadSong(song) {
     this.currentSong = song;
     this.currentScale = parseScalePitchClasses(song.key);
+    if (this.sequencer && this.sequencer.prepare) {
+      this.sequencer.prepare(song);
+    }
   }
 
   start() {

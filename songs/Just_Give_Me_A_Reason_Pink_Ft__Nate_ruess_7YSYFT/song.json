@@ -7,8 +7,8 @@
   "bpm": 120,
   "duration": 245,
   "thumbnail": "https://i.ytimg.com/vi_webp/7YSYFTez9Sg/sddefault.webp",
-  "videoUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
-  "audioUrl": "/songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
+  "videoUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
+  "audioUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
   "hasVideoLyrics": true,
   "notes": []
 }

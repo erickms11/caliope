@@ -7,8 +7,8 @@
   "bpm": 120,
   "duration": 250,
   "thumbnail": "https://i.ytimg.com/vi_webp/Mk5JYEFcGnU/maxresdefault.webp",
-  "videoUrl": "/songs/Hoobastank_The_Reason_Mk5JYE/video.mp4",
-  "audioUrl": "/songs/Hoobastank_The_Reason_Mk5JYE/audio.mp3",
+  "videoUrl": "songs/Hoobastank_The_Reason_Mk5JYE/video.mp4",
+  "audioUrl": "songs/Hoobastank_The_Reason_Mk5JYE/audio.mp3",
   "hasVideoLyrics": true,
   "notes": []
 }

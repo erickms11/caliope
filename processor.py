@@ -160,8 +160,8 @@ def process_youtube_song(youtube_url, progress_callback=None):
         "bpm": 120,
         "duration": round(duration, 1),
         "thumbnail": thumbnail,
-        "videoUrl": f"/songs/{safe_folder}/video.mp4",
-        "audioUrl": f"/songs/{safe_folder}/audio.mp3",
+        "videoUrl": f"songs/{safe_folder}/video.mp4",
+        "audioUrl": f"songs/{safe_folder}/audio.mp3",
         "hasVideoLyrics": True,
         "notes": []
     }

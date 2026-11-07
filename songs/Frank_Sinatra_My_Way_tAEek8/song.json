@@ -7,8 +7,8 @@
   "bpm": 120,
   "duration": 292,
   "thumbnail": "https://i.ytimg.com/vi_webp/tAEek8nO11c/maxresdefault.webp",
-  "videoUrl": "/songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
-  "audioUrl": "/songs/Frank_Sinatra_My_Way_tAEek8/audio.mp3",
+  "videoUrl": "songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
+  "audioUrl": "songs/Frank_Sinatra_My_Way_tAEek8/audio.mp3",
   "hasVideoLyrics": true,
   "notes": []
 }

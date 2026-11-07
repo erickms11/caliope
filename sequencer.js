@@ -53,6 +53,7 @@ class BackingTrackSequencer {
     this.onEnded = null;
 
     if (this.videoElement) {
+      this.videoElement.crossOrigin = "anonymous";
       this.videoElement.addEventListener('ended', () => {
         if (this.onEnded) this.onEnded();
       });
@@ -152,10 +153,42 @@ class BackingTrackSequencer {
     this.masterGain.gain.setTargetAtTime(vol, this.ctx.currentTime, 0.05);
   }
 
+  resolveMediaUrl(url) {
+    if (!url) return '';
+    // Preserva URLs absolutas externas (http://, https://, blob:, data:)
+    if (/^(?:https?:)?\/\/|^blob:|^data:/i.test(url)) {
+      return url;
+    }
+    // Remove qualquer barra inicial para ser sempre relativo ao diretório da aplicação
+    return url.replace(/^\/+/, '');
+  }
+
+  prepare(song) {
+    if (!song) return;
+    if (song.videoUrl && this.videoElement) {
+      const cleanUrl = this.resolveMediaUrl(song.videoUrl);
+      if (!this.videoElement.src || !this.videoElement.src.endsWith(cleanUrl)) {
+        this.videoElement.src = cleanUrl;
+        this.videoElement.load();
+      }
+    } else if (song.audioUrl && this.audioElement) {
+      const cleanUrl = this.resolveMediaUrl(song.audioUrl);
+      if (!this.audioElement.src || !this.audioElement.src.endsWith(cleanUrl)) {
+        this.audioElement.src = cleanUrl;
+        this.audioElement.load();
+      }
+    }
+  }
+
   start(song) {
     this.stop();
     this.song = song;
     this.isPlaying = true;
+
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+
     this.startTime = this.ctx.currentTime;
     this.currentStep = 0;
 
@@ -168,7 +201,10 @@ class BackingTrackSequencer {
     if (song.videoUrl && this.videoElement) {
       if (this.videoDimmer) this.videoDimmer.classList.add('active');
       this.videoElement.classList.add('active');
-      this.videoElement.src = song.videoUrl;
+      const cleanVideoUrl = this.resolveMediaUrl(song.videoUrl);
+      if (!this.videoElement.src || !this.videoElement.src.endsWith(cleanVideoUrl)) {
+        this.videoElement.src = cleanVideoUrl;
+      }
       this.videoElement.currentTime = 0;
 
       if (!this.videoSourceNode) {
@@ -180,7 +216,16 @@ class BackingTrackSequencer {
         }
       }
 
-      this.videoElement.play().catch(err => console.error("Erro tocando vídeo:", err));
+      const playPromise = this.videoElement.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(err => {
+          console.warn("Autoplay bloqueado pelo navegador, tentando fallback desmutado:", err);
+          this.videoElement.muted = true;
+          this.videoElement.play().then(() => {
+            setTimeout(() => { this.videoElement.muted = false; }, 100);
+          }).catch(e => console.error("Erro tocando vídeo:", e));
+        });
+      }
       return;
     }
 
@@ -197,7 +242,10 @@ class BackingTrackSequencer {
           console.warn("MediaElementSource já conectado:", e);
         }
       }
-      this.audioElement.src = song.audioUrl;
+      const cleanAudioUrl = this.resolveMediaUrl(song.audioUrl);
+      if (!this.audioElement.src || !this.audioElement.src.endsWith(cleanAudioUrl)) {
+        this.audioElement.src = cleanAudioUrl;
+      }
       this.audioElement.currentTime = 0;
       this.audioElement.play().catch(err => console.error("Erro tocando áudio:", err));
       return;

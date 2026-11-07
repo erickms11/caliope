@@ -7,8 +7,8 @@
   "bpm": 120,
   "duration": 237,
   "thumbnail": "https://i.ytimg.com/vi_webp/8fm8rnf8THk/maxresdefault.webp",
-  "videoUrl": "/songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/video.mp4",
-  "audioUrl": "/songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/audio.mp3",
+  "videoUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/video.mp4",
+  "audioUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/audio.mp3",
   "hasVideoLyrics": true,
   "notes": []
 }
