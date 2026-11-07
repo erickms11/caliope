@@ -649,7 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <p class="song-card-artist" title="${song.artist}">${song.artist}</p>
           ${keyTag}
           <button class="btn btn-primary btn-start-song">
-            🎤 Cantar Agora
+            🎤 Cantar
           </button>
         </div>
       `;
