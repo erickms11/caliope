@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
     "songTitle": "Te Esperando",
     "songArtist": "Luan Santana",
     "songId": "__Te_Esperando_Luan_Santana_3nBAoA",
-    "score": 15157,
+    "score": 8850,
     "accuracy": 85,
     "maxCombo": 72,
     "stars": 4,
@@ -210,12 +210,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const SCORE_MILESTONES = [
     { threshold: 1000, badge: '🔥 AQUECENDO A VOZ', title: '1.000 PONTOS!', subtitle: 'Primeiro marco! Segure o ritmo!', sound: 'low' },
-    { threshold: 3000, badge: '⚡ EM RITMO ACELERADO', title: '3.000 PONTOS!', subtitle: 'Ótimo fôlego! Mandando bem demais!', sound: 'mid' },
-    { threshold: 5000, badge: '🌟 SHOW AO VIVO!', title: '5.000 PONTOS!', subtitle: 'Espetacular! A plateia está vibrando!', sound: 'high' },
+    { threshold: 2500, badge: '⚡ EM RITMO ACELERADO', title: '2.500 PONTOS!', subtitle: 'Ótimo fôlego! Mandando bem demais!', sound: 'mid' },
+    { threshold: 5000, badge: '🌟 METADE DO CAMINHO!', title: '5.000 PONTOS!', subtitle: 'Espetacular! A plateia está vibrando!', sound: 'high' },
     { threshold: 7500, badge: '🎤 AFINAÇÃO DE OURO', title: '7.500 PONTOS!', subtitle: 'Voz cirúrgica! Nível de gravação profissional!', sound: 'high' },
-    { threshold: 10000, badge: '🏆 SUPER ESTRELA DO VIDEOKÊ!', title: '10.000 PONTOS!', subtitle: 'Histórico! Você está dominando o palco!', sound: 'fanfare' },
-    { threshold: 15000, badge: '💎 FENÔMENO MUSICAL', title: '15.000 PONTOS!', subtitle: 'Inacreditável! Apresentação impecável!', sound: 'fanfare' },
-    { threshold: 20000, badge: '👑 LENDA DO CALIOPE', title: '20.000 PONTOS!', subtitle: 'Pontuação Lendária! Um verdadeiro ícone!', sound: 'fanfare' }
+    { threshold: 9000, badge: '👑 SHOW HISTÓRICO!', title: '9.000 PONTOS!', subtitle: 'Incrível! O palco é todo seu!', sound: 'high' },
+    { threshold: 10000, badge: '🏆 PONTUAÇÃO MÁXIMA!', title: '10.000 PONTOS!', subtitle: 'PERFEITO! Você zerou o videokê!', sound: 'fanfare' }
   ];
 
   // Sistema de Confetes e Partículas Festivas

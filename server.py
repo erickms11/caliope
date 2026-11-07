@@ -23,7 +23,7 @@ DEFAULT_RANKINGS = [
         "songTitle": "Te Esperando",
         "songArtist": "Luan Santana",
         "songId": "__Te_Esperando_Luan_Santana_3nBAoA",
-        "score": 15157,
+        "score": 8850,
         "accuracy": 85,
         "maxCombo": 72,
         "stars": 4,

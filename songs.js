@@ -1,6 +1,6 @@
 /**
  * Catálogo Oficial Integrado de Videokês do Caliope
- * Total: 40 faixas com playback sincronizado e letras dinâmicas
+ * Total: 42 faixas com playback sincronizado e letras dinâmicas
  */
 
 const SONGS_CATALOG = [
@@ -561,6 +561,34 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/GBRLY5DnL3M/sddefault.webp",
     "videoUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/video.mp4",
     "audioUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Calcinha_Preta_Liga_pra_mim_Fa2HI8",
+    "title": "Liga pra mim",
+    "artist": "Calcinha Preta",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 198,
+    "thumbnail": "https://i.ytimg.com/vi/Fa2HI8RDLfc/maxresdefault.jpg",
+    "videoUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/video.mp4",
+    "audioUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "EU_E_EU_GUSTAVO_MIOTO_oft0y3",
+    "title": "GUSTAVO MIOTO",
+    "artist": "EU E EU",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 189,
+    "thumbnail": "https://i.ytimg.com/vi/oft0y3XcHu4/maxresdefault.jpg",
+    "videoUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/video.mp4",
+    "audioUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   }

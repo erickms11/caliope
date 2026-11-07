@@ -73,3 +73,4 @@ echo -e "-------------------------------------------------------------\n"
 
 # 5. Executar o servidor Python
 exec python3 server.py
+
