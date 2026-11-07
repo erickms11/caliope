@@ -1,0 +1,265 @@
+/**
+ * Caliope Pitch Detector
+ * Autocorrelation com interpolação parabólica para detecção de tom em tempo real
+ */
+
+const NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+
+class PitchDetector {
+  constructor() {
+    this.audioCtx = null;
+    this.analyser = null;
+    this.mediaStream = null;
+    this.sourceNode = null;
+    this.buffer = null;
+    this.isListening = false;
+    
+    // Configurações
+    this.noiseThreshold = parseFloat(localStorage.getItem('caliope_noise_gate') || '0.040'); // Limiar menos sensível para evitar disparos em falso
+    this.speakerRejectionMode = localStorage.getItem('caliope_speaker_mode') !== 'false'; // Padrão: Modo Caixas de Som ativo
+    this.echoCancellation = false; // Desativado para evitar que o navegador abafe/corte o microfone USB
+    this.noiseSuppression = false;
+    this.minFreq = 70;   // ~C#2 (grave masculino)
+    this.maxFreq = 1000; // ~B5 (agudo feminino)
+    this.correlationThreshold = this.speakerRejectionMode ? 0.76 : 0.68;
+
+    // Suporte a Microfone Remoto (Celular via WebRTC / P2P)
+    this.remoteAudioData = null;
+    this.lastRemoteDataTime = 0;
+  }
+
+  setRemoteAudioData(data) {
+    if (!data) {
+      this.remoteAudioData = null;
+      this.lastRemoteDataTime = 0;
+      return;
+    }
+    this.remoteAudioData = data;
+    this.lastRemoteDataTime = performance.now();
+  }
+
+  setSpeakerMode(enabled) {
+    this.speakerRejectionMode = !!enabled;
+    localStorage.setItem('caliope_speaker_mode', this.speakerRejectionMode ? 'true' : 'false');
+    this.correlationThreshold = this.speakerRejectionMode ? 0.76 : 0.68;
+    if (this.speakerRejectionMode && this.noiseThreshold < 0.035) {
+      this.setNoiseThreshold(0.040);
+    } else if (!this.speakerRejectionMode && this.noiseThreshold > 0.028) {
+      this.setNoiseThreshold(0.022);
+    }
+  }
+
+  setNoiseThreshold(val) {
+    this.noiseThreshold = Math.max(0.012, Math.min(0.12, Math.round(val * 1000) / 1000));
+    localStorage.setItem('caliope_noise_gate', this.noiseThreshold.toString());
+  }
+
+  async calibrateAmbient(samplesCount = 20, delayMs = 50) {
+    if (!this.isListening || !this.analyser) return null;
+    let maxRms = 0;
+    let sumRms = 0;
+    for (let i = 0; i < samplesCount; i++) {
+      this.analyser.getFloatTimeDomainData(this.buffer);
+      let sumSq = 0;
+      for (let j = 0; j < this.buffer.length; j++) {
+        sumSq += this.buffer[j] * this.buffer[j];
+      }
+      const r = Math.sqrt(sumSq / this.buffer.length);
+      if (r > maxRms) maxRms = r;
+      sumRms += r;
+      await new Promise(res => setTimeout(res, delayMs));
+    }
+    const avgRms = sumRms / samplesCount;
+    // O corte deve ficar com folga acústica confortável (45% acima do maior pico de ruído medido)
+    const newCut = Math.max(0.030, Math.min(0.095, Math.round((maxRms * 1.45 + 0.008) * 1000) / 1000));
+    this.setNoiseThreshold(newCut);
+    return { peakRms: maxRms, avgRms: avgRms, newThreshold: newCut };
+  }
+
+  async init(deviceId = null) {
+    if (!this.audioCtx) {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      this.audioCtx = new AudioContext({ latencyHint: 'interactive' });
+    }
+
+    if (this.audioCtx.state === 'suspended') {
+      await this.audioCtx.resume();
+    }
+
+    // Parar stream anterior se houver
+    if (this.mediaStream) {
+      this.mediaStream.getTracks().forEach(track => track.stop());
+    }
+
+    const constraints = {
+      audio: {
+        echoCancellation: this.echoCancellation,
+        noiseSuppression: this.noiseSuppression,
+        autoGainControl: false,
+        channelCount: 1
+      }
+    };
+
+    if (deviceId) {
+      constraints.audio.deviceId = { exact: deviceId };
+    }
+
+    this.mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+
+    this.analyser = this.audioCtx.createAnalyser();
+    this.analyser.fftSize = 2048; // ~46ms @ 44.1kHz
+    this.buffer = new Float32Array(this.analyser.fftSize);
+
+    this.sourceNode = this.audioCtx.createMediaStreamSource(this.mediaStream);
+    this.sourceNode.connect(this.analyser);
+    // NÃO conectamos analyser ao audioCtx.destination para NÃO gerar microfonia / eco!
+
+    this.isListening = true;
+    return this.mediaStream;
+  }
+
+  getAudioData() {
+    // 1. Verificar se há dados recentes de microfone remoto (celular via WebRTC)
+    const hasFreshRemote = this.remoteAudioData && (performance.now() - (this.lastRemoteDataTime || 0) < 400);
+    const remote = hasFreshRemote ? this.remoteAudioData : null;
+
+    // 2. Se o microfone local do PC estiver ouvindo, processar sinal local
+    let local = { volume: 0, pitch: -1, note: null, buffer: this.buffer, isSinging: false };
+    if (this.isListening && this.analyser) {
+      this.analyser.getFloatTimeDomainData(this.buffer);
+
+      let sumSquares = 0;
+      for (let i = 0; i < this.buffer.length; i++) {
+        sumSquares += this.buffer[i] * this.buffer[i];
+      }
+      const rms = Math.sqrt(sumSquares / this.buffer.length);
+
+      if (rms >= this.noiseThreshold) {
+        const pitchResult = this.autoCorrelate(this.buffer, this.audioCtx.sampleRate);
+        const pitch = pitchResult.freq;
+        const noteData = pitch > 0 ? this.frequencyToNote(pitch) : null;
+        const minCorr = this.correlationThreshold || 0.68;
+        const isSinging = pitch > 0 && noteData !== null && (pitchResult.correlation >= minCorr);
+
+        local = {
+          volume: rms,
+          pitch: isSinging ? pitch : -1,
+          correlation: pitchResult.correlation,
+          note: isSinging ? noteData : null,
+          buffer: this.buffer,
+          isSinging: isSinging,
+          threshold: this.noiseThreshold,
+          source: 'local'
+        };
+      } else {
+        local.volume = rms;
+      }
+    }
+
+    // 3. Decisão de Áudio: Se o celular estiver conectado e cantando (ou se não houver microfone local)
+    if (remote) {
+      if (!this.isListening || remote.isSinging || (remote.volume > (local.volume || 0))) {
+        return {
+          volume: remote.volume || 0,
+          pitch: remote.pitch || -1,
+          correlation: remote.correlation || 0.85,
+          note: remote.note || null,
+          buffer: this.buffer,
+          isSinging: !!remote.isSinging,
+          threshold: this.noiseThreshold,
+          source: 'remote',
+          remoteSinger: remote.singerName || ''
+        };
+      }
+    }
+
+    return local;
+  }
+
+  autoCorrelate(buffer, sampleRate) {
+    const SIZE = buffer.length;
+    const minPeriod = Math.floor(sampleRate / this.maxFreq);
+    const maxPeriod = Math.floor(sampleRate / this.minFreq);
+
+    // Encontrar melhor período de repetição
+    let bestCorrelation = -1;
+    let bestPeriod = -1;
+
+    // Normalização inicial
+    let sumSquares = 0;
+    for (let i = 0; i < SIZE; i++) {
+      sumSquares += buffer[i] * buffer[i];
+    }
+    if (sumSquares < 0.0001) return { freq: -1, correlation: 0 };
+
+    for (let period = minPeriod; period <= maxPeriod; period++) {
+      let correlation = 0;
+      for (let i = 0; i < SIZE - period; i++) {
+        correlation += buffer[i] * buffer[i + period];
+      }
+      correlation = correlation / (SIZE - period);
+
+      // Normalizado
+      const normCorrelation = correlation / (sumSquares / SIZE);
+
+      if (normCorrelation > bestCorrelation) {
+        bestCorrelation = normCorrelation;
+        bestPeriod = period;
+      }
+    }
+
+    // Threshold de confiança da nota vocal
+    const minCorr = this.correlationThreshold || 0.68;
+    if (bestCorrelation >= minCorr && bestPeriod > 0) {
+      // Interpolação parabólica para precisão sub-sample
+      const p = bestPeriod;
+      let refinedPeriod = p;
+
+      if (p > 1 && p < maxPeriod - 1) {
+        const c1 = this.calculateCorrelationAt(buffer, p - 1, SIZE);
+        const c2 = bestCorrelation;
+        const c3 = this.calculateCorrelationAt(buffer, p + 1, SIZE);
+        const delta = (c3 - c1) / (2 * (2 * c2 - c1 - c3) + 1e-6);
+        if (Math.abs(delta) < 1) {
+          refinedPeriod = p + delta;
+        }
+      }
+
+      return { freq: sampleRate / refinedPeriod, correlation: bestCorrelation };
+    }
+
+    return { freq: -1, correlation: bestCorrelation };
+  }
+
+  calculateCorrelationAt(buffer, period, size) {
+    let corr = 0;
+    for (let i = 0; i < size - period; i++) {
+      corr += buffer[i] * buffer[i + period];
+    }
+    return corr / (size - period);
+  }
+
+  frequencyToNote(freq) {
+    // MIDI note number: 69 = A4 (440Hz)
+    const midiFloat = 12 * (Math.log2(freq / 440)) + 69;
+    const midi = Math.round(midiFloat);
+    const noteIndex = ((midi % 12) + 12) % 12;
+    const octave = Math.floor(midi / 12) - 1;
+    const noteName = NOTE_NAMES[noteIndex];
+    
+    // Desvio em cents (-50 a +50 cents do semitom exato)
+    const cents = Math.round((midiFloat - midi) * 100);
+
+    return {
+      name: noteName,
+      octave: octave,
+      full: `${noteName}${octave}`,
+      midi: midi,
+      cents: cents,
+      freq: Math.round(freq * 10) / 10
+    };
+  }
+}
+
+window.PitchDetector = PitchDetector;
+

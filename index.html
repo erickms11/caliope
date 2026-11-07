@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Caliope • O Jogo de Videokê Oficial</title>
+  <link rel="stylesheet" href="style.css?v=23">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Global Header -->
+    <header class="header">
+      <div class="logo-group" id="btn-home-logo" title="Ir para o Menu de Músicas" style="cursor: pointer;">
+        <div class="logo-badge">🎤 CALIOPE</div>
+        <span class="subtitle">Videokê Oficial</span>
+      </div>
+
+      <!-- Abas de Navegação Principal -->
+      <nav class="nav-tabs">
+        <button id="nav-btn-lobby" class="nav-tab active">
+          <span>🎵</span> Músicas
+        </button>
+        <button id="nav-btn-ranking" class="nav-tab">
+          <span>🏆</span> Ranking
+        </button>
+      </nav>
+
+      <div class="header-actions">
+        <button id="btn-open-remote-mic" class="btn btn-primary" title="Conectar microfone do celular via QR Code">
+          <span id="remote-mic-header-icon">📱</span> <span id="remote-mic-header-label">Microfone no Celular</span>
+        </button>
+
+        <button id="btn-open-import" class="btn btn-accent">
+          <span id="btn-import-icon">✨</span> <span id="btn-import-label">+ Adicionar do YouTube</span>
+        </button>
+
+        <button id="btn-open-settings" class="btn btn-secondary" title="Configurações de Áudio e Microfone">
+          <span>⚙️</span> Ajustes
+        </button>
+      </div>
+    </header>
+
+    <!-- TELA 1: LOBBY / MENU DE SELEÇÃO DE MÚSICAS (PADRÃO JOGO) -->
+    <main id="view-lobby" class="view-content active">
+      <div class="lobby-header">
+        <div class="lobby-welcome">
+          <h1>🎤 Escolha sua Música & Solte a Voz</h1>
+          <p>Selecione um videokê do catálogo abaixo ou adicione qualquer vídeo novo do YouTube!</p>
+        </div>
+        <div class="lobby-actions">
+          <div class="lobby-search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="lobby-search" placeholder="Buscar música ou cantor...">
+          </div>
+        </div>
+      </div>
+
+      <!-- Grade de Cards de Músicas -->
+      <div class="songs-grid" id="songs-grid">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </main>
+
+    <!-- TELA 2: RANKING GERAL / LEADERBOARD (PADRÃO JOGO) -->
+    <main id="view-ranking" class="view-content" style="display: none;">
+      <div class="ranking-header">
+        <div class="ranking-title-group">
+          <h1>🏆 Galeria dos Campeões do Videokê</h1>
+          <p>Confira os melhores cantores, pontuações e recordes registrados!</p>
+        </div>
+        <div class="ranking-filters">
+          <div class="ranking-search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="ranking-search" placeholder="Filtrar por cantor ou música...">
+          </div>
+          <div class="ranking-diff-filters" id="ranking-diff-filter">
+            <button class="rank-filter-btn active" data-diff="all">Todas</button>
+            <button class="rank-filter-btn" data-diff="easy">🟢 Fácil</button>
+            <button class="rank-filter-btn" data-diff="medium">🟡 Médio</button>
+            <button class="rank-filter-btn" data-diff="hard">🔴 Difícil</button>
+          </div>
+          <button id="btn-clear-ranking" class="btn btn-secondary btn-sm" title="Limpar histórico de pontuações">
+            🗑️ Limpar Ranking
+          </button>
+        </div>
+      </div>
+
+      <!-- Pódio Top 3 Especial -->
+      <div class="podium-grid" id="podium-grid">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+      <!-- Tabela Completa de Ranking -->
+      <div class="ranking-table-card">
+        <table class="ranking-table">
+          <thead>
+            <tr>
+              <th style="width: 70px;">POS</th>
+              <th>CANTOR(A)</th>
+              <th>MÚSICA</th>
+              <th>DIFICULDADE</th>
+              <th>AFINAÇÃO</th>
+              <th>ESTRELAS</th>
+              <th style="text-align: right;">PONTUAÇÃO</th>
+            </tr>
+          </thead>
+          <tbody id="ranking-table-body">
+            <!-- Linhas dinâmicas -->
+          </tbody>
+        </table>
+
+        <!-- Estado Vazio -->
+        <div class="ranking-empty-state" id="ranking-empty-state" style="display: none;">
+          <div class="empty-icon">🎤</div>
+          <h3>Nenhuma cantoria registrada ainda!</h3>
+          <p>Escolha uma música, solte a voz e seja o primeiro a gravar seu nome no topo do Videokê!</p>
+          <button class="btn btn-primary" id="btn-empty-go-sing">
+            🎵 Escolher Música Agora
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- TELA 2: PALCO DO VIDEOKÊ (CANVAS & VÍDEO EXPANDIDO EM 540PX) -->
+    <main id="view-stage" class="view-content" style="display: none;">
+      
+      <!-- HUD Superior do Jogo -->
+      <section class="game-hud">
+        <div class="song-info-card">
+          <button id="btn-stage-back" class="btn btn-secondary btn-sm" title="Voltar para a seleção de músicas" style="white-space: nowrap; flex-shrink: 0;">
+            ⬅️ Músicas
+          </button>
+          <div class="song-meta">
+            <div class="song-meta-badges">
+              <span class="badge-genre" id="hud-genre">Videokê Oficial</span>
+              <span class="badge-key" id="hud-key">🎹 Tom: Auto</span>
+            </div>
+            <h1 class="hud-title" id="hud-title">Título da Música</h1>
+            <p class="hud-artist" id="hud-artist">Artista</p>
+          </div>
+        </div>
+
+        <!-- Monitor Visual do Microfone ao Vivo (Apenas Barrinha e Nota) -->
+        <div class="hud-mic-card">
+          <div class="hud-mic-header">
+            <span class="hud-mic-title">🎙️ MICROFONE</span>
+            <button class="hud-remote-badge" id="hud-remote-badge" title="Clique para abrir QR Code de conexão do celular">
+              <span class="remote-indicator-dot" id="hud-remote-dot"></span>
+              <span id="hud-remote-text">📱 Conectar Celular</span>
+            </button>
+          </div>
+          <div class="hud-mic-meter-wrap">
+            <div class="hud-mic-meter-bar">
+              <div class="hud-mic-meter-fill" id="hud-mic-meter-fill"></div>
+            </div>
+            <span class="hud-mic-vol" id="hud-mic-vol">0%</span>
+          </div>
+          <div class="hud-mic-note" id="hud-mic-note">🎵 Tom: aguardando voz...</div>
+        </div>
+
+        <!-- Dificuldade do Jogo (Travada durante a música) -->
+        <div class="hud-diff-card">
+          <span class="hud-diff-label">DIFICULDADE</span>
+          <span class="badge-difficulty" id="stage-diff-badge">🟡 Médio</span>
+        </div>
+
+        <!-- Pontuação, Estrelas & Sincronia em Tempo Real -->
+        <div class="score-stars-card">
+          <div class="stars-row" id="stars-row">
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+            <span class="star">★</span>
+          </div>
+
+          <div class="score-readout">
+            <span class="score-label">PONTUAÇÃO</span>
+            <span class="score-num" id="live-score">00000</span>
+          </div>
+
+          <div class="accuracy-pill" id="accuracy-pill">
+            <span class="acc-label">AFINAÇÃO</span>
+            <span class="acc-val" id="live-accuracy">100%</span>
+          </div>
+
+          <div class="combo-pill" id="combo-pill" title="Sequência de canto afinado sem pausas. Multiplica seus pontos em até 5x!">
+            <span class="combo-label">SEQUÊNCIA</span>
+            <div class="combo-val-wrapper">
+              <span class="combo-val" id="combo-text">0</span>
+              <span class="multiplier-tag" id="multiplier-tag">1x</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Palco Imersivo de 540px -->
+      <section class="stage-section">
+        <div class="canvas-wrapper">
+          <video id="stage-video" class="stage-video" playsinline preload="auto"></video>
+          <div class="stage-video-dimmer" id="stage-video-dimmer"></div>
+          <canvas id="game-canvas" width="1160" height="540"></canvas>
+          <div class="hit-floating-text" id="floating-hit">NO RITMO!</div>
+
+          <!-- Canvas de Confetes e Partículas Comemorativas (5k, 10k...) -->
+          <canvas id="confetti-canvas" class="confetti-canvas" width="1160" height="540"></canvas>
+
+          <!-- Banner de Celebração de Marco de Pontuação -->
+          <div class="milestone-banner" id="milestone-banner">
+            <div class="milestone-glow"></div>
+            <div class="milestone-inner">
+              <span class="milestone-badge" id="milestone-badge">🌟 SHOW AO VIVO!</span>
+              <div class="milestone-score" id="milestone-score">5.000 PONTOS!</div>
+              <p class="milestone-subtitle" id="milestone-subtitle">Espetacular! A plateia está vibrando!</p>
+            </div>
+          </div>
+
+          <!-- Contagem Regressiva de 5 Segundos (Get Ready!) -->
+          <div class="countdown-overlay" id="countdown-overlay" style="display: none;">
+            <div class="countdown-box">
+              <div class="countdown-badge">🎤 PREPARE SEU MICROFONE</div>
+              <h2 class="countdown-title" id="countdown-song-title">Nome da Música</h2>
+              <div class="countdown-details" id="countdown-details">🎹 Tom: A Maior • Dificuldade: Médio</div>
+              <div class="countdown-circle">
+                <span class="countdown-number" id="countdown-number">5</span>
+              </div>
+              <p class="countdown-tip" id="countdown-tip">Respire fundo, o videokê vai começar!</p>
+              <button class="btn btn-secondary btn-sm" id="btn-skip-countdown">Pular Espera ⏩</button>
+            </div>
+          </div>
+          
+          <!-- Overlay de Pausa -->
+          <div class="stage-overlay" id="stage-overlay">
+            <div class="overlay-content">
+              <h2 id="overlay-title">Pronto para Cantar?</h2>
+              <p id="overlay-desc">Segure o microfone e cante acompanhando a letra na tela!</p>
+              <button id="btn-play-song" class="btn btn-primary btn-large">
+                ▶ Começar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Barra de Progresso & Controles do Palco -->
+        <div class="timeline-bar">
+          <div class="timeline-controls">
+            <button id="btn-pause-song" class="btn btn-secondary btn-sm" title="Pausar ou Continuar (Espaço)">
+              <span id="pause-icon">⏸</span> <span id="pause-text">Pausar</span>
+            </button>
+            <button id="btn-restart-song" class="btn btn-secondary btn-sm" title="Reiniciar do começo (R)">
+              <span>🔄</span> Reiniciar
+            </button>
+            <button id="btn-back-to-menu-bottom" class="btn btn-secondary btn-sm" title="Voltar ao catálogo">
+              <span>🚪</span> Sair da Música
+            </button>
+          </div>
+          <div class="timeline-fill" id="timeline-fill"></div>
+          <div class="timeline-time">
+            <span id="time-current">0:00</span>
+            <span id="time-total">0:00</span>
+          </div>
+        </div>
+
+        <!-- Caixa de letra auxiliar (usada apenas quando a música não for vídeo) -->
+        <div class="lyrics-box" id="lyrics-box" style="display: none;">
+          <div class="karaoke-line line-current" id="lyrics-line-1">
+            <span class="lyric-syllable">Aguardando início...</span>
+          </div>
+          <div class="karaoke-line line-next" id="lyrics-line-2">
+            <span class="lyric-next-preview"></span>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- MODAL DE ESCOLHA DE DIFICULDADE ANTES DE CANTAR -->
+    <div class="modal-backdrop" id="prestart-modal">
+      <div class="modal-card modal-prestart">
+        <div class="modal-header">
+          <span class="diff-modal-icon">🎤</span>
+          <h2 id="prestart-song-title">Título da Música</h2>
+          <p id="prestart-song-artist">Artista</p>
+          <div class="prestart-song-meta">
+            <span class="badge-key" id="prestart-song-key">🎹 Tom: A Menor</span>
+            <span class="song-card-duration" id="prestart-song-duration">⏱️ 3:45</span>
+          </div>
+        </div>
+
+        <!-- Campo Nome do Cantor -->
+        <div class="prestart-singer-box">
+          <label for="singer-name-input">👤 Nome do Cantor(a):</label>
+          <div class="singer-input-wrap">
+            <span class="singer-input-icon">🎤</span>
+            <input type="text" id="singer-name-input" placeholder="Digite seu nome ou apelido (ex: João, Maria...)" maxlength="24" autocomplete="name">
+          </div>
+        </div>
+
+        <div class="prestart-diff-prompt">
+          <h3>Selecione o Nível de Desafio:</h3>
+          <p>A dificuldade fica travada durante a música para garantir uma avaliação justa</p>
+        </div>
+
+        <div class="diff-cards-grid">
+          <button type="button" class="diff-choice-card" data-diff="easy">
+            <div class="diff-choice-header">
+              <span class="diff-choice-emoji">🟢</span>
+              <span class="diff-choice-title">Fácil</span>
+              <span class="diff-choice-badge">Festa & Chuveiro</span>
+            </div>
+            <p class="diff-choice-desc">Muito tolerante! Ideal para cantar e se divertir com os amigos sem pressão.</p>
+          </button>
+
+          <button type="button" class="diff-choice-card active" data-diff="medium">
+            <div class="diff-choice-header">
+              <span class="diff-choice-emoji">🟡</span>
+              <span class="diff-choice-title">Médio</span>
+              <span class="diff-choice-badge">Padrão Videokê</span>
+            </div>
+            <p class="diff-choice-desc">Equilibrado e motivador! Avalia ritmo e afinação para quem canta no dia a dia.</p>
+          </button>
+
+          <button type="button" class="diff-choice-card" data-diff="hard">
+            <div class="diff-choice-header">
+              <span class="diff-choice-emoji">🔴</span>
+              <span class="diff-choice-title">Difícil</span>
+              <span class="diff-choice-badge">Modo Jurado</span>
+            </div>
+            <p class="diff-choice-desc">Rigor de estúdio! Micro-afinação cirúrgica — desafinar ou sair do tom quebra o combo.</p>
+          </button>
+        </div>
+
+        <div class="modal-actions prestart-actions">
+          <button type="button" id="btn-cancel-prestart" class="btn btn-secondary">
+            Voltar
+          </button>
+          <button type="button" id="btn-confirm-start" class="btn btn-primary btn-large">
+            ▶ Começar (5s de Preparação)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE AJUSTES DE ÁUDIO & MICROFONE -->
+    <div class="modal-backdrop" id="settings-modal">
+      <div class="modal-card modal-settings">
+        <div class="modal-header">
+          <div class="import-icon-badge">⚙️</div>
+          <h2>Ajustes de Áudio & Microfone</h2>
+          <p>Configure a captação do microfone e proteções contra eco do notebook</p>
+        </div>
+
+        <div class="settings-list">
+          <!-- Nível de Dificuldade -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <strong>🎯 Rigor da Avaliação Vocal</strong>
+              <span>Define tolerância de cents, oscilação (desafinação) e exigência de tom</span>
+            </div>
+            <div class="diff-btn-group modal-diff-group" id="modal-diff-group">
+              <button class="diff-btn" data-diff="easy" title="Tolerante a pequenas oscilações e escala livre">🟢 Fácil</button>
+              <button class="diff-btn active" data-diff="medium" title="Afinação equilibrada e ritmo">🟡 Médio</button>
+              <button class="diff-btn" data-diff="hard" title="Rigor de estúdio e escala estrita">🔴 Difícil</button>
+            </div>
+          </div>
+
+          <!-- Modo Caixas de Som / Anti-Vazamento -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <strong>🛡️ Modo de Captação & Anti-Vazamento</strong>
+              <span>Filtro acústico inteligente contra retorno das caixas (não usa o abafador do navegador que muta o microfone)</span>
+            </div>
+            <button id="modal-btn-toggle-echo" class="btn btn-primary">
+              <span id="modal-echo-icon">🔊</span> <span id="modal-echo-text">Modo Caixas (Anti-Vazamento)</span>
+            </button>
+          </div>
+
+          <!-- Normalização Automática de Volume (Nivelamento sem mexer nos arquivos) -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <strong>🎚️ Nivelamento Automático de Volume</strong>
+              <span>Normaliza faixas altas e baixas em tempo real para manter o som uniforme entre todas as músicas</span>
+            </div>
+            <button id="modal-btn-toggle-normalize" class="btn btn-primary">
+              <span id="modal-norm-icon">🎚️</span> <span id="modal-norm-text">Normalização Ativa</span>
+            </button>
+          </div>
+
+          <!-- Corte de Som / Ruído -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <strong>🎙️ Limiar de Corte (Noise Gate)</strong>
+              <span>Ignora sons da sala abaixo deste nível para não pontuar sozinho</span>
+            </div>
+            <div class="setting-control" style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+              <div style="display: flex; gap: 8px; align-items: center;">
+                <button type="button" id="btn-auto-calibrate-gate" class="btn btn-secondary btn-xs" title="Escuta o som da sala e ajusta o corte automaticamente">
+                  🎯 Auto-Calibrar com a Sala
+                </button>
+                <strong id="modal-gate-val-text" style="color: var(--cyan-neon); min-width: 65px; text-align: right;">Médio (40)</strong>
+              </div>
+              <input type="range" id="modal-quick-gate" min="15" max="85" value="40" step="2" style="width: 100%;">
+            </div>
+          </div>
+
+          <!-- Teste de Volume do Microfone -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <strong>🔊 Teste ao Vivo do Microfone</strong>
+              <span>Fale no microfone para ver a barra responder</span>
+            </div>
+            <div class="setting-control">
+              <span id="modal-vol-num" style="font-family: var(--font-mono); font-size: 0.8rem; color: #94a3b8;">0%</span>
+              <div class="mic-meter-bar">
+                <div class="mic-meter-fill" id="modal-mic-meter-fill"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Limpar Cache -->
+          <div class="setting-row">
+            <div class="setting-info">
+              <strong>🧹 Limpar Cache & Recarregar</strong>
+              <span>Força a atualização dos vídeos e partituras locais</span>
+            </div>
+            <button id="modal-btn-clear-cache" class="btn btn-secondary btn-sm">
+              Limpar Cache
+            </button>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btn-close-settings" class="btn btn-primary btn-block">
+            Concluir Ajustes
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE IMPORTAÇÃO DO YOUTUBE -->
+    <div class="modal-backdrop" id="import-modal">
+      <div class="modal-card modal-import">
+        <div class="modal-header">
+          <div class="import-icon-badge">✨</div>
+          <h2>Adicionar Vídeo de Karaokê</h2>
+          <p>Cole o link de qualquer vídeo de Karaokê do YouTube (ex: Ponto do Karaokê, Sing King, Muramatsu, etc.)</p>
+        </div>
+
+        <form id="import-form" class="import-form">
+          <div class="input-group">
+            <input type="url" id="yt-url-input" placeholder="https://www.youtube.com/watch?v=..." required>
+            <button type="submit" id="btn-start-import" class="btn btn-primary">
+              Iniciar Processamento
+            </button>
+          </div>
+        </form>
+
+        <!-- Container de Progresso -->
+        <div class="import-progress-wrap" id="import-progress-wrap" style="display: none;">
+          <div class="progress-steps">
+            <span class="step-pill" id="step-dl">1. Baixando</span>
+            <span class="step-pill" id="step-sep">2. Áudio Estéreo</span>
+            <span class="step-pill" id="step-lyr">3. Catálogo</span>
+          </div>
+
+          <div class="import-bar-track">
+            <div class="import-bar-fill" id="import-bar-fill"></div>
+          </div>
+          
+          <div class="import-status-text" id="import-status-text">
+            Iniciando...
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btn-close-import" class="btn btn-secondary">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DE RESULTADOS DE FIM DE MÚSICA -->
+    <div class="modal-backdrop" id="results-modal">
+      <div class="modal-card">
+        <div class="modal-header">
+          <span class="rank-badge" id="modal-rank">S</span>
+          <h2 id="modal-title">Lenda do Karaokê! 🌟</h2>
+          <p id="modal-song-info">Música • Artista</p>
+          <div class="modal-singer-pill" id="modal-singer-pill">
+            <span>🎤 Cantor: <strong id="modal-singer-name">Você</strong></span>
+            <span class="badge-ranking-pos" id="modal-ranking-pos">🏆 Gravado no Ranking!</span>
+          </div>
+          <div class="modal-meta-badges">
+            <span class="badge-difficulty" id="modal-difficulty">🟡 Médio</span>
+            <span class="badge-key" id="modal-key">🎹 Tom: A Maior</span>
+          </div>
+        </div>
+
+        <div class="modal-stars" id="modal-stars">
+          ★★★★★
+        </div>
+
+        <div class="modal-stats-grid">
+          <div class="stat-item">
+            <span class="stat-label">PONTUAÇÃO FINAL</span>
+            <span class="stat-val" id="modal-score">0</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-label">AFINAÇÃO</span>
+            <span class="stat-val" id="modal-accuracy">0%</span>
+          </div>
+          <div class="stat-item" title="Maior sequência de notas afinadas cantadas sem pausas ou desafinações">
+            <span class="stat-label">MAIOR SEQUÊNCIA</span>
+            <span class="stat-val" id="modal-combo">0</span>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="btn-play-again" class="btn btn-primary btn-large">
+            🔄 Cantar Novamente
+          </button>
+          <button id="btn-view-ranking" class="btn btn-accent">
+            🏆 Ver Ranking
+          </button>
+          <button id="btn-choose-other" class="btn btn-secondary">
+            🚪 Escolher Outra Música
+          </button>
+        </div>
+      </div>
+    <!-- Modal Conectar Celular como Microfone (WebRTC PeerJS) -->
+    <div class="modal-backdrop" id="modal-remote-mic">
+      <div class="modal-card modal-remote-mic-card">
+        <div class="modal-header">
+          <div class="remote-mic-header-icon">📱🎤</div>
+          <h2>Conectar Celular como Microfone</h2>
+          <p>Aponte a câmera do seu celular para o QR Code abaixo para cantar na TV sem fios!</p>
+        </div>
+
+        <div class="remote-mic-body">
+          <div class="qr-wrapper">
+            <div id="remote-mic-qrcode" class="qr-canvas-box"></div>
+            <div class="room-code-badge" id="room-code-badge">
+              <span>SALA:</span>
+              <strong id="room-code-display">CALI-....</strong>
+            </div>
+          </div>
+
+          <div class="remote-mic-info">
+            <div class="status-connection-row" id="remote-mic-status-box">
+              <span class="status-indicator-dot pulse" id="remote-status-dot"></span>
+              <span id="remote-mic-status-text">Aguardando celular conectar...</span>
+            </div>
+
+            <div class="connected-singer-card" id="connected-singer-card" style="display: none;">
+              <span class="singer-avatar">🎤</span>
+              <div class="singer-details">
+                <span class="singer-label">CANTOR(A) CONECTADO:</span>
+                <strong class="singer-name" id="connected-singer-name">Erick Moraes</strong>
+              </div>
+            </div>
+
+            <div class="link-copy-box">
+              <input type="text" id="remote-mic-link-input" readonly>
+              <button class="btn btn-secondary btn-sm" id="btn-copy-mic-link">Copiar Link</button>
+            </div>
+
+            <p class="remote-mic-tip">
+              💡 <strong>Dica:</strong> Seu celular funcionará como microfone sem fio de alta precisão com detecção de tom em tempo real.
+            </p>
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btn-close-remote-mic" class="btn btn-primary">
+            Concluído
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bibliotecas WebRTC PeerJS e QRCode -->
+  <script src="vendor/peerjs.min.js"></script>
+  <script src="vendor/qrcode.min.js"></script>
+
+  <script src="pitch.js?v=25"></script>
+  <script src="calibrator.js?v=25"></script>
+  <script src="songs.js?v=25"></script>
+  <script src="sequencer.js?v=25"></script>
+  <script src="game_engine.js?v=25"></script>
+  <script src="app.js?v=25"></script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#080c16">
+  <title>Microfone Sem Fio • Caliope Videokê</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #080c16;
+      --bg-card: #111728;
+      --border: #1f2b45;
+      --primary: #6366f1;
+      --cyan: #06b6d4;
+      --gold: #fbbf24;
+      --rose: #f43f5e;
+      --emerald: #10b981;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background-image: 
+        radial-gradient(circle at 50% 15%, rgba(99, 102, 241, 0.18) 0%, transparent 60%),
+        radial-gradient(circle at 50% 85%, rgba(6, 182, 212, 0.12) 0%, transparent 60%);
+    }
+
+    .mic-app-wrap {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      flex: 1;
+    }
+
+    /* Top Bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 4px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-icon {
+      font-size: 1.4rem;
+    }
+
+    .brand-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #fff 40%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .room-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #eab308;
+    }
+
+    .status-dot.connected {
+      background: var(--emerald);
+      box-shadow: 0 0 10px var(--emerald);
+    }
+
+    .status-dot.disconnected {
+      background: var(--rose);
+    }
+
+    /* Card de Identificação do Cantor */
+    .singer-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 12px 16px;
+    }
+
+    .singer-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    .singer-input-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .singer-avatar {
+      font-size: 1.5rem;
+    }
+
+    .singer-input {
+      flex: 1;
+      background: #090e1a;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      font-family: inherit;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .singer-input:focus {
+      border-color: var(--primary);
+    }
+
+    /* Botão Central de Microfone */
+    .mic-button-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .btn-big-mic {
+      width: 170px;
+      height: 170px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 3px solid #334155;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+    }
+
+    .btn-big-mic:active {
+      transform: scale(0.94);
+    }
+
+    .btn-big-mic .mic-glyph {
+      font-size: 3.4rem;
+      transition: transform 0.2s;
+    }
+
+    .btn-big-mic .mic-status-label {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .btn-big-mic.active {
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, #1e1b4b 75%);
+      border-color: var(--primary);
+      box-shadow: 0 0 40px rgba(99, 102, 241, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-big-mic.active .mic-status-label {
+      color: #a5b4fc;
+    }
+
+    .btn-big-mic.singing {
+      border-color: var(--cyan);
+      box-shadow: 0 0 50px rgba(6, 182, 212, 0.7), inset 0 0 25px rgba(6, 182, 212, 0.5);
+      transform: scale(1.04);
+    }
+
+    .btn-big-mic.singing .mic-glyph {
+      transform: scale(1.1);
+    }
+
+    /* Live Vocal Readout */
+    .readout-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .note-display-box {
+      text-align: center;
+      background: #090e1a;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 10px;
+    }
+
+    .note-title {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .note-value {
+      font-size: 2.2rem;
+      font-weight: 900;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--cyan);
+      line-height: 1.1;
+      text-shadow: 0 0 16px rgba(6, 182, 212, 0.45);
+    }
+
+    .note-freq {
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* VU Meter */
+    .vu-meter-box {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .vu-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .vu-track {
+      width: 100%;
+      height: 12px;
+      background: #090e1a;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .vu-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981 0%, #fbbf24 65%, #f43f5e 95%);
+      border-radius: 6px;
+      transition: width 0.06s ease-out;
+    }
+
+    /* Dica Inferior */
+    .footer-tip {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.4;
+      padding: 10px;
+    }
+
+    .footer-tip strong {
+      color: #e2e8f0;
+    }
+
+    /* Alerta de Desconexão */
+    .reconnect-bar {
+      display: none;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid rgba(244, 63, 94, 0.4);
+      color: #fda4af;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .reconnect-btn {
+      background: var(--rose);
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 0.75rem;
+      margin-top: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="mic-app-wrap">
+    
+    <!-- Top Bar -->
+    <header class="top-bar">
+      <div class="brand">
+        <span class="brand-icon">🎤</span>
+        <span class="brand-title">Caliope Mic</span>
+      </div>
+
+      <div class="room-badge" id="room-badge">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="room-text">CONECTANDO...</span>
+      </div>
+    </header>
+
+    <!-- Barra de Alerta de Conexão -->
+    <div class="reconnect-bar" id="reconnect-bar">
+      ⚠️ Desconectado da TV!
+      <br>
+      <button class="reconnect-btn" id="btn-reconnect">Tentar Reconectar</button>
+    </div>
+
+    <!-- Identificação do Cantor -->
+    <section class="singer-card">
+      <label class="singer-label" for="singer-input">Quem está cantando:</label>
+      <div class="singer-input-row">
+        <span class="singer-avatar">🌟</span>
+        <input type="text" id="singer-input" class="singer-input" placeholder="Seu Nome / Apelido" maxlength="28" autocomplete="name">
+      </div>
+    </section>
+
+    <!-- Botão Principal de Ativação do Microfone -->
+    <section class="mic-button-section">
+      <button class="btn-big-mic" id="btn-toggle-mic">
+        <span class="mic-glyph" id="mic-glyph">🎙️</span>
+        <span class="mic-status-label" id="mic-status-label">Toque p/ Ligar</span>
+      </button>
+    </section>
+
+    <!-- Mostradores Vocais em Tempo Real -->
+    <section class="readout-card">
+      
+      <!-- Tom e Nota Musical -->
+      <div class="note-display-box">
+        <div class="note-title">Nota Musical Cantada</div>
+        <div class="note-value" id="note-value">---</div>
+        <div class="note-freq" id="note-freq">Aguardando canto...</div>
+      </div>
+
+      <!-- Barra VU de Volume -->
+      <div class="vu-meter-box">
+        <div class="vu-header">
+          <span>VOLUME DA VOZ</span>
+          <span id="vu-pct">0%</span>
+        </div>
+        <div class="vu-track">
+          <div class="vu-fill" id="vu-fill"></div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Dicas de Uso -->
+    <footer class="footer-tip">
+      💡 <strong>Dica de Videokê:</strong> Segure o celular a 10-15cm da boca e cante olhando para a TV. Sua voz e afinação pontuam direto no telão!
+    </footer>
+
+  </div>
+
+  <!-- Bibliotecas WebRTC e Algoritmo de Tom -->
+  <script src="vendor/peerjs.min.js"></script>
+  <script src="pitch.js"></script>
+
+  <script>
+    // Parâmetros da Sala via URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetRoom = urlParams.get('room') || '';
+
+    // Elementos da Interface
+    const roomText = document.getElementById('room-text');
+    const statusDot = document.getElementById('status-dot');
+    const reconnectBar = document.getElementById('reconnect-bar');
+    const btnReconnect = document.getElementById('btn-reconnect');
+    const singerInput = document.getElementById('singer-input');
+    const btnToggleMic = document.getElementById('btn-toggle-mic');
+    const micGlyph = document.getElementById('mic-glyph');
+    const micStatusLabel = document.getElementById('mic-status-label');
+    const noteValue = document.getElementById('note-value');
+    const noteFreq = document.getElementById('note-freq');
+    const vuFill = document.getElementById('vu-fill');
+    const vuPct = document.getElementById('vu-pct');
+
+    // Recuperar nome do cantor
+    const savedSinger = localStorage.getItem('caliope_singer_name') || 'Erick Moraes';
+    singerInput.value = savedSinger;
+
+    let peer = null;
+    let conn = null;
+    let detector = null;
+    let isMicActive = false;
+    let sendInterval = null;
+
+    // Atualização do Nome do Cantor
+    singerInput.addEventListener('input', () => {
+      const name = singerInput.value.trim() || 'Cantor(a)';
+      localStorage.setItem('caliope_singer_name', name);
+      if (conn && conn.open) {
+        conn.send({ type: 'singer_update', singerName: name });
+      }
+    });
+
+    // 1. Conexão WebRTC PeerJS com a TV
+    function connectToHost() {
+      if (!targetRoom) {
+        roomText.textContent = 'SEM SALA';
+        statusDot.className = 'status-dot disconnected';
+        alert('Código de sala não informado na URL!');
+        return;
+      }
+
+      roomText.textContent = `SALA: ${targetRoom.toUpperCase().replace('CALIOPE-', '')}`;
+      statusDot.className = 'status-dot';
+      reconnectBar.style.display = 'none';
+
+      // Cria peer cliente
+      if (peer) {
+        try { peer.destroy(); } catch (_) {}
+      }
+
+      peer = new Peer();
+
+      peer.on('open', (id) => {
+        console.log('Peer móvel registrado:', id);
+        // Conectar ao Host (TV)
+        conn = peer.connect(targetRoom, { reliable: true });
+
+        conn.on('open', () => {
+          console.log('Conectado à TV com sucesso!');
+          statusDot.className = 'status-dot connected';
+          reconnectBar.style.display = 'none';
+
+          // Enviar identificação inicial
+          conn.send({
+            type: 'singer_joined',
+            singerName: singerInput.value.trim() || 'Cantor(a)'
+          });
+        });
+
+        conn.on('close', () => {
+          console.warn('Conexão com a TV fechada');
+          statusDot.className = 'status-dot disconnected';
+          reconnectBar.style.display = 'block';
+        });
+
+        conn.on('error', (err) => {
+          console.error('Erro na conexão:', err);
+          statusDot.className = 'status-dot disconnected';
+          reconnectBar.style.display = 'block';
+        });
+      });
+
+      peer.on('error', (err) => {
+        console.error('Erro PeerJS:', err);
+        statusDot.className = 'status-dot disconnected';
+        reconnectBar.style.display = 'block';
+      });
+    }
+
+    btnReconnect.addEventListener('click', connectToHost);
+
+    // 2. Ativação do Microfone Local do Celular
+    async function toggleMicrophone() {
+      if (isMicActive) {
+        // Desligar
+        isMicActive = false;
+        btnToggleMic.classList.remove('active', 'singing');
+        micGlyph.textContent = '🎙️';
+        micStatusLabel.textContent = 'Toque p/ Ligar';
+        noteValue.textContent = '---';
+        noteFreq.textContent = 'Microfone desligado';
+        vuFill.style.width = '0%';
+        vuPct.textContent = '0%';
+
+        if (sendInterval) clearInterval(sendInterval);
+        sendInterval = null;
+
+        if (conn && conn.open) {
+          conn.send({
+            type: 'mic_data',
+            volume: 0,
+            pitch: -1,
+            note: null,
+            isSinging: false,
+            singerName: singerInput.value.trim()
+          });
+        }
+        return;
+      }
+
+      // Ligar Microfone
+      try {
+        if (!detector) {
+          detector = new PitchDetector();
+        }
+        await detector.init();
+        isMicActive = true;
+
+        btnToggleMic.classList.add('active');
+        micGlyph.textContent = '🎤';
+        micStatusLabel.textContent = 'Mic Ligado';
+        noteFreq.textContent = 'Pronto para cantar!';
+
+        startAudioLoop();
+      } catch (err) {
+        console.error('Erro ao acessar microfone no celular:', err);
+        alert('Não foi possível acessar o microfone. Verifique as permissões de microfone do navegador.');
+      }
+    }
+
+    btnToggleMic.addEventListener('click', toggleMicrophone);
+
+    // 3. Loop de Captura e Envio de Dados Vocais (~30 vezes por segundo)
+    function startAudioLoop() {
+      if (sendInterval) clearInterval(sendInterval);
+
+      sendInterval = setInterval(() => {
+        if (!isMicActive || !detector) return;
+
+        const data = detector.getAudioData();
+        const volPct = Math.min(100, Math.round(data.volume * 450));
+
+        // Atualizar VU Meter local no celular
+        vuFill.style.width = `${volPct}%`;
+        vuPct.textContent = `${volPct}%`;
+
+        // Atualizar Nota Musical local
+        if (data.isSinging && data.note) {
+          const cents = data.note.cents > 0 ? `+${data.note.cents}¢` : `${data.note.cents}¢`;
+          noteValue.textContent = `${data.note.name}${data.note.octave}`;
+          noteFreq.textContent = `${Math.round(data.pitch || data.note.freq)} Hz (${cents})`;
+          btnBigMicPulse(true);
+        } else {
+          btnBigMicPulse(false);
+          if (volPct < 8) {
+            noteValue.textContent = '---';
+            noteFreq.textContent = 'Aguardando voz...';
+          }
+        }
+
+        // Transmitir via WebRTC para a TV
+        if (conn && conn.open) {
+          conn.send({
+            type: 'mic_data',
+            volume: data.volume,
+            pitch: data.pitch,
+            note: data.note,
+            correlation: data.correlation,
+            isSinging: data.isSinging,
+            singerName: singerInput.value.trim() || 'Cantor(a)'
+          });
+        }
+      }, 33);
+    }
+
+    function btnBigMicPulse(isSinging) {
+      btnToggleMic.classList.toggle('singing', isSinging);
+    }
+
+    // Inicializar conexão
+    connectToHost();
+  </script>
+</body>
+</html>
+

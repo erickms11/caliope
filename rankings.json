@@ -1,0 +1,62 @@
+[
+  {
+    "id": "mw5mdji05luw",
+    "singer": "Erick Moraes",
+    "songTitle": "Angels",
+    "songArtist": "Robbie Williams",
+    "songId": "Robbie_Williams_Angels_pGFEj-",
+    "score": 8366,
+    "accuracy": 84,
+    "maxCombo": 49,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-06T23:42:39.096Z"
+  },
+  {
+    "id": "mw5ny7rr5hc1",
+    "singer": "Erick Moraes",
+    "songTitle": "Like A Stone",
+    "songArtist": "Audioslave",
+    "songId": "CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ",
+    "score": 7964,
+    "accuracy": 82,
+    "maxCombo": 23,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T00:26:43.287Z"
+  },
+  {
+    "id": "mw5n7knz5cs4",
+    "singer": "Erick Moraes",
+    "songTitle": "Minha Estrela Perdida",
+    "songArtist": "João Paulo e Daniel",
+    "songId": "Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE",
+    "score": 7482,
+    "accuracy": 82,
+    "maxCombo": 27,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T00:06:00.287Z"
+  },
+  {
+    "id": "mw5o551e5pir",
+    "singer": "Erick Moraes",
+    "songTitle": "Talking To The Moon",
+    "songArtist": "Bruno Mars",
+    "songId": "Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj",
+    "score": 7231,
+    "accuracy": 85,
+    "maxCombo": 38,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T00:32:06.338Z"
+  }
+]
