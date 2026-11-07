@@ -1368,7 +1368,7 @@ input[type="range"] {
   transform: translateX(-50%);
 }
 
-/* ==================== RESULTS MODAL ==================== */
+/* ==================== RESULTS MODAL & MODAIS GERAIS ==================== */
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -1380,10 +1380,13 @@ input[type="range"] {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 100;
+  z-index: 1000;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.3s ease;
+  padding: 14px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .modal-backdrop.active {
@@ -1392,19 +1395,53 @@ input[type="range"] {
 }
 
 .modal-card {
+  position: relative;
   background: #111728;
   border: 2px solid var(--gold);
   box-shadow: 0 0 50px rgba(251, 191, 36, 0.25);
   border-radius: 18px;
-  padding: 20px 26px;
+  padding: 22px 24px;
   max-width: 480px;
   width: 90%;
+  max-height: calc(100dvh - 28px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 14px;
   text-align: center;
-  animation: modalPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin: auto;
+  animation: modalPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-btn-close-top {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--text-main);
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 20;
+}
+
+.modal-btn-close-top:hover,
+.modal-btn-close-top:active {
+  background: rgba(239, 68, 68, 0.3);
+  border-color: #ef4444;
+  color: #fca5a5;
+  transform: scale(1.08);
 }
 
 @keyframes modalPop {
@@ -3159,10 +3196,17 @@ input[type="range"] {
   }
 
   /* Modais no Celular */
+  .modal-backdrop {
+    padding: 8px;
+  }
+
   .modal-card {
     padding: 16px 14px;
-    width: 94%;
-    max-width: 360px;
+    width: 96%;
+    max-width: 400px;
+    max-height: calc(100dvh - 20px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     gap: 10px;
     border-radius: 14px;
   }
@@ -3185,6 +3229,107 @@ input[type="range"] {
   .modal-actions .btn {
     width: 100%;
     justify-content: center;
+  }
+
+  /* Modal de Ajustes no Celular */
+  .modal-settings {
+    width: 96%;
+    max-width: 420px;
+    padding: 16px 12px;
+  }
+
+  .modal-settings .modal-header {
+    padding-right: 36px;
+  }
+
+  .modal-settings .modal-header h2 {
+    font-size: 1.05rem;
+  }
+
+  .modal-settings .modal-header p {
+    font-size: 0.72rem;
+  }
+
+  .settings-list {
+    gap: 8px;
+    margin: 8px 0;
+    width: 100%;
+  }
+
+  .setting-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10px 12px;
+    gap: 8px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .setting-info {
+    width: 100%;
+  }
+
+  .setting-info strong {
+    font-size: 0.82rem;
+  }
+
+  .setting-info span {
+    font-size: 0.69rem;
+    line-height: 1.3;
+  }
+
+  .setting-row > .btn {
+    width: 100%;
+    padding: 9px 10px;
+    font-size: 0.78rem;
+    justify-content: center;
+    white-space: normal;
+  }
+
+  .modal-diff-group {
+    width: 100%;
+    display: flex;
+    gap: 4px;
+  }
+
+  .modal-diff-group .diff-btn {
+    flex: 1;
+    padding: 7px 4px;
+    font-size: 0.74rem;
+    justify-content: center;
+    white-space: nowrap;
+  }
+
+  .setting-control {
+    width: 100%;
+    min-width: 0;
+    align-items: stretch;
+  }
+
+  .setting-control input[type="range"] {
+    width: 100% !important;
+  }
+
+  .mic-meter-bar {
+    width: 100%;
+    height: 10px;
+  }
+
+  /* Barra de ação inferior fixada no rodapé do modal para nunca sumir */
+  .modal-settings .modal-actions {
+    position: sticky;
+    bottom: -16px;
+    background: #111728;
+    padding: 10px 0 6px 0;
+    margin-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    z-index: 10;
+  }
+
+  .modal-settings .modal-actions #btn-close-settings {
+    padding: 11px 16px;
+    font-size: 0.88rem;
+    font-weight: 800;
   }
 
   /* Modal de Dificuldade */

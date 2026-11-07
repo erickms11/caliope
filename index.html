@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Caliope • O Jogo de Videokê Oficial</title>
-  <link rel="stylesheet" href="style.css?v=31">
+  <link rel="stylesheet" href="style.css?v=32">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -287,6 +287,7 @@
     <!-- MODAL DE ESCOLHA DE DIFICULDADE ANTES DE CANTAR -->
     <div class="modal-backdrop" id="prestart-modal">
       <div class="modal-card modal-prestart">
+        <button type="button" class="modal-btn-close-top" id="btn-close-prestart-top" aria-label="Voltar" title="Fechar (Esc)">✕</button>
         <div class="modal-header">
           <span class="diff-modal-icon">🎤</span>
           <h2 id="prestart-song-title">Título da Música</h2>
@@ -354,6 +355,7 @@
     <!-- MODAL DE AJUSTES DE ÁUDIO & MICROFONE -->
     <div class="modal-backdrop" id="settings-modal">
       <div class="modal-card modal-settings">
+        <button type="button" class="modal-btn-close-top" id="btn-close-settings-top" aria-label="Fechar Ajustes" title="Fechar (Esc)">✕</button>
         <div class="modal-header">
           <div class="import-icon-badge">⚙️</div>
           <h2>Ajustes de Áudio & Microfone</h2>
@@ -450,6 +452,7 @@
     <!-- MODAL DE IMPORTAÇÃO DO YOUTUBE -->
     <div class="modal-backdrop" id="import-modal">
       <div class="modal-card modal-import">
+        <button type="button" class="modal-btn-close-top" id="btn-close-import-top" aria-label="Fechar" title="Fechar (Esc)">✕</button>
         <div class="modal-header">
           <div class="import-icon-badge">✨</div>
           <h2>Adicionar Vídeo de Karaokê</h2>
@@ -493,6 +496,7 @@
     <!-- MODAL DE RESULTADOS DE FIM DE MÚSICA -->
     <div class="modal-backdrop" id="results-modal">
       <div class="modal-card">
+        <button type="button" class="modal-btn-close-top" id="btn-close-results-top" aria-label="Fechar" title="Fechar (Esc)">✕</button>
         <div class="modal-header">
           <span class="rank-badge" id="modal-rank">S</span>
           <h2 id="modal-title">Lenda do Karaokê! 🌟</h2>
@@ -543,6 +547,7 @@
     <!-- Modal Conectar Celular como Microfone (WebRTC PeerJS) -->
     <div class="modal-backdrop" id="modal-remote-mic">
       <div class="modal-card modal-remote-mic-card">
+        <button type="button" class="modal-btn-close-top" id="btn-close-remote-mic-top" aria-label="Fechar" title="Fechar (Esc)">✕</button>
         <div class="modal-header">
           <div class="remote-mic-header-icon">📱🎤</div>
           <h2>Conectar Celular como Microfone</h2>
@@ -597,11 +602,11 @@
   <script src="vendor/peerjs.min.js"></script>
   <script src="vendor/qrcode.min.js"></script>
 
-  <script src="pitch.js?v=31"></script>
-  <script src="calibrator.js?v=31"></script>
-  <script src="songs.js?v=31"></script>
-  <script src="sequencer.js?v=31"></script>
-  <script src="game_engine.js?v=31"></script>
-  <script src="app.js?v=31"></script>
+  <script src="pitch.js?v=32"></script>
+  <script src="calibrator.js?v=32"></script>
+  <script src="songs.js?v=32"></script>
+  <script src="sequencer.js?v=32"></script>
+  <script src="game_engine.js?v=32"></script>
+  <script src="app.js?v=32"></script>
 </body>
 </html>

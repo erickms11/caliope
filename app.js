@@ -504,6 +504,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  const btnClosePrestartTop = document.getElementById('btn-close-prestart-top');
+  if (btnClosePrestartTop) {
+    btnClosePrestartTop.addEventListener('click', () => {
+      prestartModal.classList.remove('active');
+      pendingSong = null;
+    });
+  }
+
   if (btnCancelPrestart) {
     btnCancelPrestart.addEventListener('click', () => {
       prestartModal.classList.remove('active');
@@ -1091,6 +1099,14 @@ document.addEventListener('DOMContentLoaded', () => {
     showLobby();
   });
 
+  const btnCloseResultsTop = document.getElementById('btn-close-results-top');
+  if (btnCloseResultsTop) {
+    btnCloseResultsTop.addEventListener('click', () => {
+      resultsModal.classList.remove('active');
+      showLobby();
+    });
+  }
+
   if (btnViewRanking) {
     btnViewRanking.addEventListener('click', () => {
       resultsModal.classList.remove('active');
@@ -1103,8 +1119,27 @@ document.addEventListener('DOMContentLoaded', () => {
     settingsModal.classList.add('active');
   });
 
+  const btnCloseSettingsTop = document.getElementById('btn-close-settings-top');
+  if (btnCloseSettingsTop) {
+    btnCloseSettingsTop.addEventListener('click', () => {
+      settingsModal.classList.remove('active');
+    });
+  }
+
   btnCloseSettings.addEventListener('click', () => {
     settingsModal.classList.remove('active');
+  });
+
+  // Fechar modais ao clicar no fundo escuro (backdrop)
+  [settingsModal, importModal, prestartModal, resultsModal].forEach((modal) => {
+    if (!modal) return;
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('active');
+        if (modal === prestartModal) pendingSong = null;
+        if (modal === resultsModal) showLobby();
+      }
+    });
   });
 
   // Sincronização e Controle de Ajustes de Microfone / Anti-Vazamento
@@ -1242,6 +1277,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     importModal.classList.add('active');
   });
+
+  const btnCloseImportTop = document.getElementById('btn-close-import-top');
+  if (btnCloseImportTop) {
+    btnCloseImportTop.addEventListener('click', () => {
+      importModal.classList.remove('active');
+    });
+  }
 
   btnCloseImport.addEventListener('click', () => {
     importModal.classList.remove('active');
@@ -1766,6 +1808,13 @@ document.addEventListener('DOMContentLoaded', () => {
     hudRemoteBadge.addEventListener('click', () => {
       updateRemoteMicDisplay(currentRoomId);
       if (modalRemoteMic) modalRemoteMic.classList.add('active');
+    });
+  }
+
+  const btnCloseRemoteMicTop = document.getElementById('btn-close-remote-mic-top');
+  if (btnCloseRemoteMicTop) {
+    btnCloseRemoteMicTop.addEventListener('click', () => {
+      if (modalRemoteMic) modalRemoteMic.classList.remove('active');
     });
   }
 
