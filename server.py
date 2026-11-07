@@ -6,6 +6,7 @@ import json
 import uuid
 import shutil
 import threading
+import re
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs, unquote
 
@@ -164,31 +165,148 @@ if not RANKINGS_FILE.exists():
 # Armazenamento em memória de tarefas de importação em andamento
 JOBS = {}
 
+class RangeFileWrapper:
+    """Wrapper para enviar apenas o intervalo de bytes solicitado (HTTP Range / 206)."""
+    def __init__(self, f, length):
+        self.f = f
+        self.remaining = length
+
+    def read(self, size=-1):
+        if self.remaining <= 0:
+            return b''
+        if size < 0 or size > self.remaining:
+            size = self.remaining
+        data = self.f.read(size)
+        self.remaining -= len(data)
+        return data
+
+    def close(self):
+        self.f.close()
+
 class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
+    protocol_version = "HTTP/1.1"
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, directory=str(DIRECTORY), **kwargs)
 
-    def end_headers(self):
-        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
-        self.send_header('Pragma', 'no-cache')
-        self.send_header('Expires', '0')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
-        super().end_headers()
-
     def do_OPTIONS(self):
         self.send_response(200)
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, HEAD')
+        self.send_header('Access-Control-Allow-Headers', 'Range, Content-Type, Accept, Origin')
+        self.send_header('Access-Control-Expose-Headers', 'Content-Range, Content-Length, Accept-Ranges')
+        self.send_header('Content-Length', '0')
         self.end_headers()
+
+    def send_head(self):
+        """Sobrescreve send_head para suportar streaming de vídeo/áudio e HTTP Range (206 Partial Content)."""
+        path = self.translate_path(self.path)
+        if os.path.isdir(path):
+            return super().send_head()
+
+        if not os.path.isfile(path):
+            self.send_error(404, "File not found")
+            return None
+
+        ctype = self.guess_type(path)
+        try:
+            f = open(path, 'rb')
+        except OSError:
+            self.send_error(404, "File not found")
+            return None
+
+        fs = os.fstat(f.fileno())
+        total_size = fs[6]
+        range_header = self.headers.get('Range')
+
+        is_media = any(path.endswith(ext) for ext in ('.mp4', '.mp3', '.webm', '.wav', '.ogg', '.m4a'))
+
+        if not range_header:
+            self.send_response(200)
+            self.send_header("Content-Type", ctype)
+            self.send_header("Content-Length", str(total_size))
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS, HEAD")
+            self.send_header("Access-Control-Allow-Headers", "Range, Content-Type, Accept, Origin")
+            self.send_header("Access-Control-Expose-Headers", "Content-Range, Content-Length, Accept-Ranges")
+
+            if is_media:
+                self.send_header("Cache-Control", "public, max-age=86400")
+            else:
+                self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+                self.send_header("Pragma", "no-cache")
+                self.send_header("Expires", "0")
+
+            super().end_headers()
+            return f
+
+        # Tratar requisição com Range: bytes=start-end
+        range_match = re.match(r'bytes=(\d+)-(\d*)', range_header)
+        if not range_match:
+            self.send_response(416)
+            self.send_header("Content-Range", f"bytes */{total_size}")
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            super().end_headers()
+            f.close()
+            return None
+
+        start = int(range_match.group(1))
+        end = int(range_match.group(2)) if range_match.group(2) else total_size - 1
+
+        if start >= total_size or start > end:
+            self.send_response(416)
+            self.send_header("Content-Range", f"bytes */{total_size}")
+            self.send_header("Accept-Ranges", "bytes")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            super().end_headers()
+            f.close()
+            return None
+
+        end = min(end, total_size - 1)
+        length = end - start + 1
+
+        self.send_response(206)
+        self.send_header("Content-Type", ctype)
+        self.send_header("Content-Range", f"bytes {start}-{end}/{total_size}")
+        self.send_header("Content-Length", str(length))
+        self.send_header("Accept-Ranges", "bytes")
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS, HEAD")
+        self.send_header("Access-Control-Allow-Headers", "Range, Content-Type, Accept, Origin")
+        self.send_header("Access-Control-Expose-Headers", "Content-Range, Content-Length, Accept-Ranges")
+        self.send_header("Cache-Control", "public, max-age=86400")
+        super().end_headers()
+
+        f.seek(start)
+        return RangeFileWrapper(f, length)
+
+    def send_json_response(self, data, status=200):
+        if isinstance(data, (dict, list)):
+            payload = json.dumps(data, ensure_ascii=False).encode('utf-8')
+        elif isinstance(data, str):
+            payload = data.encode('utf-8')
+        elif isinstance(data, bytes):
+            payload = data
+        else:
+            payload = str(data).encode('utf-8')
+
+        self.send_response(status)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(payload)))
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, DELETE, OPTIONS, HEAD')
+        self.send_header('Access-Control-Allow-Headers', 'Range, Content-Type, Accept, Origin')
+        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
+        super().end_headers()
+        self.wfile.write(payload)
 
     def do_GET(self):
         parsed = urlparse(self.path)
 
         # 1. API: Listar Músicas Importadas
         if parsed.path == '/api/songs':
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-
             songs = []
             for folder in SONGS_DIR.iterdir():
                 if folder.is_dir():
@@ -200,15 +318,11 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
                         except Exception as e:
                             print(f"Erro lendo {json_file}: {e}")
 
-            self.wfile.write(json.dumps(songs, ensure_ascii=False).encode('utf-8'))
+            self.send_json_response(songs)
             return
 
         # 2. API: Listar Ranking de Pontuações
         if parsed.path == '/api/rankings':
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-
             rankings = []
             if RANKINGS_FILE.exists():
                 try:
@@ -220,7 +334,7 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
             if not rankings:
                 rankings = DEFAULT_RANKINGS
 
-            self.wfile.write(json.dumps(rankings, ensure_ascii=False).encode('utf-8'))
+            self.send_json_response(rankings)
             return
 
         # 3. API: Consultar Status de um Job
@@ -229,15 +343,10 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
             job = JOBS.get(job_id)
 
             if not job:
-                self.send_response(404)
-                self.end_headers()
-                self.wfile.write(b'{"error": "Job not found"}')
+                self.send_json_response({"error": "Job not found"}, status=404)
                 return
 
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps(job, ensure_ascii=False).encode('utf-8'))
+            self.send_json_response(job)
             return
 
         # 4. Servir arquivos de áudio e estáticos normais
@@ -252,24 +361,16 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
                     RANKINGS_FILE.unlink()
                 except Exception as e:
                     print(f"Erro limpando rankings.json: {e}")
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(b'{"success": true, "message": "Ranking limpo com sucesso"}')
+            self.send_json_response({"success": True, "message": "Ranking limpo com sucesso"})
             return
 
         if parsed.path.startswith('/api/songs/'):
             song_id = unquote(parsed.path.replace('/api/songs/', '').strip())
             deleted = self._delete_song(song_id)
-
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"success": True, "id": song_id, "deletedFromDisk": deleted}, ensure_ascii=False).encode('utf-8'))
+            self.send_json_response({"success": True, "id": song_id, "deletedFromDisk": deleted})
             return
 
-        self.send_response(404)
-        self.end_headers()
+        self.send_json_response({"error": "Endpoint não encontrado"}, status=404)
 
     def do_POST(self):
         parsed = urlparse(self.path)
@@ -281,9 +382,7 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
             try:
                 entry = json.loads(body_bytes.decode('utf-8'))
             except Exception as e:
-                self.send_response(400)
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": f"JSON inválido: {e}"}).encode('utf-8'))
+                self.send_json_response({"error": f"JSON inválido: {e}"}, status=400)
                 return
 
             if not entry.get('singer'):
@@ -308,13 +407,10 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 print(f"Erro salvando rankings.json: {e}")
 
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"success": True, "entry": entry}, ensure_ascii=False).encode('utf-8'))
+            self.send_json_response({"success": True, "entry": entry})
             return
 
-        # 1. API: Iniciar Importação do YouTube
+        # 2. API: Iniciar Importação do YouTube
         if parsed.path == '/api/import-youtube':
             content_length = int(self.headers.get('Content-Length', 0))
             body_bytes = self.rfile.read(content_length)
@@ -323,15 +419,11 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
                 data = json.loads(body_bytes.decode('utf-8'))
                 youtube_url = data.get('url', '').strip()
             except Exception as e:
-                self.send_response(400)
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": f"JSON inválido: {e}"}).encode('utf-8'))
+                self.send_json_response({"error": f"JSON inválido: {e}"}, status=400)
                 return
 
             if not youtube_url:
-                self.send_response(400)
-                self.end_headers()
-                self.wfile.write(b'{"error": "URL do YouTube ausente"}')
+                self.send_json_response({"error": "URL do YouTube ausente"}, status=400)
                 return
 
             job_id = str(uuid.uuid4())[:8]
@@ -348,13 +440,10 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
             t = threading.Thread(target=self._run_processor, args=(job_id, youtube_url), daemon=True)
             t.start()
 
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"job_id": job_id}).encode('utf-8'))
+            self.send_json_response({"job_id": job_id})
             return
 
-        # 2. API: Excluir Música do Catálogo
+        # 3. API: Excluir Música do Catálogo
         if parsed.path == '/api/songs/delete':
             content_length = int(self.headers.get('Content-Length', 0))
             body_bytes = self.rfile.read(content_length)
@@ -362,20 +451,18 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
                 data = json.loads(body_bytes.decode('utf-8'))
                 song_id = data.get('id', '').strip()
             except Exception as e:
-                self.send_response(400)
-                self.end_headers()
-                self.wfile.write(json.dumps({"error": f"JSON inválido: {e}"}).encode('utf-8'))
+                self.send_json_response({"error": f"JSON inválido: {e}"}, status=400)
+                return
+
+            if not song_id:
+                self.send_json_response({"error": "ID da música não informado"}, status=400)
                 return
 
             deleted = self._delete_song(song_id)
-            self.send_response(200)
-            self.send_header('Content-Type', 'application/json')
-            self.end_headers()
-            self.wfile.write(json.dumps({"success": True, "id": song_id, "deletedFromDisk": deleted}, ensure_ascii=False).encode('utf-8'))
+            self.send_json_response({"success": True, "id": song_id, "deletedFromDisk": deleted})
             return
 
-        self.send_response(404)
-        self.end_headers()
+        self.send_json_response({"error": "Endpoint não encontrado"}, status=404)
 
     def _delete_song(self, song_id):
         if not song_id:
@@ -437,8 +524,8 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     os.chdir(str(DIRECTORY))
-    socketserver.TCPServer.allow_reuse_address = True
-    with socketserver.TCPServer(("", PORT), CaliopeServerHandler) as httpd:
+    http.server.ThreadingHTTPServer.allow_reuse_address = True
+    with http.server.ThreadingHTTPServer(("", PORT), CaliopeServerHandler) as httpd:
         print(f"🎤 Caliope Servidor rodando em http://localhost:{PORT}")
         try:
             httpd.serve_forever()

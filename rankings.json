@@ -133,5 +133,20 @@
     "difficulty": "Médio",
     "difficultyId": "medium",
     "date": "2026-11-07T00:56:24.960Z"
+  },
+  {
+    "id": "mw6pmyi7o8y4",
+    "singer": "Erick Moraes",
+    "songTitle": "Angels",
+    "songArtist": "Robbie Williams",
+    "songId": "Robbie_Williams_Angels_pGFEj-",
+    "score": 121,
+    "accuracy": 87,
+    "maxCombo": 0,
+    "stars": 4,
+    "rank": "A",
+    "difficulty": "Médio",
+    "difficultyId": "medium",
+    "date": "2026-11-07T18:01:43.471Z"
   }
 ]

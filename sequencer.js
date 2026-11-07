@@ -205,7 +205,20 @@ class BackingTrackSequencer {
       if (!this.videoElement.src || !this.videoElement.src.endsWith(cleanVideoUrl)) {
         this.videoElement.src = cleanVideoUrl;
       }
-      this.videoElement.currentTime = 0;
+      if (this.videoElement.currentTime !== 0) {
+        try {
+          this.videoElement.currentTime = 0;
+        } catch (e) {}
+      }
+
+      this.videoElement.onerror = () => {
+        console.warn("Erro no elemento de vídeo:", this.videoElement.error);
+        if (song.audioUrl && this.audioElement) {
+          const cleanAudio = this.resolveMediaUrl(song.audioUrl);
+          this.audioElement.src = cleanAudio;
+          this.audioElement.play().catch(aErr => console.error("Erro no áudio alternativo:", aErr));
+        }
+      };
 
       if (!this.videoSourceNode) {
         try {
@@ -223,7 +236,14 @@ class BackingTrackSequencer {
           this.videoElement.muted = true;
           this.videoElement.play().then(() => {
             setTimeout(() => { this.videoElement.muted = false; }, 100);
-          }).catch(e => console.error("Erro tocando vídeo:", e));
+          }).catch(e => {
+            console.error("Erro tocando vídeo:", e);
+            if (song.audioUrl && this.audioElement) {
+              const cleanAudio = this.resolveMediaUrl(song.audioUrl);
+              this.audioElement.src = cleanAudio;
+              this.audioElement.play().catch(aErr => console.error("Erro tocando áudio:", aErr));
+            }
+          });
         });
       }
       return;
