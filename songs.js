@@ -1,6 +1,6 @@
 /**
  * Catálogo Oficial Integrado de Videokês do Caliope
- * Total: 55 faixas com playback sincronizado e letras dinâmicas
+ * Total: 59 faixas com playback sincronizado e letras dinâmicas
  */
 
 const SONGS_CATALOG = [
@@ -71,6 +71,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/qk4w6JMzuGg/maxresdefault.webp",
     "videoUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/video.mp4",
     "audioUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk",
+    "title": "COISAS QUE EU SEI Dudu Falcão",
+    "artist": "Blitz Videokê",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 220,
+    "thumbnail": "https://i.ytimg.com/vi/ndXtEklozZI/sddefault.jpg",
+    "videoUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/video.mp4",
+    "audioUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -183,6 +197,20 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi_webp/iPy2YPjlrrY/sddefault.webp",
     "videoUrl": "songs/Creep_Radiohead_iPy2YP/video.mp4",
     "audioUrl": "songs/Creep_Radiohead_iPy2YP/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1",
+    "title": "O Dia Que Não Terminou",
+    "artist": "Detonautas",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 211,
+    "thumbnail": "https://i.ytimg.com/vi_webp/CX2_B1ZXFVQ/maxresdefault.webp",
+    "videoUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/video.mp4",
+    "audioUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -323,6 +351,34 @@ const SONGS_CATALOG = [
     "thumbnail": "https://i.ytimg.com/vi/IjFeGYAT-5E/maxresdefault.jpg",
     "videoUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
     "audioUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "JORGE_VERCILLO_MONALISA_qbLnXH",
+    "title": "MONALISA",
+    "artist": "JORGE VERCILLO",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 201,
+    "thumbnail": "https://i.ytimg.com/vi/qbLnXHPnvNg/maxresdefault.jpg",
+    "videoUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/video.mp4",
+    "audioUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/audio.mp3",
+    "hasVideoLyrics": true,
+    "notes": []
+  },
+  {
+    "id": "Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML",
+    "title": "Fraternidade São João Paulo II - Para se divertir, se alegrar e amar com fé!",
+    "artist": "Jardim",
+    "genre": "Videokê Oficial",
+    "difficulty": "Dinâmica",
+    "bpm": 120,
+    "duration": 344,
+    "thumbnail": "https://i.ytimg.com/vi/uLs_MLOw7D4/sddefault.jpg?v=636fd36f",
+    "videoUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/video.mp4",
+    "audioUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/audio.mp3",
     "hasVideoLyrics": true,
     "notes": []
   },

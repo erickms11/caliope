@@ -142,8 +142,14 @@ class KaraokeEngine {
     this.combo = 0;
     this.maxCombo = 0;
     this.multiplier = 1;
-    this.basePointsPerSecond = 45;
-    this.comboBonusPerSecond = 11.25;
+    this.basePointsPerSecond = 50;
+    this.comboBonusPerSecond = 15;
+
+    // Sistema anti-monotonia (rejeição de zumbido / lalala na mesma nota)
+    this.uniqueNotesSung = new Set();
+    this.currentNoteMidi = -1;
+    this.currentNoteDuration = 0;
+    this.melodicShifts = 0;
 
     // Métricas de afinação e presença
     this.perfectHits = 0;
@@ -184,12 +190,11 @@ class KaraokeEngine {
     if (!dur || dur <= 15) {
       dur = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
     }
-    // Em videokês típicos, o tempo cantado ativo gira em torno de 40% a 50% da música
-    // Usamos 45% como padrão de referência (mínimo de 35s para músicas curtas)
-    const expectedVocalSeconds = Math.max(35, dur * 0.45);
-    // 8.000 pontos base (afinação e estabilidade) + 2.000 pontos bônus de combo = 10.000 pontos máx.
-    this.basePointsPerSecond = 8000 / expectedVocalSeconds;
-    this.comboBonusPerSecond = 2000 / expectedVocalSeconds;
+    // Meta realista de tempo cantado ativo em videokê (~18s a 28s de fôlego real no microfone ao longo da faixa)
+    const expectedVocalSeconds = Math.min(28, Math.max(14, dur * 0.10));
+    // 7.500 pontos base (afinação e estabilidade) + 2.500 pontos bônus de combo = 10.000 pontos máx.
+    this.basePointsPerSecond = 7500 / expectedVocalSeconds;
+    this.comboBonusPerSecond = 2500 / expectedVocalSeconds;
   }
 
   loadSong(song) {
@@ -215,6 +220,10 @@ class KaraokeEngine {
     this.combo = 0;
     this.maxCombo = 0;
     this.multiplier = 1;
+    this.uniqueNotesSung = new Set();
+    this.currentNoteMidi = -1;
+    this.currentNoteDuration = 0;
+    this.melodicShifts = 0;
     this.perfectHits = 0;
     this.goodHits = 0;
     this.offKeyHits = 0;
@@ -343,9 +352,10 @@ class KaraokeEngine {
     const audioData = this.detector.getAudioData();
 
     // 2. Avaliação Vocal de Videokê com Dificuldade e Tonalidade
-    // Rejeição rigorosa de ruído/som ambiente: só inicia canto se o volume atingir o corte E houver tom musical detectado
+    // Rejeição rigorosa de ruído/som ambiente e transientes mecânicos (batidas no microfone)
     const isAboveThreshold = audioData.volume >= this.detector.noiseThreshold;
-    const hasValidPitch = (audioData.isSinging || (isAboveThreshold && audioData.pitch > 0 && audioData.note !== null));
+    const isSustainedVoice = audioData.isSinging && isAboveThreshold && (audioData.isSustainedVoice !== false);
+    const hasValidPitch = isSustainedVoice && audioData.pitch > 70 && audioData.pitch < 1000 && audioData.note !== null;
 
     if (hasValidPitch) {
       this.timeSinceLastPitch = 0;
@@ -354,8 +364,8 @@ class KaraokeEngine {
     }
 
     // Transição de consoante (ex: p, t, k) durante um verso ativo:
-    // Só é aceita se o jogador estava cantando afinado há menos de 180ms e o microfone ainda tem som presente
-    const isConsonantInPhrase = !hasValidPitch && isAboveThreshold && (this.timeSinceLastPitch < 0.18);
+    // Só é aceita se o jogador estava cantando afinado há menos de 150ms e o microfone ainda tem som presente
+    const isConsonantInPhrase = !hasValidPitch && isAboveThreshold && (this.timeSinceLastPitch < 0.15);
     const isVoicePresent = hasValidPitch || isConsonantInPhrase;
 
     let isPureTone = false;
@@ -363,10 +373,32 @@ class KaraokeEngine {
     let isCentTuned = false;
     let isInScale = true; // Por padrão, se não tiver tom detectado, não penaliza
 
+    let monotoneFactor = 1.0;
+
     if (hasValidPitch) {
       const midi = audioData.note.midi + (audioData.note.cents / 100);
       this.recentPitches.push(midi);
       if (this.recentPitches.length > 6) this.recentPitches.shift();
+
+      // Rastrear nota melódica e variedade
+      const noteMidiInt = audioData.note.midi;
+      this.uniqueNotesSung.add(noteMidiInt);
+
+      if (this.currentNoteMidi === noteMidiInt) {
+        this.currentNoteDuration += dt;
+      } else {
+        if (this.currentNoteMidi !== -1) {
+          this.melodicShifts++;
+        }
+        this.currentNoteMidi = noteMidiInt;
+        this.currentNoteDuration = 0;
+      }
+
+      // Rejeição de Monotonia / Zumbido ("Lalala" ou "hummm" na mesma nota):
+      // Se passar de 2.0s sustentando a mesmíssima nota fixa sem modular a melodia:
+      if (this.currentNoteDuration > 2.0) {
+        monotoneFactor = Math.max(0.10, 1.0 - ((this.currentNoteDuration - 2.0) * 0.50));
+      }
 
       // Checar estabilidade melódica (canto firme vs desafinação tremida)
       if (this.recentPitches.length >= 3) {
@@ -393,6 +425,8 @@ class KaraokeEngine {
       }
     } else {
       this.recentPitches = [];
+      this.currentNoteMidi = -1;
+      this.currentNoteDuration = 0;
     }
 
     let currentHitType = null;
@@ -425,77 +459,54 @@ class KaraokeEngine {
             this.multiplier = 1;
           }
 
-        } else if (isPureTone && isCentTuned && isPitchStable && (isInScale || !config.strictScale || !hasScaleConfigured)) {
-          // Canto Perfeito: afinação exata nos cents, nota sustentada!
+        } else if (isPureTone && isCentTuned && isPitchStable) {
+          // Afinação Perfeita: pura, afinada nos cents e firme!
           currentHitType = 'perfect';
           this.perfectHits++;
           this.perfectSeconds += dt;
 
-        } else if ((isPureTone || isCentTuned) && (isInScale || !config.strictScale || !hasScaleConfigured)) {
-          // Canto Bom: afinado e no ritmo
+        } else if (isPureTone && isPitchStable) {
+          // Afinação Boa: tom puro e sustentado
           currentHitType = 'good';
           this.goodHits++;
           this.goodSeconds += dt;
 
-        } else if (!isInScale && (!config.strictScale || !hasScaleConfigured)) {
-          // No Fácil e Médio: notas cromáticas de passagem ou blue notes pontuam com 'good'
-          currentHitType = 'good';
-          this.goodHits++;
-          this.goodSeconds += dt;
-
-        } else {
-          // Nota em ajuste ou transição inicial
+        } else if (isCentTuned || isPureTone) {
+          // Nota em transição ou leve oscilação
           currentHitType = 'good';
           this.goodHits++;
           this.goodSeconds += dt * 0.7;
+
+        } else {
+          // Nota sem pureza harmônica ou oscilante
+          currentHitType = 'waver';
+          this.waverHits++;
+          this.waverSeconds += dt;
         }
 
-        // --- CÁLCULO NORMALIZADO DE PONTUAÇÃO (TETO MÁXIMO DE 10.000 PONTOS) ---
-        const baseRate = this.basePointsPerSecond || 45;
-        const comboBonusRate = this.comboBonusPerSecond || 11.25;
-        const comboRatio = Math.min(1.0, this.combo / 30);
+        // --- CÁLCULO SEGURO DE PONTUAÇÃO (APENAS COM VOZ ATIVA) ---
+        // A pontuação só avança quando o cantor estiver ativamente cantando e afinando!
+        const baseRate = this.basePointsPerSecond || 50;
+        const comboBonusRate = this.comboBonusPerSecond || 15;
+        const comboRatio = Math.min(1.0, this.combo / 25);
 
         let hitRate = 0;
         if (currentHitType === 'perfect') {
-          hitRate = baseRate * 1.0 + (comboBonusRate * comboRatio);
+          hitRate = (baseRate * 1.0 + (comboBonusRate * comboRatio)) * monotoneFactor;
         } else if (currentHitType === 'good') {
-          hitRate = baseRate * 0.85 + (comboBonusRate * comboRatio * 0.8);
+          hitRate = (baseRate * 0.85 + (comboBonusRate * comboRatio * 0.75)) * monotoneFactor;
         } else if (currentHitType === 'waver') {
-          hitRate = baseRate * 0.50 + (comboBonusRate * comboRatio * 0.3);
+          hitRate = (baseRate * 0.30) * monotoneFactor;
         } else if (currentHitType === 'offkey') {
-          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.15);
+          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.10);
         }
 
         this.scoreFloat += hitRate * dt;
+        this.score = Math.min(10000, Math.max(0, Math.floor(this.scoreFloat)));
 
       } else if (isConsonantInPhrase) {
         // Consoante rápida durante verso cantado: mantém o fluxo sem pontuação gratuita de ruído
         this.unpitchedSeconds += dt;
-      }
-
-      // --- BALANCEAMENTO DINÂMICO DE VIDEOKÊ POR PROGRESSÃO DA MÚSICA ---
-      // Garante que baladas, músicas rápidas ou lentas progridam proporcionalmente
-      const rawDur = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
-      const progress = Math.min(1.0, Math.max(0.01, songTime / rawDur));
-
-      // Meta de canto de referência (~14s a 26s na música toda é uma performance completa)
-      const targetVocalTotal = Math.min(26, Math.max(12, rawDur * 0.10));
-      const expectedVocalNow = Math.max(1.0, targetVocalTotal * progress);
-
-      const effectiveVocalSoFar = this.perfectSeconds + (this.goodSeconds * 0.9) + (this.waverSeconds * 0.5);
-      const presenceFactor = Math.min(1.0, effectiveVocalSoFar / expectedVocalNow);
-
-      const currentAcc = this.calculateAccuracy(songTime);
-      const comboFactor = Math.min(1.0, this.maxCombo / 25);
-
-      const expectedFullScore = (currentAcc * 80) + (comboFactor * 2000);
-      const dynamicLiveScore = Math.floor(expectedFullScore * progress * presenceFactor);
-
-      // A pontuação na tela avança monotonicamente sem sobressaltos e sem ficar presa
-      const candidateScore = Math.max(Math.floor(this.scoreFloat), dynamicLiveScore);
-      if (candidateScore > this.score) {
-        this.score = Math.min(10000, candidateScore);
-        this.scoreFloat = Math.max(this.scoreFloat, this.score);
       }
 
       // Incremento de combo por cadência musical (a cada 0.28s de canto afinado)
@@ -520,9 +531,16 @@ class KaraokeEngine {
       }
 
     } else {
-      // Jogador em silêncio
+      // Jogador em silêncio: a pontuação congela rigorosamente, sem correr sozinha!
       this.comboPulseTimer = 0;
       this.silenceTimer += dt;
+
+      // Tolerância para respiração entre versos de acordo com a dificuldade
+      if (this.silenceTimer > config.pauseTolerance && this.combo > 0) {
+        this.combo = 0;
+        this.multiplier = 1;
+      }
+    }
 
       // Tolerância para respiração entre versos de acordo com a dificuldade
       if (this.silenceTimer > config.pauseTolerance && this.combo > 0) {
@@ -718,20 +736,15 @@ class KaraokeEngine {
     const songDuration = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
     const accuracy = this.calculateAccuracy(songDuration);
 
-    // Avaliação final de videokê profissional
-    const effectiveVocalSeconds = this.perfectSeconds + (this.goodSeconds * 0.9) + (this.waverSeconds * 0.5);
-    const targetTotalVocal = Math.min(26, Math.max(12, songDuration * 0.10));
-    // Se cantou pelo menos 12 a 15s na música toda, presença é 100%. Abaixo disso, escala com engajamento.
-    const presenceRatio = Math.min(1.0, Math.max(0.08, effectiveVocalSeconds / targetTotalVocal));
+    // Avaliação de diversidade melódica (ter cantado notas variadas da melodia):
+    // Um cantor que varia pelo menos 4 a 5 notas diferentes recebe 100% de diversidade.
+    // Quem fica em 1 única nota ("hummm" monótono sem sair do lugar) recebe penalidade severa.
+    const distinctNotes = (this.uniqueNotesSung && this.uniqueNotesSung.size) ? this.uniqueNotesSung.size : 0;
+    const melodyDiversityRatio = Math.min(1.0, Math.max(0.25, distinctNotes / 4.5));
 
-    const comboFactor = Math.min(1.0, this.maxCombo / 25);
-    const comboBonus = Math.round(comboFactor * 2000);
-    const accuracyBase = Math.round((accuracy / 100) * 8000);
-
-    const finalCalculatedScore = Math.round((accuracyBase + comboBonus) * presenceRatio);
-
-    // A pontuação final é o maior valor entre o acumulado dinâmico e o cálculo da performance
-    this.score = Math.min(10000, Math.max(this.score, finalCalculatedScore));
+    // A pontuação final é baseada no canto real acumulado ponderado pela variedade melódica
+    const finalCalculated = Math.round(this.scoreFloat * melodyDiversityRatio);
+    this.score = Math.min(10000, Math.max(0, finalCalculated));
 
     // Determinar estrelas (1 a 5) de acordo com os limiares da dificuldade
     const [t1, t2, t3, t4, t5] = config.starThresholds;

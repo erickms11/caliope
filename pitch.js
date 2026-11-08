@@ -11,17 +11,33 @@ class PitchDetector {
     this.analyser = null;
     this.mediaStream = null;
     this.sourceNode = null;
+    this.gainNode = null;
     this.buffer = null;
     this.isListening = false;
+
+    // Detecção específica de iOS / Safari para calibração de ganho e sensibilidade
+    const isIOS = typeof navigator !== 'undefined' && (
+      /iPad|iPhone|iPod/.test(navigator.userAgent || '') ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
+    );
+    this.isIOS = isIOS;
     
     // Configurações
-    this.noiseThreshold = parseFloat(localStorage.getItem('caliope_noise_gate') || '0.040'); // Limiar menos sensível para evitar disparos em falso
-    this.speakerRejectionMode = localStorage.getItem('caliope_speaker_mode') !== 'false'; // Padrão: Modo Caixas de Som ativo
-    this.echoCancellation = false; // Desativado para evitar que o navegador abafe/corte o microfone USB
-    this.noiseSuppression = false;
+    // No iOS, o microfone com AGC precisa de limiar mais sensível (0.015). Em PC/Android USB, 0.028.
+    const savedThreshold = localStorage.getItem('caliope_noise_gate');
+    const defaultThreshold = this.isIOS ? '0.015' : '0.028';
+    this.noiseThreshold = parseFloat(savedThreshold || defaultThreshold);
+    this.speakerRejectionMode = localStorage.getItem('caliope_speaker_mode') !== 'false';
+    this.echoCancellation = true; // Ativado como padrão para isolar o som dos alto-falantes da TV/celular!
+    this.noiseSuppression = true;
+    this.autoGainControl = this.isIOS; // No iOS, AGC é indispensável para evitar atenuação bruta do microfone
     this.minFreq = 70;   // ~C#2 (grave masculino)
     this.maxFreq = 1000; // ~B5 (agudo feminino)
     this.correlationThreshold = this.speakerRejectionMode ? 0.76 : 0.68;
+
+    // Filtro Anti-Batida e Rejeição de Transientes Mecânicos
+    this.consecutivePitchFrames = 0;
+    this.lastDetectedPitch = 0;
 
     // Suporte a Microfone Remoto (Celular via WebRTC / P2P)
     this.remoteAudioData = null;
@@ -95,7 +111,7 @@ class PitchDetector {
       audio: {
         echoCancellation: this.echoCancellation,
         noiseSuppression: this.noiseSuppression,
-        autoGainControl: false,
+        autoGainControl: this.autoGainControl,
         channelCount: 1
       }
     };
@@ -116,7 +132,16 @@ class PitchDetector {
     this.buffer = new Float32Array(this.analyser.fftSize);
 
     this.sourceNode = this.audioCtx.createMediaStreamSource(this.mediaStream);
-    this.sourceNode.connect(this.analyser);
+
+    // Pré-amplificador digital para iOS / Safari (aumenta o ganho limpo em 2.2x sem estourar distorção)
+    if (this.isIOS) {
+      this.gainNode = this.audioCtx.createGain();
+      this.gainNode.gain.value = 2.2;
+      this.sourceNode.connect(this.gainNode);
+      this.gainNode.connect(this.analyser);
+    } else {
+      this.sourceNode.connect(this.analyser);
+    }
     // NÃO conectamos analyser ao audioCtx.destination para NÃO gerar microfonia / eco!
 
     this.isListening = true;
@@ -129,7 +154,7 @@ class PitchDetector {
     const remote = hasFreshRemote ? this.remoteAudioData : null;
 
     // 2. Se o microfone local do PC estiver ouvindo, processar sinal local
-    let local = { volume: 0, pitch: -1, note: null, buffer: this.buffer, isSinging: false };
+    let local = { volume: 0, pitch: -1, note: null, buffer: this.buffer, isSinging: false, isSustainedVoice: false };
     if (this.isListening && this.analyser) {
       this.analyser.getFloatTimeDomainData(this.buffer);
 
@@ -144,19 +169,40 @@ class PitchDetector {
         const pitch = pitchResult.freq;
         const noteData = pitch > 0 ? this.frequencyToNote(pitch) : null;
         const minCorr = this.correlationThreshold || 0.68;
-        const isSinging = pitch > 0 && noteData !== null && (pitchResult.correlation >= minCorr);
+        const rawIsSinging = pitch > 0 && noteData !== null && (pitchResult.correlation >= minCorr);
+
+        // Filtro Anti-Batida e Rejeição de Transientes Mecânicos:
+        // Batidas no microfone, estalos e cliques duram menos de 60ms (1 a 2 frames).
+        // Voz humana sustentada mantém o tom estável por pelo menos 3 frames consecutivos (~70-90ms).
+        if (rawIsSinging && pitch >= 75 && pitch <= 950) {
+          if (this.lastDetectedPitch > 0 && Math.abs(pitch - this.lastDetectedPitch) < 45) {
+            this.consecutivePitchFrames = (this.consecutivePitchFrames || 0) + 1;
+          } else {
+            this.consecutivePitchFrames = 1;
+          }
+          this.lastDetectedPitch = pitch;
+        } else {
+          this.consecutivePitchFrames = 0;
+          this.lastDetectedPitch = 0;
+        }
+
+        const isSustainedVoice = rawIsSinging && (this.consecutivePitchFrames >= 3);
 
         local = {
           volume: rms,
-          pitch: isSinging ? pitch : -1,
+          pitch: isSustainedVoice ? pitch : -1,
           correlation: pitchResult.correlation,
-          note: isSinging ? noteData : null,
+          note: isSustainedVoice ? noteData : null,
           buffer: this.buffer,
-          isSinging: isSinging,
+          isSinging: isSustainedVoice,
+          isSustainedVoice: isSustainedVoice,
+          consecutiveFrames: this.consecutivePitchFrames,
           threshold: this.noiseThreshold,
           source: 'local'
         };
       } else {
+        this.consecutivePitchFrames = 0;
+        this.lastDetectedPitch = 0;
         local.volume = rms;
       }
     }
@@ -171,6 +217,7 @@ class PitchDetector {
           note: remote.note || null,
           buffer: this.buffer,
           isSinging: !!remote.isSinging,
+          isSustainedVoice: !!remote.isSinging,
           threshold: this.noiseThreshold,
           source: 'remote',
           remoteSinger: remote.singerName || ''
