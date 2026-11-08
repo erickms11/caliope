@@ -135,9 +135,9 @@
     <!-- TELA 2: PALCO DO VIDEOKÊ (CANVAS & VÍDEO EXPANDIDO EM 540PX) -->
     <main id="view-stage" class="view-content" style="display: none;">
       
-      <!-- HUD Superior do Jogo -->
+      <!-- HUD Superior do Jogo (Ultra Compacto em 1 Linha) -->
       <section class="game-hud">
-        <!-- Controles de Ação do Palco (Topo) -->
+        <!-- Controles de Ação do Palco -->
         <div class="hud-controls-card">
           <button id="btn-stage-back" class="btn btn-stage-ctrl btn-close-stage" title="Sair do Videokê (Esc)" aria-label="Sair">
             ✕
@@ -150,42 +150,33 @@
           </button>
         </div>
 
+        <!-- Info da Música (Apenas Título e Artista) -->
         <div class="song-info-card">
-          <div class="song-meta">
-            <div class="song-meta-badges">
-              <span class="badge-genre" id="hud-genre">Videokê Oficial</span>
-              <span class="badge-key" id="hud-key">🎹 Tom: Auto</span>
-            </div>
-            <h1 class="hud-title" id="hud-title">Título da Música</h1>
-            <p class="hud-artist" id="hud-artist">Artista</p>
-          </div>
+          <h1 class="hud-title" id="hud-title">Título da Música</h1>
+          <span class="hud-dot-sep">•</span>
+          <p class="hud-artist" id="hud-artist">Artista</p>
         </div>
 
-        <!-- Monitor Visual do Microfone ao Vivo (Apenas Barrinha e Nota) -->
+        <!-- Monitor Visual do Microfone (Apenas Ícone 🎙️ e VU Meter + Tom) -->
         <div class="hud-mic-card">
-          <div class="hud-mic-header">
-            <span class="hud-mic-title">🎙️ MICROFONE</span>
-            <button class="hud-remote-badge" id="hud-remote-badge" title="Clique para abrir QR Code de conexão do celular">
-              <span class="remote-indicator-dot" id="hud-remote-dot"></span>
-              <span id="hud-remote-text">📱 Conectar Celular</span>
-            </button>
+          <span class="hud-mic-icon" title="Microfone">🎙️</span>
+          <div class="hud-mic-meter-bar">
+            <div class="hud-mic-meter-fill" id="hud-mic-meter-fill"></div>
           </div>
-          <div class="hud-mic-meter-wrap">
-            <div class="hud-mic-meter-bar">
-              <div class="hud-mic-meter-fill" id="hud-mic-meter-fill"></div>
-            </div>
-            <span class="hud-mic-vol" id="hud-mic-vol">0%</span>
-          </div>
-          <div class="hud-mic-note" id="hud-mic-note">🎵 Tom: aguardando voz...</div>
+          <span class="hud-mic-vol" id="hud-mic-vol">0%</span>
+          <div class="hud-mic-note" id="hud-mic-note">🎵 Voz...</div>
+          <button class="hud-remote-badge" id="hud-remote-badge" title="Conectar celular como microfone">
+            <span class="remote-indicator-dot" id="hud-remote-dot"></span>
+            <span id="hud-remote-text">📱</span>
+          </button>
         </div>
 
-        <!-- Dificuldade do Jogo (Travada durante a música) -->
+        <!-- Dificuldade do Jogo -->
         <div class="hud-diff-card">
-          <span class="hud-diff-label">DIFICULDADE</span>
           <span class="badge-difficulty" id="stage-diff-badge">🟡 Médio</span>
         </div>
 
-        <!-- Pontuação, Estrelas & Afinação em Tempo Real (Sem Combo!) -->
+        <!-- Pontuação, Estrelas & Afinação em Tempo Real -->
         <div class="score-stars-card">
           <div class="stars-row" id="stars-row">
             <span class="star">★</span>
@@ -196,12 +187,10 @@
           </div>
 
           <div class="score-readout">
-            <span class="score-label">PONTUAÇÃO</span>
             <span class="score-num" id="live-score">00000</span>
           </div>
 
-          <div class="accuracy-pill" id="accuracy-pill">
-            <span class="acc-label">AFINAÇÃO</span>
+          <div class="accuracy-pill" id="accuracy-pill" title="Afinação em Tempo Real">
             <span class="acc-val" id="live-accuracy">--%</span>
           </div>
         </div>
@@ -593,11 +582,11 @@
   <script src="vendor/peerjs.min.js"></script>
   <script src="vendor/qrcode.min.js"></script>
 
-  <script src="pitch.js?v=41"></script>
-  <script src="calibrator.js?v=41"></script>
-  <script src="songs.js?v=41"></script>
-  <script src="sequencer.js?v=41"></script>
-  <script src="game_engine.js?v=41"></script>
-  <script src="app.js?v=41"></script>
+  <script src="pitch.js?v=42"></script>
+  <script src="calibrator.js?v=42"></script>
+  <script src="songs.js?v=42"></script>
+  <script src="sequencer.js?v=42"></script>
+  <script src="game_engine.js?v=42"></script>
+  <script src="app.js?v=42"></script>
 </body>
 </html>

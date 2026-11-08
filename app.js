@@ -960,7 +960,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Atualizar dados no HUD
     hudTitle.textContent = song.title;
     hudArtist.textContent = song.artist;
-    hudGenre.textContent = song.genre || 'Videokê Oficial';
+    if (hudGenre) hudGenre.textContent = song.genre || 'Videokê Oficial';
     if (hudKey) hudKey.textContent = `🎹 Tom: ${song.key || 'Auto'}`;
     if (stageDiffBadge) stageDiffBadge.textContent = diffLabels[currentDifficulty] || '🟡 Médio';
     timeTotal.textContent = formatTime(song.duration);

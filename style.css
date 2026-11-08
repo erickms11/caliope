@@ -176,34 +176,36 @@ body {
 
 /* ==================== VIEW 1: GAME VIEW ==================== */
 .game-hud {
-  display: grid;
-  grid-template-columns: auto 1.3fr 0.95fr auto 1.15fr;
-  gap: 10px;
-  align-items: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 4px 10px;
+  min-height: 44px;
 }
 
 /* Card de Controles do Palco (Topo) */
 .hud-controls-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 6px 10px;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .btn-stage-ctrl {
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   border: 1px solid var(--border-color);
   background: #0d1424;
   color: #e2e8f0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -221,7 +223,7 @@ body {
   color: #f43f5e;
   border-color: rgba(244, 63, 94, 0.35);
   background: rgba(244, 63, 94, 0.1);
-  font-size: 1.25rem;
+  font-size: 1.05rem;
 }
 
 .btn-close-stage:hover {
@@ -230,67 +232,65 @@ body {
   color: #fff;
 }
 
-/* Card de Monitor do Microfone ao Vivo */
-.hud-mic-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 8px 12px;
+/* Informação da Música: Apenas Título e Artista Inline */
+.song-info-card {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  min-width: 155px;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  flex: 1 1 auto;
+  padding: 0 4px;
 }
 
-.hud-mic-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.hud-mic-title {
-  font-size: 0.68rem;
+.hud-title {
+  font-size: 0.95rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
+}
+
+.hud-dot-sep {
   color: var(--text-muted);
+  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
-.hud-mic-status {
-  font-size: 0.72rem;
-  font-weight: 700;
-  padding: 1px 7px;
-  border-radius: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  color: #94a3b8;
-  transition: all 0.15s ease;
+.hud-artist {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.2;
 }
 
-.hud-mic-status.active {
-  background: rgba(16, 185, 129, 0.18);
-  color: #34d399;
-  border: 1px solid rgba(16, 185, 129, 0.45);
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.35);
-}
-
-.hud-mic-status.low {
-  background: rgba(251, 191, 36, 0.18);
-  color: #fbbf24;
-  border: 1px solid rgba(251, 191, 36, 0.45);
-}
-
-.hud-mic-meter-wrap {
+/* Monitor Visual do Microfone: Apenas Ícone 🎙️ e Medidor Horizontal */
+.hud-mic-card {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-shrink: 0;
+  background: #090e1a;
+  border: 1px solid var(--border-color);
+  padding: 3px 8px;
+  border-radius: 8px;
+}
+
+.hud-mic-icon {
+  font-size: 0.95rem;
+  line-height: 1;
 }
 
 .hud-mic-meter-bar {
-  flex: 1;
-  height: 8px;
-  background: #090e1a;
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
+  width: 50px;
+  height: 6px;
+  background: #050811;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -298,76 +298,47 @@ body {
   height: 100%;
   width: 0%;
   background: linear-gradient(90deg, #10b981 0%, #38bdf8 60%, #fbbf24 85%, #f43f5e 100%);
-  border-radius: 4px;
+  border-radius: 3px;
   transition: width 0.06s ease-out;
 }
 
 .hud-mic-vol {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 800;
   color: #cbd5e1;
-  min-width: 32px;
+  min-width: 26px;
   text-align: right;
 }
 
 .hud-mic-note {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--cyan-neon);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: var(--font-mono);
+  max-width: 85px;
 }
 
-.song-info-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 8px 12px;
-  display: flex;
-  justify-content: space-between;
+.hud-remote-badge {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  color: #a5b4fc;
+  cursor: pointer;
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  min-width: 0;
-  overflow: hidden;
+  gap: 3px;
+  transition: all 0.15s ease;
 }
 
-.song-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-  flex: 1;
-  overflow: hidden;
-}
-
-.song-meta-badges {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.badge-genre {
-  font-size: 0.62rem;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  font-weight: 700;
-  color: var(--cyan-neon);
-  white-space: nowrap;
-}
-
-.badge-key {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #c084fc;
-  background: rgba(192, 132, 252, 0.12);
-  border: 1px solid rgba(192, 132, 252, 0.3);
-  padding: 1px 6px;
-  border-radius: 5px;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
+.hud-remote-badge:hover {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: #818cf8;
 }
 
 /* Dificuldade no HUD */
@@ -488,21 +459,24 @@ select {
   text-overflow: ellipsis;
 }
 
+.hud-diff-card {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
 .score-stars-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  background: var(--bg-card);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 8px 14px;
+  gap: 8px;
+  flex-shrink: 0;
+  padding: 0 4px;
 }
 
 .stars-row {
   display: flex;
-  gap: 2px;
-  font-size: 1.3rem;
+  gap: 1px;
+  font-size: 1.05rem;
   color: #27354f;
   line-height: 1;
 }
@@ -516,37 +490,34 @@ select {
 
 .score-readout {
   display: flex;
-  flex-direction: column;
   align-items: center;
-}
-
-.score-label {
-  font-size: 0.58rem;
-  letter-spacing: 1px;
-  color: var(--text-muted);
-  font-weight: 700;
 }
 
 .score-num {
-  font-size: 1.6rem;
+  font-size: 1.25rem;
   font-weight: 800;
   font-family: var(--font-mono);
   color: var(--gold);
-  text-shadow: 0 0 12px var(--gold-glow);
-  line-height: 1.1;
+  text-shadow: 0 0 10px var(--gold-glow);
+  line-height: 1;
 }
 
-.combo-pill {
-  display: flex;
-  flex-direction: column;
+.accuracy-pill {
+  display: inline-flex;
   align-items: center;
-  background: #090e1a;
-  border: 1px solid var(--border-color);
-  padding: 4px 10px;
-  border-radius: 9px;
-  min-width: 82px;
-  transition: all 0.25s ease;
-  cursor: help;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 2px 7px;
+  border-radius: 6px;
+}
+
+.acc-val {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #38bdf8;
+  line-height: 1;
+}
 }
 
 .combo-pill:hover {
@@ -676,13 +647,13 @@ select {
   position: relative;
   background: #060911;
   border: 1px solid var(--border-color);
-  border-radius: 20px;
+  border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 14px 50px rgba(0, 0, 0, 0.6);
   width: 100%;
-  height: calc(100vh - 170px);
-  min-height: 560px;
-  max-height: 840px;
+  height: calc(100vh - 135px);
+  min-height: 580px;
+  max-height: 880px;
 }
 
 .stage-video {
@@ -3127,66 +3098,71 @@ input[type="range"] {
     height: 180px;
   }
 
-  /* Palco do Videokê (Stage) */
+  /* Palco do Videokê (Stage) em Mobile */
   .game-hud {
     display: flex;
-    flex-direction: column;
-    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 6px;
+    padding: 4px 6px;
+    min-height: unset;
   }
 
   .song-info-card {
-    padding: 6px 10px;
+    padding: 0;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 4px;
+    max-width: 170px;
   }
 
   .hud-title {
-    font-size: 0.95rem;
-    max-width: calc(100vw - 120px);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    font-size: 0.82rem;
+    max-width: 100px;
   }
 
   .hud-artist {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+    max-width: 70px;
   }
 
   .hud-diff-card {
-    display: none; /* Dificuldade já fica visível no topo da música */
+    display: none;
   }
 
   .hud-mic-card {
     min-width: unset;
-    padding: 6px 10px;
+    padding: 2px 5px;
+    gap: 4px;
+  }
+
+  .hud-mic-meter-bar {
+    width: 35px;
   }
 
   .hud-mic-note {
-    font-size: 0.75rem;
+    max-width: 60px;
+    font-size: 0.68rem;
   }
 
-  /* Placar e Sequência Compactos em 2x2 */
   .score-stars-card {
-    padding: 8px 10px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    padding: 0;
+    display: flex;
+    gap: 5px;
     align-items: center;
-    justify-content: center;
   }
 
   .stars-row {
-    font-size: 1.05rem;
-    justify-content: center;
-  }
-
-  .score-readout {
-    text-align: center;
+    font-size: 0.85rem;
   }
 
   .score-num {
-    font-size: 1.25rem;
+    font-size: 1.05rem;
+  }
+
+  .acc-val {
+    font-size: 0.74rem;
   }
 
   .accuracy-pill, .combo-pill {
