@@ -165,18 +165,32 @@ class BackingTrackSequencer {
 
   prepare(song) {
     if (!song) return;
+    this.stop();
+
     if (song.videoUrl && this.videoElement) {
+      if (this.videoDimmer) this.videoDimmer.classList.add('active');
+      this.videoElement.classList.add('active');
       const cleanUrl = this.resolveMediaUrl(song.videoUrl);
       if (!this.videoElement.src || !this.videoElement.src.endsWith(cleanUrl)) {
         this.videoElement.src = cleanUrl;
         this.videoElement.load();
       }
+      try {
+        this.videoElement.pause();
+        this.videoElement.currentTime = 0;
+      } catch (_) {}
     } else if (song.audioUrl && this.audioElement) {
+      if (this.videoElement) this.videoElement.classList.remove('active');
+      if (this.videoDimmer) this.videoDimmer.classList.remove('active');
       const cleanUrl = this.resolveMediaUrl(song.audioUrl);
       if (!this.audioElement.src || !this.audioElement.src.endsWith(cleanUrl)) {
         this.audioElement.src = cleanUrl;
         this.audioElement.load();
       }
+      try {
+        this.audioElement.pause();
+        this.audioElement.currentTime = 0;
+      } catch (_) {}
     }
   }
 
@@ -290,8 +304,10 @@ class BackingTrackSequencer {
     }
 
     if (this.videoElement) {
-      this.videoElement.pause();
-      this.videoElement.currentTime = 0;
+      try {
+        this.videoElement.pause();
+        this.videoElement.currentTime = 0;
+      } catch (_) {}
       this.videoElement.classList.remove('active');
     }
     if (this.videoDimmer) {
@@ -299,8 +315,10 @@ class BackingTrackSequencer {
     }
 
     if (this.audioElement) {
-      this.audioElement.pause();
-      this.audioElement.currentTime = 0;
+      try {
+        this.audioElement.pause();
+        this.audioElement.currentTime = 0;
+      } catch (_) {}
     }
 
     if (this.intervalId) {

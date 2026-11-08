@@ -895,7 +895,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (countdownOverlay) countdownOverlay.style.display = 'none';
 
-    if (gameEngine && gameEngine.isPlaying) {
+    if (gameEngine) {
       gameEngine.stop();
     }
 
@@ -915,7 +915,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (countdownOverlay) countdownOverlay.style.display = 'none';
 
-    if (gameEngine && gameEngine.isPlaying) {
+    if (gameEngine) {
       gameEngine.stop();
     }
 
@@ -947,6 +947,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 6. Contagem Regressiva de 5 Segundos (Get Ready!)
   async function startSongWithCountdown(song) {
+    // 1. Interromper qualquer contagem em andamento
+    if (countdownInterval) {
+      clearInterval(countdownInterval);
+      countdownInterval = null;
+    }
+
+    // 2. PARAR IMEDIATAMENTE a música, vídeo ou áudio anterior
+    if (gameEngine) {
+      gameEngine.stop();
+    }
+
+    // 3. Resetar botões e ícones de pausa
+    if (pauseIcon) pauseIcon.textContent = '⏸';
+    if (pauseText) pauseText.textContent = 'Pausar';
+    if (btnPauseSong) btnPauseSong.title = 'Pausar (Espaço)';
+
     selectedSong = song;
 
     // Resgatar e salvar nome do cantor
@@ -1248,6 +1264,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   btnRestartSong.addEventListener('click', () => {
     if (!selectedSong) return;
+    if (gameEngine) {
+      gameEngine.stop();
+    }
+    if (pauseIcon) pauseIcon.textContent = '⏸';
+    if (pauseText) pauseText.textContent = 'Pausar';
+    if (btnPauseSong) btnPauseSong.title = 'Pausar (Espaço)';
     startSongWithCountdown(selectedSong);
   });
 
@@ -1666,6 +1688,12 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     } else if (e.code === 'KeyR') {
       if (viewStage.style.display !== 'none' && selectedSong) {
+        if (gameEngine) {
+          gameEngine.stop();
+        }
+        if (pauseIcon) pauseIcon.textContent = '⏸';
+        if (pauseText) pauseText.textContent = 'Pausar';
+        if (btnPauseSong) btnPauseSong.title = 'Pausar (Espaço)';
         startSongWithCountdown(selectedSong);
       }
     } else if (e.code === 'KeyF' || e.code === 'F11') {
