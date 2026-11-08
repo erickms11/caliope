@@ -542,13 +542,6 @@ class KaraokeEngine {
       }
     }
 
-      // Tolerância para respiração entre versos de acordo com a dificuldade
-      if (this.silenceTimer > config.pauseTolerance && this.combo > 0) {
-        this.combo = 0;
-        this.multiplier = 1;
-      }
-    }
-
     // 3. Atualizar partículas
     this.updateParticles();
 
