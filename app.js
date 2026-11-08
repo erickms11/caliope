@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const hudMicMeterFill = document.getElementById('hud-mic-meter-fill');
   const hudMicVol = document.getElementById('hud-mic-vol');
   const hudMicNote = document.getElementById('hud-mic-note');
-  let lastNoteText = '🎵 Tom: aguardando voz...';
+  let lastNoteText = '🎵 Aguardando voz...';
   let lastNoteTime = 0;
 
   // Nível de Dificuldade (Fácil, Médio, Difícil)
@@ -994,10 +994,10 @@ document.addEventListener('DOMContentLoaded', () => {
     if (hudMicMeterFill) hudMicMeterFill.style.width = '0%';
     if (hudMicVol) hudMicVol.textContent = '0%';
     if (hudMicNote) {
-      hudMicNote.textContent = '🎵 Tom: aguardando voz...';
+      hudMicNote.textContent = '🎵 Aguardando voz...';
       hudMicNote.style.color = '#64748b';
     }
-    lastNoteText = '🎵 Tom: aguardando voz...';
+    lastNoteText = '🎵 Aguardando voz...';
     lastNoteTime = 0;
 
     // Inicializar áudio se ainda não estiver ouvindo
@@ -1137,7 +1137,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const now = performance.now();
           if (data.micIsSinging && data.micNote) {
             const centsText = data.micNote.cents > 0 ? `+${data.micNote.cents}¢` : `${data.micNote.cents}¢`;
-            lastNoteText = `🎵 ${data.micNote.name}${data.micNote.octave} • ${Math.round(data.micNote.freq || data.micPitch || 0)}Hz (${centsText})`;
+            lastNoteText = `🎵 ${data.micNote.name}${data.micNote.octave} (${centsText})`;
             lastNoteTime = now;
             hudMicNote.textContent = lastNoteText;
             hudMicNote.style.color = 'var(--cyan-neon)';
@@ -1145,7 +1145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Mantém a última nota por 450ms para visual calmo e sem piscadeiras entre sílabas
             hudMicNote.textContent = lastNoteText;
           } else {
-            hudMicNote.textContent = '🎵 Tom: aguardando voz...';
+            hudMicNote.textContent = '🎵 Aguardando voz...';
             hudMicNote.style.color = '#64748b';
           }
         }
