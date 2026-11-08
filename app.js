@@ -798,7 +798,6 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="song-card-thumb">
           <img src="${thumbUrl}" alt="${song.title}" loading="lazy">
           <span class="song-card-duration">⏱️ ${formatTime(song.duration)}</span>
-          <span class="song-card-tag">${isVideo ? '🎬 Videokê' : '🎵 Clássico'}</span>
           <button class="song-card-btn-delete" title="Excluir música do Videokê">🗑️</button>
         </div>
         <div class="song-card-body">
