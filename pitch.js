@@ -173,7 +173,7 @@ class PitchDetector {
 
         // Filtro Anti-Batida e Rejeição de Transientes Mecânicos:
         // Batidas no microfone, estalos e cliques duram menos de 60ms (1 a 2 frames).
-        // Voz humana sustentada mantém o tom estável por pelo menos 3 frames consecutivos (~70-90ms).
+        // Voz humana sustentada mantém o tom estável por pelo menos 4 frames consecutivos (~100-120ms).
         if (rawIsSinging && pitch >= 75 && pitch <= 950) {
           if (this.lastDetectedPitch > 0 && Math.abs(pitch - this.lastDetectedPitch) < 45) {
             this.consecutivePitchFrames = (this.consecutivePitchFrames || 0) + 1;
@@ -186,7 +186,7 @@ class PitchDetector {
           this.lastDetectedPitch = 0;
         }
 
-        const isSustainedVoice = rawIsSinging && (this.consecutivePitchFrames >= 3);
+        const isSustainedVoice = rawIsSinging && (this.consecutivePitchFrames >= 4);
 
         local = {
           volume: rms,
