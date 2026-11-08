@@ -139,11 +139,7 @@ class KaraokeEngine {
     // Sistema de Pontuação Normalizado (Máximo 10.000 pontos para todas as músicas)
     this.score = 0;
     this.scoreFloat = 0;
-    this.combo = 0;
-    this.maxCombo = 0;
-    this.multiplier = 1;
-    this.basePointsPerSecond = 50;
-    this.comboBonusPerSecond = 15;
+    this.pointsPerSecond = 400;
 
     // Sistema anti-monotonia (rejeição de zumbido / lalala na mesma nota)
     this.uniqueNotesSung = new Set();
@@ -192,9 +188,8 @@ class KaraokeEngine {
     }
     // Meta realista de tempo cantado ativo em videokê (~18s a 28s de fôlego real no microfone ao longo da faixa)
     const expectedVocalSeconds = Math.min(28, Math.max(14, dur * 0.10));
-    // 7.500 pontos base (afinação e estabilidade) + 2.500 pontos bônus de combo = 10.000 pontos máx.
-    this.basePointsPerSecond = 7500 / expectedVocalSeconds;
-    this.comboBonusPerSecond = 2500 / expectedVocalSeconds;
+    // 10.000 pontos diretos no canto afinado sem multiplicador artificial
+    this.pointsPerSecond = 10000 / expectedVocalSeconds;
   }
 
   loadSong(song) {
@@ -217,9 +212,6 @@ class KaraokeEngine {
     // Reset completo de pontuação para início limpo
     this.score = 0;
     this.scoreFloat = 0;
-    this.combo = 0;
-    this.maxCombo = 0;
-    this.multiplier = 1;
     this.uniqueNotesSung = new Set();
     this.currentNoteMidi = -1;
     this.currentNoteDuration = 0;
@@ -486,19 +478,17 @@ class KaraokeEngine {
 
         // --- CÁLCULO SEGURO DE PONTUAÇÃO (APENAS COM VOZ ATIVA) ---
         // A pontuação só avança quando o cantor estiver ativamente cantando e afinando!
-        const baseRate = this.basePointsPerSecond || 50;
-        const comboBonusRate = this.comboBonusPerSecond || 15;
-        const comboRatio = Math.min(1.0, this.combo / 25);
+        const baseRate = this.pointsPerSecond || 400;
 
         let hitRate = 0;
         if (currentHitType === 'perfect') {
-          hitRate = (baseRate * 1.0 + (comboBonusRate * comboRatio)) * monotoneFactor;
+          hitRate = (baseRate * 1.0) * monotoneFactor;
         } else if (currentHitType === 'good') {
-          hitRate = (baseRate * 0.85 + (comboBonusRate * comboRatio * 0.75)) * monotoneFactor;
+          hitRate = (baseRate * 0.82) * monotoneFactor;
         } else if (currentHitType === 'waver') {
-          hitRate = (baseRate * 0.30) * monotoneFactor;
+          hitRate = (baseRate * 0.28) * monotoneFactor;
         } else if (currentHitType === 'offkey') {
-          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.10);
+          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.08);
         }
 
         this.scoreFloat += hitRate * dt;
@@ -509,37 +499,14 @@ class KaraokeEngine {
         this.unpitchedSeconds += dt;
       }
 
-      // Incremento de combo por cadência musical (a cada 0.28s de canto afinado)
-      if (currentHitType === 'perfect' || currentHitType === 'good' || (this.difficulty === 'easy' && currentHitType)) {
-        this.comboPulseTimer += dt;
-        if (this.comboPulseTimer >= 0.28) {
-          this.comboPulseTimer = 0;
-          this.combo++;
-          if (this.combo > this.maxCombo) this.maxCombo = this.combo;
-
-          // Multiplicadores
-          if (this.combo >= 35) this.multiplier = 5;
-          else if (this.combo >= 22) this.multiplier = 4;
-          else if (this.combo >= 12) this.multiplier = 3;
-          else if (this.combo >= 5) this.multiplier = 2;
-          else this.multiplier = 1;
-        }
-
+      // Efeito de partículas de brilho em afinação perfeita ou boa
+      if (currentHitType === 'perfect' || currentHitType === 'good') {
         this.emitParticles(this.width / 2, this.height * 0.88, currentHitType === 'perfect');
-      } else {
-        this.comboPulseTimer = 0;
       }
 
     } else {
       // Jogador em silêncio: a pontuação congela rigorosamente, sem correr sozinha!
-      this.comboPulseTimer = 0;
       this.silenceTimer += dt;
-
-      // Tolerância para respiração entre versos de acordo com a dificuldade
-      if (this.silenceTimer > config.pauseTolerance && this.combo > 0) {
-        this.combo = 0;
-        this.multiplier = 1;
-      }
     }
 
     // 3. Atualizar partículas
@@ -626,6 +593,10 @@ class KaraokeEngine {
   }
 
   render(songTime, currentHitType, audioData) {
+    if (this.canvas && this.canvas.clientWidth && (this.canvas.width !== this.canvas.clientWidth || this.canvas.height !== this.canvas.clientHeight)) {
+      this.width = this.canvas.width = this.canvas.clientWidth;
+      this.height = this.canvas.height = this.canvas.clientHeight;
+    }
     const ctx = this.ctx;
     ctx.clearRect(0, 0, this.width, this.height);
 
@@ -684,42 +655,40 @@ class KaraokeEngine {
   calculateAccuracy(songTime) {
     const config = DIFFICULTY_CONFIG[this.difficulty] || DIFFICULTY_CONFIG.medium;
     const totalSingingTime = this.perfectSeconds + this.goodSeconds + this.waverSeconds + this.offKeySeconds;
-    const totalActiveTime = totalSingingTime + (this.unpitchedSeconds * 0.25);
 
-    if (totalActiveTime < 0.3) {
-      return 100;
+    // Aguarda pelo menos 2.5 segundos de canto real avaliado para começar a pontuar a afinação
+    if (totalSingingTime < 2.5) {
+      return null;
     }
 
     let liveAccuracy = 100;
     if (this.difficulty === 'easy') {
-      // Fácil: Muito generoso! Cantores amadores atingem facilmente 80% a 98%
-      const weighted = (this.perfectSeconds * 1.0) +
-                       (this.goodSeconds * 0.95) +
-                       (this.waverSeconds * 0.80) +
-                       (this.offKeySeconds * 0.70) +
-                       (this.unpitchedSeconds * 0.25 * 0.5);
-      const ratio = Math.min(1.0, weighted / totalActiveTime);
-      liveAccuracy = Math.min(100, Math.round(55 + (ratio * 43)));
-    } else if (this.difficulty === 'medium') {
-      // Médio: Clássico e motivador! Cantores normais atingem 70% a 90%
+      // Fácil: tolerante, boas notas contam bem
       const weighted = (this.perfectSeconds * 1.0) +
                        (this.goodSeconds * 0.88) +
-                       (this.waverSeconds * 0.60) +
-                       (this.offKeySeconds * 0.40) +
-                       (this.unpitchedSeconds * 0.25 * 0.3);
-      const ratio = Math.min(1.0, Math.max(0, weighted / totalActiveTime));
-      liveAccuracy = Math.min(100, Math.round(38 + (ratio * 60)));
-    } else {
-      // Difícil: Rigoroso e impiedoso! Desafinar ou cantar fora do tom derruba a nota
+                       (this.waverSeconds * 0.45) +
+                       (this.offKeySeconds * 0.15);
+      const ratio = Math.max(0, weighted / totalSingingTime);
+      liveAccuracy = Math.min(100, Math.round(ratio * 100));
+    } else if (this.difficulty === 'medium') {
+      // Médio: realista e orgânico, sem piso artificial! Se desafinar, a porcentagem cai de verdade
       const weighted = (this.perfectSeconds * 1.0) +
-                       (this.goodSeconds * 0.50) -
-                       (this.waverSeconds * 0.35) -
-                       (this.offKeySeconds * 0.75);
-      const ratio = Math.max(0, weighted / totalActiveTime);
+                       (this.goodSeconds * 0.82) +
+                       (this.waverSeconds * 0.25) -
+                       (this.offKeySeconds * 0.20);
+      const ratio = Math.max(0, weighted / totalSingingTime);
+      liveAccuracy = Math.min(100, Math.round(ratio * 100));
+    } else {
+      // Difícil: rigoroso de estúdio
+      const weighted = (this.perfectSeconds * 1.0) +
+                       (this.goodSeconds * 0.60) -
+                       (this.waverSeconds * 0.20) -
+                       (this.offKeySeconds * 0.60);
+      const ratio = Math.max(0, weighted / totalSingingTime);
       liveAccuracy = Math.min(100, Math.round(ratio * 100));
     }
 
-    return Math.max(1, liveAccuracy);
+    return Math.max(0, Math.min(100, liveAccuracy));
   }
 
   finishSong() {
@@ -728,6 +697,7 @@ class KaraokeEngine {
     const config = DIFFICULTY_CONFIG[this.difficulty] || DIFFICULTY_CONFIG.medium;
     const songDuration = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
     const accuracy = this.calculateAccuracy(songDuration);
+    const finalAccuracy = (accuracy !== null && accuracy >= 0) ? accuracy : 0;
 
     // Avaliação de diversidade melódica (ter cantado notas variadas da melodia):
     // Um cantor que varia pelo menos 4 a 5 notas diferentes recebe 100% de diversidade.
@@ -742,25 +712,24 @@ class KaraokeEngine {
     // Determinar estrelas (1 a 5) de acordo com os limiares da dificuldade
     const [t1, t2, t3, t4, t5] = config.starThresholds;
     let stars = 1;
-    if (accuracy >= t5) stars = 5;
-    else if (accuracy >= t4) stars = 4;
-    else if (accuracy >= t3) stars = 3;
-    else if (accuracy >= t2) stars = 2;
+    if (finalAccuracy >= t5) stars = 5;
+    else if (finalAccuracy >= t4) stars = 4;
+    else if (finalAccuracy >= t3) stars = 3;
+    else if (finalAccuracy >= t2) stars = 2;
     else stars = 1;
 
     // Ranks e títulos clássicos
     let rank = 'D';
     let title = 'Cantor de Chuveiro 🚿';
-    if (accuracy >= t5) { rank = 'S'; title = 'Lenda do Karaokê! 🌟'; }
-    else if (accuracy >= t4) { rank = 'A'; title = 'Vocalista Profissional! 🎤'; }
-    else if (accuracy >= t3) { rank = 'B'; title = 'Afinado no Ritmo! 🎶'; }
-    else if (accuracy >= t2) { rank = 'C'; title = 'Cantor Amador! 🎵'; }
+    if (finalAccuracy >= t5) { rank = 'S'; title = 'Lenda do Karaokê! 🌟'; }
+    else if (finalAccuracy >= t4) { rank = 'A'; title = 'Vocalista Profissional! 🎤'; }
+    else if (finalAccuracy >= t3) { rank = 'B'; title = 'Afinado no Ritmo! 🎶'; }
+    else if (finalAccuracy >= t2) { rank = 'C'; title = 'Cantor Amador! 🎵'; }
 
     if (this.onSongEnd) {
       this.onSongEnd({
         score: this.score,
-        maxCombo: this.maxCombo,
-        accuracy: accuracy,
+        accuracy: finalAccuracy,
         stars: stars,
         rank: rank,
         title: title,

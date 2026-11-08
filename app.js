@@ -967,9 +967,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Resetar HUD de pontuação e marcos
     liveScore.textContent = '00000';
-    liveAccuracy.textContent = '100%';
-    comboText.textContent = '0';
-    multiplierTag.textContent = '1x';
+    liveAccuracy.textContent = '--%';
+    if (comboText) comboText.textContent = '0';
+    if (multiplierTag) multiplierTag.textContent = '1x';
     if (comboPill) comboPill.classList.remove('on-fire');
     achievedMilestones.clear();
     if (milestoneHideTimeout) clearTimeout(milestoneHideTimeout);
@@ -1076,28 +1076,37 @@ document.addEventListener('DOMContentLoaded', () => {
       liveScore.textContent = data.score.toString().padStart(5, '0');
       checkScoreMilestones(data.score);
 
-      // Sequência Afinada / Bônus Multiplicador
-      if (data.combo > 0) {
-        comboText.textContent = data.combo >= 20 ? `🔥 ${data.combo}` : `${data.combo}`;
-        if (comboPill) comboPill.classList.toggle('on-fire', data.combo >= 20);
-        multiplierTag.textContent = `${data.multiplier}x BÔNUS`;
-      } else {
-        comboText.textContent = '0';
-        if (comboPill) comboPill.classList.remove('on-fire');
-        multiplierTag.textContent = '1x';
+      // Sequência Afinada / Bônus Multiplicador (se houver elemento na interface)
+      if (comboText) {
+        if (data.combo > 0) {
+          comboText.textContent = data.combo >= 20 ? `🔥 ${data.combo}` : `${data.combo}`;
+          if (comboPill) comboPill.classList.toggle('on-fire', data.combo >= 20);
+          if (multiplierTag) multiplierTag.textContent = `${data.multiplier}x BÔNUS`;
+        } else {
+          comboText.textContent = '0';
+          if (comboPill) comboPill.classList.remove('on-fire');
+          if (multiplierTag) multiplierTag.textContent = '1x';
+        }
       }
 
-      if (liveAccuracy && data.accuracy !== undefined) {
-        liveAccuracy.textContent = `${data.accuracy}%`;
+      // Afinação Orgânica em Tempo Real (Inicia com --% até ter amostragem de canto)
+      if (liveAccuracy) {
+        if (data.accuracy !== null && data.accuracy !== undefined && data.accuracy >= 0) {
+          liveAccuracy.textContent = `${data.accuracy}%`;
+        } else {
+          liveAccuracy.textContent = '--%';
+        }
       }
 
-      // Atualizar Estrelas (Faixas estritas de Videokê)
+      // Atualizar Estrelas (Faixas realistas de Videokê)
       let starsCount = 0;
-      if (data.accuracy >= 95) starsCount = 5;
-      else if (data.accuracy >= 85) starsCount = 4;
-      else if (data.accuracy >= 72) starsCount = 3;
-      else if (data.accuracy >= 55) starsCount = 2;
-      else if (data.accuracy >= 35) starsCount = 1;
+      if (data.accuracy !== null && data.accuracy !== undefined) {
+        if (data.accuracy >= 90) starsCount = 5;
+        else if (data.accuracy >= 80) starsCount = 4;
+        else if (data.accuracy >= 65) starsCount = 3;
+        else if (data.accuracy >= 50) starsCount = 2;
+        else if (data.accuracy >= 35) starsCount = 1;
+      }
 
       starsElements.forEach((star, idx) => {
         star.classList.toggle('filled', idx < starsCount);
@@ -1163,8 +1172,14 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       modalStars.textContent = '★'.repeat(stats.stars) + '☆'.repeat(5 - stats.stars);
       modalScore.textContent = stats.score;
-      modalAccuracy.textContent = `${stats.accuracy}%`;
-      modalCombo.textContent = `${stats.maxCombo} notas`;
+      modalAccuracy.textContent = (stats.accuracy !== null && stats.accuracy >= 0) ? `${stats.accuracy}%` : '--%';
+      if (modalCombo) {
+        if (stats.stars >= 5) modalCombo.textContent = '🌟 Lenda';
+        else if (stats.stars >= 4) modalCombo.textContent = '🎤 Excelente';
+        else if (stats.stars >= 3) modalCombo.textContent = '🎶 Afinado';
+        else if (stats.stars >= 2) modalCombo.textContent = '🎵 Bom';
+        else modalCombo.textContent = '🚿 No Ritmo';
+      }
 
       // 🏆 Salvar Pontuação no Ranking do Servidor & Local
       const rankingEntry = {
@@ -1218,7 +1233,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!gameEngine || !gameEngine.isPlaying) return;
     const isPaused = gameEngine.togglePause();
     pauseIcon.textContent = isPaused ? '▶' : '⏸';
-    pauseText.textContent = isPaused ? 'Continuar' : 'Pausar';
+    if (pauseText) pauseText.textContent = isPaused ? 'Continuar' : 'Pausar';
+    btnPauseSong.title = isPaused ? 'Continuar (Espaço)' : 'Pausar (Espaço)';
   });
 
   btnRestartSong.addEventListener('click', () => {

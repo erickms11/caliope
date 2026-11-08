@@ -177,9 +177,57 @@ body {
 /* ==================== VIEW 1: GAME VIEW ==================== */
 .game-hud {
   display: grid;
-  grid-template-columns: 1.2fr 0.9fr auto 1.15fr;
+  grid-template-columns: auto 1.3fr 0.95fr auto 1.15fr;
   gap: 10px;
   align-items: stretch;
+}
+
+/* Card de Controles do Palco (Topo) */
+.hud-controls-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-stage-ctrl {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: #0d1424;
+  color: #e2e8f0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 0;
+}
+
+.btn-stage-ctrl:hover {
+  background: #1e293b;
+  border-color: rgba(99, 102, 241, 0.5);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.btn-close-stage {
+  color: #f43f5e;
+  border-color: rgba(244, 63, 94, 0.35);
+  background: rgba(244, 63, 94, 0.1);
+  font-size: 1.25rem;
+}
+
+.btn-close-stage:hover {
+  background: rgba(244, 63, 94, 0.25);
+  border-color: #f43f5e;
+  color: #fff;
 }
 
 /* Card de Monitor do Microfone ao Vivo */
@@ -631,8 +679,10 @@ select {
   border-radius: 20px;
   overflow: hidden;
   box-shadow: 0 14px 50px rgba(0, 0, 0, 0.6);
-  min-height: 540px;
-  height: 540px;
+  width: 100%;
+  height: calc(100vh - 170px);
+  min-height: 560px;
+  max-height: 840px;
 }
 
 .stage-video {
@@ -671,29 +721,30 @@ select {
   position: relative;
   z-index: 3;
   width: 100%;
-  height: 540px;
+  height: 100%;
   display: block;
   background: transparent;
 }
 
 .hit-floating-text {
   position: absolute;
-  top: 20px;
-  right: 28px;
-  font-size: 1.6rem;
-  font-weight: 900;
+  top: 72px;
+  right: 22px;
+  font-size: 1.15rem;
+  font-weight: 800;
   font-family: var(--font-main);
   color: var(--gold);
-  text-shadow: 0 0 20px var(--gold-glow);
+  text-shadow: 0 0 16px var(--gold-glow);
   opacity: 0;
-  transform: scale(0.8);
+  transform: scale(0.85);
   transition: all 0.12s ease-out;
   pointer-events: none;
+  z-index: 7;
 }
 
 .hit-floating-text.active {
   opacity: 1;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .hit-floating-text.perfect {
@@ -725,37 +776,38 @@ select {
   pointer-events: none;
 }
 
-/* Banner de Celebração de Marco de Pontuação (5 mil, 10 mil...) */
+/* Banner de Celebração de Marco de Pontuação Compacto no Canto Superior Direito */
 .milestone-banner {
   position: absolute;
-  top: 26px;
-  left: 50%;
-  transform: translateX(-50%) scale(0.65);
+  top: 14px;
+  right: 18px;
+  left: auto;
+  transform: translateY(-8px) scale(0.85);
   z-index: 8;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: opacity 0.28s ease, transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .milestone-banner.show {
   opacity: 1;
-  transform: translateX(-50%) scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .milestone-banner.hide {
   opacity: 0;
-  transform: translateX(-50%) translateY(-18px) scale(0.85);
-  transition: opacity 0.35s ease-in, transform 0.35s ease-in;
+  transform: translateY(-10px) scale(0.85);
+  transition: opacity 0.3s ease-in, transform 0.3s ease-in;
 }
 
 .milestone-glow {
   position: absolute;
-  top: -16px;
-  left: -16px;
-  right: -16px;
-  bottom: -16px;
-  background: radial-gradient(circle, rgba(251, 191, 36, 0.38) 0%, rgba(99, 102, 241, 0.18) 50%, transparent 75%);
-  filter: blur(14px);
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.35) 0%, rgba(99, 102, 241, 0.15) 50%, transparent 75%);
+  filter: blur(10px);
   z-index: -1;
   animation: milestoneAura 2s infinite alternate ease-in-out;
 }
@@ -763,13 +815,13 @@ select {
 .milestone-inner {
   background: rgba(10, 15, 29, 0.94);
   backdrop-filter: blur(14px);
-  border: 2px solid var(--gold);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.75), 0 0 30px rgba(251, 191, 36, 0.45);
-  border-radius: 18px;
-  padding: 14px 32px;
-  text-align: center;
-  min-width: 320px;
-  max-width: 480px;
+  border: 1.5px solid var(--gold);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.75), 0 0 20px rgba(251, 191, 36, 0.35);
+  border-radius: 14px;
+  padding: 8px 16px;
+  text-align: right;
+  min-width: unset;
+  max-width: 260px;
 }
 
 .milestone-badge {
@@ -777,32 +829,35 @@ select {
   background: linear-gradient(135deg, rgba(251, 191, 36, 0.22), rgba(249, 115, 22, 0.22));
   border: 1px solid rgba(251, 191, 36, 0.55);
   color: #fbbf24;
-  font-size: 0.72rem;
+  font-size: 0.62rem;
   font-weight: 800;
-  letter-spacing: 1.2px;
+  letter-spacing: 0.8px;
   text-transform: uppercase;
-  padding: 3px 14px;
-  border-radius: 20px;
-  margin-bottom: 6px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  margin-bottom: 2px;
 }
 
 .milestone-score {
-  font-size: 1.95rem;
+  font-size: 1.3rem;
   font-weight: 900;
   font-family: var(--font-main);
   background: linear-gradient(135deg, #ffffff 10%, #fbbf24 60%, #f59e0b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  filter: drop-shadow(0 0 12px rgba(251, 191, 36, 0.55));
+  filter: drop-shadow(0 0 8px rgba(251, 191, 36, 0.45));
   line-height: 1.15;
-  margin-bottom: 4px;
+  margin-bottom: 2px;
 }
 
 .milestone-subtitle {
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  color: #e2e8f0;
-  letter-spacing: 0.3px;
+  color: #cbd5e1;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Efeito de pulso no mostrador de pontuação HUD */
@@ -912,15 +967,34 @@ select {
   border-radius: 5px;
 }
 
-/* Timeline */
+/* Timeline Compacta */
 .timeline-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background: var(--bg-card);
+  gap: 12px;
+  background: rgba(10, 15, 29, 0.75);
   border: 1px solid var(--border-color);
-  padding: 6px 14px;
+  padding: 4px 14px;
   border-radius: 10px;
+}
+
+.timeline-bar-compact {
+  padding: 4px 14px;
+  min-height: 28px;
+}
+
+.timeline-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.timeline-time-val {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-width: 38px;
 }
 
 .timeline-controls {

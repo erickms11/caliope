@@ -137,10 +137,20 @@
       
       <!-- HUD Superior do Jogo -->
       <section class="game-hud">
-        <div class="song-info-card">
-          <button id="btn-stage-back" class="btn btn-secondary btn-sm" title="Voltar para a seleção de músicas" style="white-space: nowrap; flex-shrink: 0;">
-            ⬅️ Músicas
+        <!-- Controles de Ação do Palco (Topo) -->
+        <div class="hud-controls-card">
+          <button id="btn-stage-back" class="btn btn-stage-ctrl btn-close-stage" title="Sair do Videokê (Esc)" aria-label="Sair">
+            ✕
           </button>
+          <button id="btn-pause-song" class="btn btn-stage-ctrl" title="Pausar / Continuar (Espaço)" aria-label="Pausar">
+            <span id="pause-icon">⏸</span>
+          </button>
+          <button id="btn-restart-song" class="btn btn-stage-ctrl" title="Reiniciar do começo (R)" aria-label="Reiniciar">
+            <span>🔄</span>
+          </button>
+        </div>
+
+        <div class="song-info-card">
           <div class="song-meta">
             <div class="song-meta-badges">
               <span class="badge-genre" id="hud-genre">Videokê Oficial</span>
@@ -175,7 +185,7 @@
           <span class="badge-difficulty" id="stage-diff-badge">🟡 Médio</span>
         </div>
 
-        <!-- Pontuação, Estrelas & Sincronia em Tempo Real -->
+        <!-- Pontuação, Estrelas & Afinação em Tempo Real (Sem Combo!) -->
         <div class="score-stars-card">
           <div class="stars-row" id="stars-row">
             <span class="star">★</span>
@@ -192,15 +202,7 @@
 
           <div class="accuracy-pill" id="accuracy-pill">
             <span class="acc-label">AFINAÇÃO</span>
-            <span class="acc-val" id="live-accuracy">100%</span>
-          </div>
-
-          <div class="combo-pill" id="combo-pill" title="Sequência de canto afinado sem pausas. Multiplica seus pontos em até 5x!">
-            <span class="combo-label">SEQUÊNCIA</span>
-            <div class="combo-val-wrapper">
-              <span class="combo-val" id="combo-text">0</span>
-              <span class="multiplier-tag" id="multiplier-tag">1x</span>
-            </div>
+            <span class="acc-val" id="live-accuracy">--%</span>
           </div>
         </div>
       </section>
@@ -252,24 +254,13 @@
           </div>
         </div>
 
-        <!-- Barra de Progresso & Controles do Palco -->
-        <div class="timeline-bar">
-          <div class="timeline-controls">
-            <button id="btn-pause-song" class="btn btn-secondary btn-sm" title="Pausar ou Continuar (Espaço)">
-              <span id="pause-icon">⏸</span> <span id="pause-text">Pausar</span>
-            </button>
-            <button id="btn-restart-song" class="btn btn-secondary btn-sm" title="Reiniciar do começo (R)">
-              <span>🔄</span> Reiniciar
-            </button>
-            <button id="btn-back-to-menu-bottom" class="btn btn-secondary btn-sm" title="Voltar ao catálogo">
-              <span>🚪</span> Sair
-            </button>
+        <!-- Barra de Progresso Compacta do Palco -->
+        <div class="timeline-bar timeline-bar-compact">
+          <span class="timeline-time-val" id="time-current">0:00</span>
+          <div class="timeline-track">
+            <div class="timeline-fill" id="timeline-fill"></div>
           </div>
-          <div class="timeline-fill" id="timeline-fill"></div>
-          <div class="timeline-time">
-            <span id="time-current">0:00</span>
-            <span id="time-total">0:00</span>
-          </div>
+          <span class="timeline-time-val" id="time-total">0:00</span>
         </div>
 
         <!-- Caixa de letra auxiliar (usada apenas quando a música não for vídeo) -->
@@ -524,9 +515,9 @@
             <span class="stat-label">AFINAÇÃO</span>
             <span class="stat-val" id="modal-accuracy">0%</span>
           </div>
-          <div class="stat-item" title="Maior sequência de notas afinadas cantadas sem pausas ou desafinações">
-            <span class="stat-label">MAIOR SEQUÊNCIA</span>
-            <span class="stat-val" id="modal-combo">0</span>
+          <div class="stat-item" title="Avaliação do desempenho vocal no videokê">
+            <span class="stat-label">AVALIAÇÃO</span>
+            <span class="stat-val" id="modal-combo">Afinado</span>
           </div>
         </div>
 
@@ -602,11 +593,11 @@
   <script src="vendor/peerjs.min.js"></script>
   <script src="vendor/qrcode.min.js"></script>
 
-  <script src="pitch.js?v=39"></script>
-  <script src="calibrator.js?v=39"></script>
-  <script src="songs.js?v=39"></script>
-  <script src="sequencer.js?v=39"></script>
-  <script src="game_engine.js?v=39"></script>
-  <script src="app.js?v=39"></script>
+  <script src="pitch.js?v=40"></script>
+  <script src="calibrator.js?v=40"></script>
+  <script src="songs.js?v=40"></script>
+  <script src="sequencer.js?v=40"></script>
+  <script src="game_engine.js?v=40"></script>
+  <script src="app.js?v=40"></script>
 </body>
 </html>
