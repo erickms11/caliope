@@ -1174,54 +1174,64 @@ document.addEventListener('DOMContentLoaded', () => {
       modalScore.textContent = stats.score;
       modalAccuracy.textContent = (stats.accuracy !== null && stats.accuracy >= 0) ? `${stats.accuracy}%` : '--%';
       if (modalCombo) {
-        if (stats.stars >= 5) modalCombo.textContent = '🌟 Lenda';
+        if (!stats.didSing || stats.score === 0) modalCombo.textContent = '🔇 Sem Canto';
+        else if (stats.stars >= 5) modalCombo.textContent = '🌟 Lenda';
         else if (stats.stars >= 4) modalCombo.textContent = '🎤 Excelente';
         else if (stats.stars >= 3) modalCombo.textContent = '🎶 Afinado';
         else if (stats.stars >= 2) modalCombo.textContent = '🎵 Bom';
-        else modalCombo.textContent = '🚿 No Ritmo';
+        else modalCombo.textContent = '🚿 Treinando';
       }
 
-      // 🏆 Salvar Pontuação no Ranking do Servidor & Local
-      const rankingEntry = {
-        id: Date.now().toString(36) + Math.random().toString(36).substring(2, 6),
-        singer: currentSinger || 'Cantor(a)',
-        songTitle: selectedSong.title,
-        songArtist: selectedSong.artist,
-        songId: selectedSong.id,
-        score: stats.score,
-        accuracy: stats.accuracy,
-        maxCombo: stats.maxCombo,
-        stars: stats.stars,
-        rank: stats.rank,
-        difficulty: stats.difficulty || diffNames[currentDifficulty],
-        difficultyId: stats.difficultyId || currentDifficulty,
-        date: new Date().toISOString()
-      };
+      // 🏆 Salvar Pontuação no Ranking do Servidor & Local (Apenas se cantou de verdade!)
+      if (stats.score > 0 && stats.didSing) {
+        const rankingEntry = {
+          id: Date.now().toString(36) + Math.random().toString(36).substring(2, 6),
+          singer: currentSinger || 'Cantor(a)',
+          songTitle: selectedSong.title,
+          songArtist: selectedSong.artist,
+          songId: selectedSong.id,
+          score: stats.score,
+          accuracy: stats.accuracy,
+          maxCombo: 0,
+          stars: stats.stars,
+          rank: stats.rank,
+          difficulty: stats.difficulty || diffNames[currentDifficulty],
+          difficultyId: stats.difficultyId || currentDifficulty,
+          date: new Date().toISOString()
+        };
 
-      try {
-        await fetch('/api/rankings', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(rankingEntry)
-        });
-      } catch (e) {
-        console.warn("Aviso salvando ranking no servidor:", e);
-      }
+        try {
+          await fetch('/api/rankings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(rankingEntry)
+          });
+        } catch (e) {
+          console.warn("Aviso salvando ranking no servidor:", e);
+        }
 
-      caliopeRankings.push(rankingEntry);
-      caliopeRankings.sort((a, b) => (b.score || 0) - (a.score || 0));
-      try {
-        localStorage.setItem('caliope_rankings_cache', JSON.stringify(caliopeRankings));
-      } catch (_) {}
+        caliopeRankings.push(rankingEntry);
+        caliopeRankings.sort((a, b) => (b.score || 0) - (a.score || 0));
+        try {
+          localStorage.setItem('caliope_rankings_cache', JSON.stringify(caliopeRankings));
+        } catch (_) {}
 
-      // Atualizar crachá de posição no resultado
-      const pos = caliopeRankings.findIndex(r => r.id === rankingEntry.id) + 1;
-      if (modalRankingPos) {
-        const medal = pos === 1 ? '🥇' : (pos === 2 ? '🥈' : (pos === 3 ? '🥉' : '🏆'));
-        modalRankingPos.textContent = `${medal} #${pos} no Ranking Geral!`;
-      }
-      if (modalSingerName) {
-        modalSingerName.textContent = rankingEntry.singer;
+        // Atualizar crachá de posição no resultado
+        const pos = caliopeRankings.findIndex(r => r.id === rankingEntry.id) + 1;
+        if (modalRankingPos) {
+          const medal = pos === 1 ? '🥇' : (pos === 2 ? '🥈' : (pos === 3 ? '🥉' : '🏆'));
+          modalRankingPos.textContent = `${medal} #${pos} no Ranking Geral!`;
+        }
+        if (modalSingerName) {
+          modalSingerName.textContent = rankingEntry.singer;
+        }
+      } else {
+        if (modalRankingPos) {
+          modalRankingPos.textContent = '💡 Cante no microfone para entrar no ranking!';
+        }
+        if (modalSingerName) {
+          modalSingerName.textContent = currentSinger || 'Você';
+        }
       }
 
       resultsModal.classList.add('active');

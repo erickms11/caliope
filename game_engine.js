@@ -696,35 +696,49 @@ class KaraokeEngine {
 
     const config = DIFFICULTY_CONFIG[this.difficulty] || DIFFICULTY_CONFIG.medium;
     const songDuration = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
-    const accuracy = this.calculateAccuracy(songDuration);
-    const finalAccuracy = (accuracy !== null && accuracy >= 0) ? accuracy : 0;
+    const totalSingingTime = this.perfectSeconds + this.goodSeconds + this.waverSeconds + this.offKeySeconds;
+    const didSing = totalSingingTime >= 2.0 && this.scoreFloat >= 10;
 
-    // Avaliação de diversidade melódica (ter cantado notas variadas da melodia):
-    // Um cantor que varia pelo menos 4 a 5 notas diferentes recebe 100% de diversidade.
-    // Quem fica em 1 única nota ("hummm" monótono sem sair do lugar) recebe penalidade severa.
-    const distinctNotes = (this.uniqueNotesSung && this.uniqueNotesSung.size) ? this.uniqueNotesSung.size : 0;
-    const melodyDiversityRatio = Math.min(1.0, Math.max(0.25, distinctNotes / 4.5));
+    let finalAccuracy = 0;
+    let stars = 0;
+    let rank = '-';
+    let title = 'Sem Voz Detectada 🤫';
 
-    // A pontuação final é baseada no canto real acumulado ponderado pela variedade melódica
-    const finalCalculated = Math.round(this.scoreFloat * melodyDiversityRatio);
-    this.score = Math.min(10000, Math.max(0, finalCalculated));
+    if (!didSing) {
+      this.score = 0;
+      finalAccuracy = 0;
+      stars = 0;
+      rank = '-';
+      title = 'Microfone no Mudo? 🤫';
+    } else {
+      const accuracy = this.calculateAccuracy(songDuration);
+      finalAccuracy = (accuracy !== null && accuracy >= 0) ? accuracy : 0;
 
-    // Determinar estrelas (1 a 5) de acordo com os limiares da dificuldade
-    const [t1, t2, t3, t4, t5] = config.starThresholds;
-    let stars = 1;
-    if (finalAccuracy >= t5) stars = 5;
-    else if (finalAccuracy >= t4) stars = 4;
-    else if (finalAccuracy >= t3) stars = 3;
-    else if (finalAccuracy >= t2) stars = 2;
-    else stars = 1;
+      // Avaliação de diversidade melódica (ter cantado notas variadas da melodia):
+      // Um cantor que varia pelo menos 4 a 5 notas diferentes recebe 100% de diversidade.
+      // Quem fica em 1 única nota ("hummm" monótono sem sair do lugar) recebe penalidade severa.
+      const distinctNotes = (this.uniqueNotesSung && this.uniqueNotesSung.size) ? this.uniqueNotesSung.size : 0;
+      const melodyDiversityRatio = Math.min(1.0, Math.max(0.25, distinctNotes / 4.5));
 
-    // Ranks e títulos clássicos
-    let rank = 'D';
-    let title = 'Cantor de Chuveiro 🚿';
-    if (finalAccuracy >= t5) { rank = 'S'; title = 'Lenda do Karaokê! 🌟'; }
-    else if (finalAccuracy >= t4) { rank = 'A'; title = 'Vocalista Profissional! 🎤'; }
-    else if (finalAccuracy >= t3) { rank = 'B'; title = 'Afinado no Ritmo! 🎶'; }
-    else if (finalAccuracy >= t2) { rank = 'C'; title = 'Cantor Amador! 🎵'; }
+      // A pontuação final é baseada no canto real acumulado ponderado pela variedade melódica
+      const finalCalculated = Math.round(this.scoreFloat * melodyDiversityRatio);
+      this.score = Math.min(10000, Math.max(0, finalCalculated));
+
+      // Determinar estrelas (1 a 5) de acordo com os limiares da dificuldade
+      const [t1, t2, t3, t4, t5] = config.starThresholds;
+      if (finalAccuracy >= t5) stars = 5;
+      else if (finalAccuracy >= t4) stars = 4;
+      else if (finalAccuracy >= t3) stars = 3;
+      else if (finalAccuracy >= t2) stars = 2;
+      else stars = 1;
+
+      // Ranks e títulos clássicos
+      if (finalAccuracy >= t5) { rank = 'S'; title = 'Lenda do Karaokê! 🌟'; }
+      else if (finalAccuracy >= t4) { rank = 'A'; title = 'Vocalista Profissional! 🎤'; }
+      else if (finalAccuracy >= t3) { rank = 'B'; title = 'Afinado no Ritmo! 🎶'; }
+      else if (finalAccuracy >= t2) { rank = 'C'; title = 'Cantor Amador! 🎵'; }
+      else { rank = 'D'; title = 'Cantor de Chuveiro 🚿'; }
+    }
 
     if (this.onSongEnd) {
       this.onSongEnd({
@@ -733,6 +747,7 @@ class KaraokeEngine {
         stars: stars,
         rank: rank,
         title: title,
+        didSing: didSing,
         difficulty: config.name,
         difficultyId: this.difficulty
       });
