@@ -67,7 +67,7 @@ const DIFFICULTY_CONFIG = {
     desc: 'Festa & Diversão: super tolerante, para cantar sem pressão',
     centsTolerance: 45,       // Quase o semitom inteiro (super generoso)
     maxWaverSemitones: 2.8,   // Tolera vibrato e transições livres
-    correlationMin: 0.75,     // Capta a voz facilmente
+    correlationMin: 0.55,     // Capta a voz facilmente mesmo em celulares
     pauseTolerance: 6.0,      // Permite respirar e curtir o instrumental
     strictScale: false,       // Sem penalização por tom
     comboBreakOnBadPitch: false,
@@ -79,9 +79,9 @@ const DIFFICULTY_CONFIG = {
     name: 'Médio',
     label: '🟡 Médio',
     desc: 'Videokê Clássico: avaliação equilibrada e gratificante para quem canta no dia a dia',
-    centsTolerance: 32,       // Tolerância amigável para cantores amadores
-    maxWaverSemitones: 2.0,   // Tolera vibrato natural (1.5 a 2 semitons)
-    correlationMin: 0.82,     // Boa captação vocal
+    centsTolerance: 35,       // Tolerância amigável para cantores amadores e microfones móveis
+    maxWaverSemitones: 2.2,   // Tolera vibrato natural (1.5 a 2.2 semitons)
+    correlationMin: 0.65,     // Perfeito para microfone de celular (Android/iOS) e PC
     pauseTolerance: 4.0,      // Pausas normais de respiração
     strictScale: false,       // Bonifica quem tá no tom, não massacra quem escapa levemente
     comboBreakOnBadPitch: false,
@@ -93,9 +93,9 @@ const DIFFICULTY_CONFIG = {
     name: 'Difícil',
     label: '🔴 Difícil',
     desc: 'Modo Jurado / The Voice: rigor de estúdio, desafinar zera o combo na hora',
-    centsTolerance: 14,       // Afinação cirúrgica
-    maxWaverSemitones: 1.0,   // Proibido oscilar ou tremer a voz
-    correlationMin: 0.92,     // Tom puro das cordas vocais
+    centsTolerance: 18,       // Afinação cirúrgica
+    maxWaverSemitones: 1.2,   // Proibido oscilar ou tremer a voz
+    correlationMin: 0.78,     // Tom puro das cordas vocais
     pauseTolerance: 2.0,      // Ritmo estrito
     strictScale: true,        // Fora do tom zera o combo imediatamente!
     comboBreakOnBadPitch: true,
@@ -139,7 +139,7 @@ class KaraokeEngine {
     // Sistema de Pontuação Normalizado (Máximo 10.000 pontos para todas as músicas)
     this.score = 0;
     this.scoreFloat = 0;
-    this.pointsPerSecond = 120;
+    this.pointsPerSecond = 220;
 
     // Sistema anti-monotonia (rejeição de zumbido / lalala na mesma nota)
     this.uniqueNotesSung = new Set();
@@ -190,10 +190,9 @@ class KaraokeEngine {
     if (!dur || dur <= 15) {
       dur = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
     }
-    // Meta realista de tempo cantado ativo em videokê (~45% da duração total da faixa)
-    // Em uma faixa típica de 200s, são ~90 segundos de canto real necessário para atingir 10.000 pontos.
-    const expectedVocalSeconds = Math.max(60, dur * 0.45);
-    // 10.000 pontos diretos no canto afinado sem multiplicador artificial
+    // Em videokê clássico (~200s), os vocais ativos somam ~40 a 52 segundos de canto real.
+    // Para atingir 10.000 pontos cantando com afinação nesses 40-50s, a taxa é de ~200 a 240 pts/s.
+    const expectedVocalSeconds = Math.max(38, Math.min(52, dur * 0.22));
     this.pointsPerSecond = 10000 / expectedVocalSeconds;
   }
 
@@ -393,30 +392,19 @@ class KaraokeEngine {
         this.currentNoteDuration = 0;
       }
 
-      // Rastreamento de sustentação contínua da mesma nota (Anti-Fala):
-      // Na fala humana comum, as sílabas deslizam e mudam de altura a cada 80-140ms.
-      // No canto real, uma nota é sustentada por pelo menos 180-250ms dentro de uma tolerância suave (vibrato).
-      const semitoneDiff = (this.lastStableMidi > 0) ? Math.abs(midi - this.lastStableMidi) : 0;
-      if (this.lastStableMidi > 0 && semitoneDiff <= 1.15) {
-        this.currentNoteSustainTime += dt;
-      } else {
-        this.currentNoteSustainTime = dt;
-        this.lastStableMidi = midi;
+      // Rejeição de Monotonia / Zumbido ("Lalala" ou "hummm" na mesma nota fixa):
+      // Se passar de 1.8s sustentando a mesmíssima nota fixa sem modular a melodia:
+      if (this.currentNoteDuration > 1.8) {
+        monotoneFactor = Math.max(0.12, 1.0 - ((this.currentNoteDuration - 1.8) * 0.60));
       }
 
-      // Rejeição de Monotonia / Zumbido ("Lalala" ou "hummm" na mesma nota):
-      // Se passar de 2.0s sustentando a mesmíssima nota fixa sem modular a melodia:
-      if (this.currentNoteDuration > 2.0) {
-        monotoneFactor = Math.max(0.10, 1.0 - ((this.currentNoteDuration - 2.0) * 0.50));
-      }
-
-      // Checar estabilidade melódica (canto firme vs desafinação tremida)
-      if (this.recentPitches.length >= 3) {
+      // Checar estabilidade melódica recente
+      if (this.recentPitches.length >= 2) {
         const minP = Math.min(...this.recentPitches);
         const maxP = Math.max(...this.recentPitches);
         isPitchStable = (maxP - minP) <= config.maxWaverSemitones;
       } else {
-        isPitchStable = false; // Exige pelo menos 3 frames coletados antes de considerar estável
+        isPitchStable = true;
       }
 
       // Correlação de frequência (pureza das cordas vocais cantando nota musical)
@@ -437,8 +425,6 @@ class KaraokeEngine {
       this.recentPitches = [];
       this.currentNoteMidi = -1;
       this.currentNoteDuration = 0;
-      this.currentNoteSustainTime = 0;
-      this.lastStableMidi = -1;
     }
 
     let currentHitType = null;
@@ -448,15 +434,8 @@ class KaraokeEngine {
 
       if (hasValidPitch) {
         const hasScaleConfigured = !!(this.currentScale && this.currentScale.scaleNotes && this.currentScale.scaleNotes.size > 0);
-        // Filtro Anti-Fala: Uma nota cantada precisa de sustentação mínima (>= 180ms)
-        const isSustainedNote = this.currentNoteSustainTime >= 0.18;
 
-        if (!isSustainedNote) {
-          // Palavras faladas rápidas, transientes de dicção ou ataques não sustentados:
-          // Não pontuam nem são contabilizados como canto afinado
-          currentHitType = null;
-
-        } else if (!isInScale && config.strictScale && hasScaleConfigured) {
+        if (!isInScale && config.strictScale && hasScaleConfigured) {
           // No Modo Difícil (somente se a escala da música estiver cadastrada!), sair do tom penaliza
           currentHitType = 'offkey';
           this.offKeyHits++;
@@ -467,7 +446,7 @@ class KaraokeEngine {
             this.multiplier = 1;
           }
 
-        } else if (!isPitchStable && this.recentPitches.length >= 4) {
+        } else if (!isPitchStable && this.recentPitches.length >= 3) {
           // Voz oscilando / tremendo muito rápido
           currentHitType = 'waver';
           this.waverHits++;
@@ -478,50 +457,48 @@ class KaraokeEngine {
             this.multiplier = 1;
           }
 
-        } else if (isPureTone && isCentTuned && isPitchStable && this.currentNoteSustainTime >= 0.22) {
-          // Afinação Perfeita: pura, afinada nos cents, firme e bem sustentada!
+        } else if (isPureTone && isCentTuned && isPitchStable) {
+          // Afinação Perfeita: pura, afinada nos cents e firme!
           currentHitType = 'perfect';
           this.perfectHits++;
           this.perfectSeconds += dt;
 
         } else if (isPureTone && isPitchStable) {
-          // Afinação Boa: tom puro, estável e sustentado
+          // Afinação Boa: tom puro e estável
           currentHitType = 'good';
           this.goodHits++;
           this.goodSeconds += dt;
 
-        } else if (isPureTone) {
-          // Tom puro mas com desvio de afinação ou leve oscilação
+        } else if (isPureTone || isCentTuned) {
+          // Transição melódica / vibrato leve
           currentHitType = 'waver';
           this.waverHits++;
           this.waverSeconds += dt;
 
         } else {
-          // Som sem sustentação harmônica limpa
           currentHitType = null;
         }
 
         // --- CÁLCULO SEGURO DE PONTUAÇÃO (APENAS COM VOZ ATIVA E CANTADA) ---
         // A pontuação só avança quando o cantor estiver ativamente cantando e afinando!
-        const baseRate = this.pointsPerSecond || 111;
+        const baseRate = this.pointsPerSecond || 220;
 
         let hitRate = 0;
         if (currentHitType === 'perfect') {
           hitRate = (baseRate * 1.0) * monotoneFactor;
         } else if (currentHitType === 'good') {
-          hitRate = (baseRate * 0.82) * monotoneFactor;
+          hitRate = (baseRate * 0.85) * monotoneFactor;
         } else if (currentHitType === 'waver') {
-          hitRate = (baseRate * 0.28) * monotoneFactor;
+          hitRate = (baseRate * 0.35) * monotoneFactor;
         } else if (currentHitType === 'offkey') {
-          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.08);
+          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.10);
         }
 
         // Teto dinâmico de pontuação por progresso da música:
         // Evita matematicamente atingir 10.000 pontos na metade da música!
-        // Dá folga de 20% para acomodar músicas onde o canto se concentra nos primeiros 80%.
         const songDuration = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
         const progressRatio = Math.min(1.0, songTime / Math.max(30, songDuration));
-        const maxAllowedScore = Math.min(10000, Math.floor(10000 * Math.min(1.0, (progressRatio * 1.20) + 0.05)));
+        const maxAllowedScore = Math.min(10000, Math.floor(10000 * Math.min(1.0, (progressRatio * 1.15) + 0.05)));
 
         this.scoreFloat += hitRate * dt;
         this.score = Math.min(maxAllowedScore, Math.max(0, Math.floor(this.scoreFloat)));
