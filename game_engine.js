@@ -72,7 +72,7 @@ const DIFFICULTY_CONFIG = {
     strictScale: false,       // Sem penalização por tom
     comboBreakOnBadPitch: false,
     scoreRate: 35,
-    starThresholds: [20, 40, 55, 70, 82] // Muito fácil tirar 4 ou 5 estrelas
+    starThresholds: [20, 35, 50, 68, 80] // Muito fácil tirar 4 ou 5 estrelas
   },
   medium: {
     id: 'medium',
@@ -86,7 +86,7 @@ const DIFFICULTY_CONFIG = {
     strictScale: false,       // Bonifica quem tá no tom, não massacra quem escapa levemente
     comboBreakOnBadPitch: false,
     scoreRate: 30,
-    starThresholds: [30, 50, 68, 80, 90] // Justo e motivador (65-88% típico)
+    starThresholds: [25, 40, 56, 72, 86] // Justo e motivador: 56% a 71% já é 3 estrelas (Afinado no Ritmo!)
   },
   hard: {
     id: 'hard',
@@ -100,7 +100,7 @@ const DIFFICULTY_CONFIG = {
     strictScale: true,        // Fora do tom zera o combo imediatamente!
     comboBreakOnBadPitch: true,
     scoreRate: 40,
-    starThresholds: [45, 65, 80, 90, 96] // Muito difícil
+    starThresholds: [35, 50, 66, 80, 92] // Rigoroso de estúdio
   }
 };
 
@@ -534,6 +534,15 @@ class KaraokeEngine {
 
     // 5. Cálculo de Precisão e Afinação Rigoroso
     const liveAccuracy = this.calculateAccuracy(songTime);
+    let liveStars = 0;
+    if (liveAccuracy !== null && liveAccuracy >= 0) {
+      const [t1, t2, t3, t4, t5] = config.starThresholds;
+      if (liveAccuracy >= t5) liveStars = 5;
+      else if (liveAccuracy >= t4) liveStars = 4;
+      else if (liveAccuracy >= t3) liveStars = 3;
+      else if (liveAccuracy >= t2) liveStars = 2;
+      else if (liveAccuracy >= t1) liveStars = 1;
+    }
 
     if (this.onScoreUpdate) {
       this.onScoreUpdate({
@@ -542,6 +551,7 @@ class KaraokeEngine {
         multiplier: this.multiplier,
         hitType: currentHitType,
         accuracy: liveAccuracy,
+        stars: liveStars,
         difficulty: this.difficulty,
         key: this.currentSong ? this.currentSong.key : null,
         micVolume: audioData.volume,
@@ -738,10 +748,9 @@ class KaraokeEngine {
       const melodyDiversityRatio = Math.min(1.0, Math.max(0.25, distinctNotes / 4.5));
 
       // TETO RIGOROSO DE AFINAÇÃO:
-      // A pontuação NUNCA pode ser descolada da afinação do cantor!
-      // Se a afinação foi 60%, a pontuação máxima possível é 6.000 pontos.
-      // Se foi 85%, o teto é 8.500 pontos. Apenas quem afina >= 95% atinge 10.000.
-      const maxPossibleByAccuracy = Math.round(10000 * (finalAccuracy / 100));
+      // A pontuação reflete a afinação com margem amigável de videokê (+8%)
+      // Uma afinação de 60% permite alcançar até ~6.800 pontos (3 estrelas).
+      const maxPossibleByAccuracy = Math.round(10000 * Math.min(1.0, (finalAccuracy + 8) / 100));
 
       // A pontuação final é baseada no canto real ponderado por diversidade e estritamente limitada pela afinação
       const finalCalculated = Math.round(this.scoreFloat * melodyDiversityRatio);
@@ -753,6 +762,7 @@ class KaraokeEngine {
       else if (finalAccuracy >= t4) stars = 4;
       else if (finalAccuracy >= t3) stars = 3;
       else if (finalAccuracy >= t2) stars = 2;
+      else if (finalAccuracy >= t1) stars = 1;
       else stars = 1;
 
       // Ranks e títulos clássicos

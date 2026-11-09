@@ -1113,14 +1113,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
 
-      // Atualizar Estrelas (Faixas realistas de Videokê)
-      let starsCount = 0;
-      if (data.accuracy !== null && data.accuracy !== undefined) {
-        if (data.accuracy >= 90) starsCount = 5;
-        else if (data.accuracy >= 80) starsCount = 4;
-        else if (data.accuracy >= 65) starsCount = 3;
-        else if (data.accuracy >= 50) starsCount = 2;
-        else if (data.accuracy >= 35) starsCount = 1;
+      // Atualizar Estrelas (Sincronizado com o motor e dificuldade da música)
+      let starsCount = (data.stars !== undefined) ? data.stars : 0;
+      if (starsCount === 0 && data.accuracy !== null && data.accuracy !== undefined && data.accuracy >= 0) {
+        if (data.accuracy >= 86) starsCount = 5;
+        else if (data.accuracy >= 72) starsCount = 4;
+        else if (data.accuracy >= 56) starsCount = 3;
+        else if (data.accuracy >= 40) starsCount = 2;
+        else if (data.accuracy >= 25) starsCount = 1;
       }
 
       starsElements.forEach((star, idx) => {
