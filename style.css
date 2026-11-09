@@ -3196,26 +3196,52 @@ input[type="range"] {
     left: 0;
   }
 
-  /* Marco de Pontuação Compacto */
+  /* Marco de Pontuação Ultra-Compacto no Canto Superior Direito (Não obstrui o vídeo/letra) */
   .milestone-banner {
-    top: 8px;
+    top: 6px;
+    right: 8px;
+    left: auto;
+    transform: translateY(-4px) scale(0.85);
   }
 
   .milestone-inner {
     min-width: unset;
-    width: 90vw;
-    max-width: 330px;
-    padding: 10px 14px;
-    border-radius: 14px;
+    width: auto;
+    max-width: 155px;
+    padding: 3px 6px;
+    border-radius: 8px;
+    border: 1px solid rgba(251, 191, 36, 0.55);
+    background: rgba(10, 15, 29, 0.92);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.7);
+    text-align: right;
+  }
+
+  .milestone-badge {
+    font-size: 0.50rem;
+    padding: 1px 4px;
+    margin-bottom: 0px;
+    border-radius: 6px;
   }
 
   .milestone-score {
-    font-size: 1.25rem;
-    letter-spacing: 0.5px;
+    font-size: 0.80rem;
+    letter-spacing: 0.2px;
+    margin-bottom: 0;
+    line-height: 1.1;
   }
 
   .milestone-subtitle {
-    font-size: 0.75rem;
+    display: none !important;
+  }
+
+  .milestone-glow {
+    display: none !important;
+  }
+
+  .hit-floating-text {
+    top: 42px;
+    right: 10px;
+    font-size: 0.80rem;
   }
 
   /* Barra de Progresso Compacta no Celular */

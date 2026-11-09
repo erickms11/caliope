@@ -139,7 +139,7 @@ class KaraokeEngine {
     // Sistema de Pontuação Normalizado (Máximo 10.000 pontos para todas as músicas)
     this.score = 0;
     this.scoreFloat = 0;
-    this.pointsPerSecond = 220;
+    this.pointsPerSecond = 140;
 
     // Sistema anti-monotonia (rejeição de zumbido / lalala na mesma nota)
     this.uniqueNotesSung = new Set();
@@ -190,9 +190,9 @@ class KaraokeEngine {
     if (!dur || dur <= 15) {
       dur = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
     }
-    // Em videokê clássico (~200s), os vocais ativos somam ~40 a 52 segundos de canto real.
-    // Para atingir 10.000 pontos cantando com afinação nesses 40-50s, a taxa é de ~200 a 240 pts/s.
-    const expectedVocalSeconds = Math.max(38, Math.min(52, dur * 0.22));
+    // Em videokê clássico (~200s), os vocais ativos somam ~50 a 80 segundos de canto real.
+    // Para atingir 10.000 pontos cantando com afinação perfeita nesses 50-80s, a taxa é de ~130 a 160 pts/s.
+    const expectedVocalSeconds = Math.max(50, Math.min(80, dur * 0.32));
     this.pointsPerSecond = 10000 / expectedVocalSeconds;
   }
 
@@ -481,24 +481,32 @@ class KaraokeEngine {
 
         // --- CÁLCULO SEGURO DE PONTUAÇÃO (APENAS COM VOZ ATIVA E CANTADA) ---
         // A pontuação só avança quando o cantor estiver ativamente cantando e afinando!
-        const baseRate = this.pointsPerSecond || 220;
+        const baseRate = this.pointsPerSecond || 140;
 
         let hitRate = 0;
         if (currentHitType === 'perfect') {
           hitRate = (baseRate * 1.0) * monotoneFactor;
         } else if (currentHitType === 'good') {
-          hitRate = (baseRate * 0.85) * monotoneFactor;
+          hitRate = (baseRate * 0.82) * monotoneFactor;
         } else if (currentHitType === 'waver') {
-          hitRate = (baseRate * 0.35) * monotoneFactor;
+          hitRate = (baseRate * 0.28) * monotoneFactor;
         } else if (currentHitType === 'offkey') {
-          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.10);
+          hitRate = config.comboBreakOnBadPitch ? 0 : (baseRate * 0.08);
         }
 
         // Teto dinâmico de pontuação por progresso da música:
-        // Evita matematicamente atingir 10.000 pontos na metade da música!
         const songDuration = (this.currentSong && this.currentSong.duration > 15) ? this.currentSong.duration : 200;
         const progressRatio = Math.min(1.0, songTime / Math.max(30, songDuration));
-        const maxAllowedScore = Math.min(10000, Math.floor(10000 * Math.min(1.0, (progressRatio * 1.15) + 0.05)));
+        const maxProgressScore = Math.min(10000, Math.floor(10000 * Math.min(1.0, (progressRatio * 1.08) + 0.02)));
+
+        // Teto dinâmico estritamente alinhado à afinação em tempo real do cantor:
+        // Se a afinação for 60%, a pontuação nunca pode correr descolada para 10.000!
+        let maxAllowedScore = maxProgressScore;
+        const currentLiveAcc = this.calculateAccuracy(songTime);
+        if (currentLiveAcc !== null) {
+          const accuracyCap = Math.round(10000 * Math.min(1.0, (currentLiveAcc + 6) / 100));
+          maxAllowedScore = Math.min(maxProgressScore, accuracyCap);
+        }
 
         this.scoreFloat += hitRate * dt;
         this.score = Math.min(maxAllowedScore, Math.max(0, Math.floor(this.scoreFloat)));
@@ -729,9 +737,15 @@ class KaraokeEngine {
       const distinctNotes = (this.uniqueNotesSung && this.uniqueNotesSung.size) ? this.uniqueNotesSung.size : 0;
       const melodyDiversityRatio = Math.min(1.0, Math.max(0.25, distinctNotes / 4.5));
 
-      // A pontuação final é baseada no canto real acumulado ponderado pela variedade melódica
+      // TETO RIGOROSO DE AFINAÇÃO:
+      // A pontuação NUNCA pode ser descolada da afinação do cantor!
+      // Se a afinação foi 60%, a pontuação máxima possível é 6.000 pontos.
+      // Se foi 85%, o teto é 8.500 pontos. Apenas quem afina >= 95% atinge 10.000.
+      const maxPossibleByAccuracy = Math.round(10000 * (finalAccuracy / 100));
+
+      // A pontuação final é baseada no canto real ponderado por diversidade e estritamente limitada pela afinação
       const finalCalculated = Math.round(this.scoreFloat * melodyDiversityRatio);
-      this.score = Math.min(10000, Math.max(0, finalCalculated));
+      this.score = Math.min(maxPossibleByAccuracy, Math.max(0, finalCalculated));
 
       // Determinar estrelas (1 a 5) de acordo com os limiares da dificuldade
       const [t1, t2, t3, t4, t5] = config.starThresholds;

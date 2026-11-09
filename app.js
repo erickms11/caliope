@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
       milestoneHideTimeout = setTimeout(() => {
         milestoneBanner.classList.remove('show');
         milestoneBanner.classList.add('hide');
-      }, 2800);
+      }, 2000);
     }
   }
 
