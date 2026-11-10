@@ -3,6 +3,7 @@ import sys
 import json
 import re
 import subprocess
+import urllib.request
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -138,6 +139,48 @@ def process_youtube_song(youtube_url, progress_callback=None):
     ]
     run_cmd(cmd_dl)
 
+    # Salvar thumbnail local em WebP otimizado (rápido e leve)
+    local_thumb_rel = f"songs/{safe_folder}/thumbnail.webp"
+    thumb_saved = False
+    temp_thumb = song_dir / "temp_thumb.tmp"
+
+    if thumbnail and str(thumbnail).startswith("http"):
+        try:
+            req = urllib.request.Request(thumbnail, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=8) as resp:
+                if resp.status == 200:
+                    with open(temp_thumb, "wb") as f_out:
+                        f_out.write(resp.read())
+            cmd_conv = [
+                "ffmpeg", "-y", "-i", str(temp_thumb),
+                "-vf", "scale=480:-1", "-q:v", "78",
+                str(song_dir / "thumbnail.webp")
+            ]
+            run_cmd(cmd_conv, check=False)
+            if (song_dir / "thumbnail.webp").exists() and (song_dir / "thumbnail.webp").stat().st_size > 500:
+                thumb_saved = True
+        except Exception:
+            pass
+        finally:
+            if temp_thumb.exists():
+                temp_thumb.unlink()
+
+    # Fallback: se não salvou via URL, extrai frame do próprio vídeo baixado
+    if not thumb_saved and video_file.exists():
+        try:
+            cmd_extract = [
+                "ffmpeg", "-y", "-ss", "00:00:05", "-i", str(video_file),
+                "-vframes", "1", "-vf", "scale=480:-1", "-q:v", "78",
+                str(song_dir / "thumbnail.webp")
+            ]
+            run_cmd(cmd_extract, check=False)
+            if (song_dir / "thumbnail.webp").exists() and (song_dir / "thumbnail.webp").stat().st_size > 500:
+                thumb_saved = True
+        except Exception:
+            pass
+
+    final_thumb = local_thumb_rel if thumb_saved else (thumbnail or "")
+
     # Detecção automática de categoria (Nacional vs Internacional)
     common_en = {'the', 'you', 'love', 'me', 'my', 'and', 'for', 'to', 'in', 'of', 'it', 'on', 'with', 'all', 'like', 'feat', 'ft'}
     words = set(re.findall(r'[a-zA-Z]+', f"{title} {artist}".lower()))
@@ -154,7 +197,7 @@ def process_youtube_song(youtube_url, progress_callback=None):
         "difficulty": "Dinâmica",
         "bpm": 120,
         "duration": round(duration, 1),
-        "thumbnail": thumbnail,
+        "thumbnail": final_thumb,
         "videoUrl": f"songs/{safe_folder}/video.mp4",
         "audioUrl": f"songs/{safe_folder}/video.mp4",
         "hasVideoLyrics": True,

@@ -226,6 +226,7 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
         range_header = self.headers.get('Range')
 
         is_media = any(path.endswith(ext) for ext in ('.mp4', '.mp3', '.webm', '.wav', '.ogg', '.m4a'))
+        is_static_asset = any(path.endswith(ext) for ext in ('.webp', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.woff2', '.woff', '.ttf', '.ico'))
 
         if not range_header:
             self.send_response(200)
@@ -237,8 +238,8 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
             self.send_header("Access-Control-Allow-Headers", "Range, Content-Type, Accept, Origin")
             self.send_header("Access-Control-Expose-Headers", "Content-Range, Content-Length, Accept-Ranges")
 
-            if is_media:
-                self.send_header("Cache-Control", "public, max-age=86400")
+            if is_media or is_static_asset:
+                self.send_header("Cache-Control", "public, max-age=604800, immutable")
             else:
                 self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
                 self.send_header("Pragma", "no-cache")
