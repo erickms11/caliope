@@ -202,7 +202,13 @@ class CaliopeServerHandler(http.server.SimpleHTTPRequestHandler):
         """Sobrescreve send_head para suportar streaming de vídeo/áudio e HTTP Range (206 Partial Content)."""
         path = self.translate_path(self.path)
         if os.path.isdir(path):
-            return super().send_head()
+            for index in ("index.html", "index.htm"):
+                index_path = os.path.join(path, index)
+                if os.path.exists(index_path):
+                    path = index_path
+                    break
+            else:
+                return super().send_head()
 
         if not os.path.isfile(path):
             self.send_error(404, "File not found")

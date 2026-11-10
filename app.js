@@ -2135,6 +2135,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Força recarga em navegadores mobile se restaurado via back-forward cache (bfcache)
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) {
+      window.location.reload();
+    }
+  });
+
   // Inicialização no Lobby e Configurações
   updateDifficultyUI(currentDifficulty);
   loadImportedSongs();
