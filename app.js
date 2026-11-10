@@ -813,6 +813,13 @@ document.addEventListener('DOMContentLoaded', () => {
              (s.artist && s.artist.toLowerCase().includes(filter));
     });
 
+    // Ordenação Alfabética Estrita por Artista (A-Z) e Título (A-Z)
+    songsToDisplay.sort((a, b) => {
+      const comp = (a.artist || '').localeCompare(b.artist || '', 'pt-BR', { sensitivity: 'base' });
+      if (comp !== 0) return comp;
+      return (a.title || '').localeCompare(b.title || '', 'pt-BR', { sensitivity: 'base' });
+    });
+
     const fragment = document.createDocumentFragment();
 
     if (songsToDisplay.length === 0) {
@@ -843,8 +850,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ? '<span class="song-card-tag tag-internacional">🌎 Internacional</span>'
         : '<span class="song-card-tag tag-nacional">🇧🇷 Nacional</span>';
       
-      // Os primeiros 8 cards visíveis carregam imediatamente sem aguardar viewport
-      const loadingAttr = index < 8 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
+      // Primeiros 24 cards carregam imediatamente sem aguardar viewport
+      const loadingAttr = index < 24 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
 
       card.innerHTML = `
         <div class="song-card-thumb">
@@ -2142,10 +2149,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Inicialização no Lobby e Configurações
+  // 1. Inicialização Instantânea do Lobby
   updateDifficultyUI(currentDifficulty);
-  loadImportedSongs();
-  loadAndRenderRankings();
   renderLobbySongs();
-  initRemoteMicHost();
+
+  // 2. Carregamentos secundários em segundo plano para não travar a lista
+  setTimeout(() => {
+    loadImportedSongs();
+    loadAndRenderRankings();
+    initRemoteMicHost();
+  }, 40);
 });

@@ -10,7 +10,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Caliope • O Jogo de Videokê Oficial</title>
-  <link rel="stylesheet" href="style.css?v=58">
+  <link rel="stylesheet" href="style.css?v=59">
+  <link rel="preload" href="songs.js?v=59" as="script">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -592,15 +593,16 @@
 
   </div>
 
-  <!-- Bibliotecas WebRTC PeerJS e QRCode -->
-  <script src="vendor/peerjs.min.js"></script>
-  <script src="vendor/qrcode.min.js"></script>
+  <!-- Módulos Core do Videokê (Carregamento Prioritário Instantâneo) -->
+  <script src="pitch.js?v=59"></script>
+  <script src="calibrator.js?v=59"></script>
+  <script src="songs.js?v=59"></script>
+  <script src="sequencer.js?v=59"></script>
+  <script src="game_engine.js?v=59"></script>
+  <script src="app.js?v=59"></script>
 
-  <script src="pitch.js?v=58"></script>
-  <script src="calibrator.js?v=58"></script>
-  <script src="songs.js?v=58"></script>
-  <script src="sequencer.js?v=58"></script>
-  <script src="game_engine.js?v=58"></script>
-  <script src="app.js?v=58"></script>
+  <!-- Bibliotecas WebRTC PeerJS e QRCode (Microfone Remoto - Assíncronas) -->
+  <script src="vendor/peerjs.min.js" defer></script>
+  <script src="vendor/qrcode.min.js" defer></script>
 </body>
 </html>
