@@ -14,7 +14,7 @@ const SONGS_CATALOG = [
     "duration": 212,
     "thumbnail": "https://i.ytimg.com/vi_webp/SsEpSlriogA/maxresdefault.webp",
     "videoUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/video.mp4",
-    "audioUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/audio.mp3",
+    "audioUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -28,7 +28,7 @@ const SONGS_CATALOG = [
     "duration": 214,
     "thumbnail": "https://i.ytimg.com/vi_webp/kyTDGRwo_WE/sddefault.webp",
     "videoUrl": "songs/Ainda_Bem_Thiaguinho_kyTDGR/video.mp4",
-    "audioUrl": "songs/Ainda_Bem_Thiaguinho_kyTDGR/audio.mp3",
+    "audioUrl": "songs/Ainda_Bem_Thiaguinho_kyTDGR/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -42,7 +42,7 @@ const SONGS_CATALOG = [
     "duration": 284,
     "thumbnail": "https://i.ytimg.com/vi_webp/76foKvqqDas/maxresdefault.webp",
     "videoUrl": "songs/Alcione_Voc__Me_Vira_A_Cabe_a_76foKv/video.mp4",
-    "audioUrl": "songs/Alcione_Voc__Me_Vira_A_Cabe_a_76foKv/audio.mp3",
+    "audioUrl": "songs/Alcione_Voc__Me_Vira_A_Cabe_a_76foKv/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -56,7 +56,7 @@ const SONGS_CATALOG = [
     "duration": 252,
     "thumbnail": "https://i.ytimg.com/vi_webp/Gw-QOBzISlo/maxresdefault.webp",
     "videoUrl": "songs/Backstreet_Boys_Incomplete_Gw-QOB/video.mp4",
-    "audioUrl": "songs/Backstreet_Boys_Incomplete_Gw-QOB/audio.mp3",
+    "audioUrl": "songs/Backstreet_Boys_Incomplete_Gw-QOB/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -70,7 +70,7 @@ const SONGS_CATALOG = [
     "duration": 261,
     "thumbnail": "https://i.ytimg.com/vi_webp/qk4w6JMzuGg/maxresdefault.webp",
     "videoUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/video.mp4",
-    "audioUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/audio.mp3",
+    "audioUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -84,7 +84,7 @@ const SONGS_CATALOG = [
     "duration": 220,
     "thumbnail": "https://i.ytimg.com/vi/ndXtEklozZI/sddefault.jpg",
     "videoUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/video.mp4",
-    "audioUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/audio.mp3",
+    "audioUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -98,7 +98,7 @@ const SONGS_CATALOG = [
     "duration": 261,
     "thumbnail": "https://i.ytimg.com/vi_webp/0g_hKVYa6No/maxresdefault.webp",
     "videoUrl": "songs/Bruno_Mars_It_Will_Rain_0g_hKV/video.mp4",
-    "audioUrl": "songs/Bruno_Mars_It_Will_Rain_0g_hKV/audio.mp3",
+    "audioUrl": "songs/Bruno_Mars_It_Will_Rain_0g_hKV/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -112,7 +112,7 @@ const SONGS_CATALOG = [
     "duration": 232,
     "thumbnail": "https://i.ytimg.com/vi_webp/kdtWMjCEwSw/maxresdefault.webp",
     "videoUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/video.mp4",
-    "audioUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/audio.mp3",
+    "audioUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -126,7 +126,7 @@ const SONGS_CATALOG = [
     "duration": 294,
     "thumbnail": "https://i.ytimg.com/vi/WjHMQZa_p1Q/sddefault.jpg",
     "videoUrl": "songs/CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ/video.mp4",
-    "audioUrl": "songs/CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ/audio.mp3",
+    "audioUrl": "songs/CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -140,7 +140,7 @@ const SONGS_CATALOG = [
     "duration": 198,
     "thumbnail": "https://i.ytimg.com/vi/Fa2HI8RDLfc/maxresdefault.jpg",
     "videoUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/video.mp4",
-    "audioUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/audio.mp3",
+    "audioUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -154,7 +154,7 @@ const SONGS_CATALOG = [
     "duration": 309,
     "thumbnail": "https://i.ytimg.com/vi/cdgU8YmD3Kc/maxresdefault.jpg",
     "videoUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/video.mp4",
-    "audioUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/audio.mp3",
+    "audioUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -168,7 +168,7 @@ const SONGS_CATALOG = [
     "duration": 196,
     "thumbnail": "https://i.ytimg.com/vi_webp/C4V2TT2PcOg/maxresdefault.webp",
     "videoUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/video.mp4",
-    "audioUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/audio.mp3",
+    "audioUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -182,7 +182,7 @@ const SONGS_CATALOG = [
     "duration": 246,
     "thumbnail": "https://i.ytimg.com/vi_webp/iPy2YPjlrrY/sddefault.webp",
     "videoUrl": "songs/Creep_Radiohead_iPy2YP/video.mp4",
-    "audioUrl": "songs/Creep_Radiohead_iPy2YP/audio.mp3",
+    "audioUrl": "songs/Creep_Radiohead_iPy2YP/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -196,7 +196,7 @@ const SONGS_CATALOG = [
     "duration": 211,
     "thumbnail": "https://i.ytimg.com/vi_webp/CX2_B1ZXFVQ/maxresdefault.webp",
     "videoUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/video.mp4",
-    "audioUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/audio.mp3",
+    "audioUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -210,7 +210,7 @@ const SONGS_CATALOG = [
     "duration": 225,
     "thumbnail": "https://i.ytimg.com/vi_webp/GTmvRLyu0mk/sddefault.webp",
     "videoUrl": "songs/Diamonds___Rihanna_GTmvRL/video.mp4",
-    "audioUrl": "songs/Diamonds___Rihanna_GTmvRL/audio.mp3",
+    "audioUrl": "songs/Diamonds___Rihanna_GTmvRL/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -224,7 +224,7 @@ const SONGS_CATALOG = [
     "duration": 189,
     "thumbnail": "https://i.ytimg.com/vi/oft0y3XcHu4/maxresdefault.jpg",
     "videoUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/video.mp4",
-    "audioUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/audio.mp3",
+    "audioUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -238,7 +238,7 @@ const SONGS_CATALOG = [
     "duration": 272,
     "thumbnail": "https://i.ytimg.com/vi/f0zT_JwTYt4/maxresdefault.jpg",
     "videoUrl": "songs/Elis_Regina_Como_nossos_pais_f0zT_J/video.mp4",
-    "audioUrl": "songs/Elis_Regina_Como_nossos_pais_f0zT_J/audio.mp3",
+    "audioUrl": "songs/Elis_Regina_Como_nossos_pais_f0zT_J/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -252,7 +252,7 @@ const SONGS_CATALOG = [
     "duration": 216,
     "thumbnail": "https://i.ytimg.com/vi/VO6TKTtErwY/maxresdefault.jpg",
     "videoUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/video.mp4",
-    "audioUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/audio.mp3",
+    "audioUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -266,7 +266,7 @@ const SONGS_CATALOG = [
     "duration": 292,
     "thumbnail": "https://i.ytimg.com/vi_webp/tAEek8nO11c/maxresdefault.webp",
     "videoUrl": "songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
-    "audioUrl": "songs/Frank_Sinatra_My_Way_tAEek8/audio.mp3",
+    "audioUrl": "songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -280,7 +280,7 @@ const SONGS_CATALOG = [
     "duration": 209,
     "thumbnail": "https://i.ytimg.com/vi_webp/_J9po90y8es/maxresdefault.webp",
     "videoUrl": "songs/George_Ezra_Shotgun__J9po9/video.mp4",
-    "audioUrl": "songs/George_Ezra_Shotgun__J9po9/audio.mp3",
+    "audioUrl": "songs/George_Ezra_Shotgun__J9po9/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -294,7 +294,7 @@ const SONGS_CATALOG = [
     "duration": 343,
     "thumbnail": "https://i.ytimg.com/vi/1TIeDbnzp9M/sddefault.jpg",
     "videoUrl": "songs/George_Michael_Careless_Whisper_1TIeDb/video.mp4",
-    "audioUrl": "songs/George_Michael_Careless_Whisper_1TIeDb/audio.mp3",
+    "audioUrl": "songs/George_Michael_Careless_Whisper_1TIeDb/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -308,7 +308,7 @@ const SONGS_CATALOG = [
     "duration": 196,
     "thumbnail": "https://i.ytimg.com/vi_webp/Uj9-4xxTlsU/maxresdefault.webp",
     "videoUrl": "songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
-    "audioUrl": "songs/Hamilton_Wait_for_It_Uj9-4x/audio.mp3",
+    "audioUrl": "songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -322,7 +322,7 @@ const SONGS_CATALOG = [
     "duration": 250,
     "thumbnail": "https://i.ytimg.com/vi_webp/Mk5JYEFcGnU/maxresdefault.webp",
     "videoUrl": "songs/Hoobastank_The_Reason_Mk5JYE/video.mp4",
-    "audioUrl": "songs/Hoobastank_The_Reason_Mk5JYE/audio.mp3",
+    "audioUrl": "songs/Hoobastank_The_Reason_Mk5JYE/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -336,7 +336,7 @@ const SONGS_CATALOG = [
     "duration": 220,
     "thumbnail": "https://i.ytimg.com/vi/IjFeGYAT-5E/maxresdefault.jpg",
     "videoUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
-    "audioUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/audio.mp3",
+    "audioUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -350,7 +350,7 @@ const SONGS_CATALOG = [
     "duration": 201,
     "thumbnail": "https://i.ytimg.com/vi/qbLnXHPnvNg/maxresdefault.jpg",
     "videoUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/video.mp4",
-    "audioUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/audio.mp3",
+    "audioUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -364,7 +364,7 @@ const SONGS_CATALOG = [
     "duration": 344,
     "thumbnail": "https://i.ytimg.com/vi/uLs_MLOw7D4/sddefault.jpg?v=636fd36f",
     "videoUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/video.mp4",
-    "audioUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/audio.mp3",
+    "audioUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -378,7 +378,7 @@ const SONGS_CATALOG = [
     "duration": 188,
     "thumbnail": "https://i.ytimg.com/vi_webp/_C62mLmeGu0/maxresdefault.webp",
     "videoUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/video.mp4",
-    "audioUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/audio.mp3",
+    "audioUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -392,7 +392,7 @@ const SONGS_CATALOG = [
     "duration": 270,
     "thumbnail": "https://i.ytimg.com/vi/r68Ak9v7DFc/maxresdefault.jpg",
     "videoUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/video.mp4",
-    "audioUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/audio.mp3",
+    "audioUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -406,7 +406,7 @@ const SONGS_CATALOG = [
     "duration": 253,
     "thumbnail": "https://i.ytimg.com/vi/BvTDeEiD42k/maxresdefault.jpg",
     "videoUrl": "songs/Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE/video.mp4",
-    "audioUrl": "songs/Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE/audio.mp3",
+    "audioUrl": "songs/Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -420,7 +420,7 @@ const SONGS_CATALOG = [
     "duration": 245,
     "thumbnail": "https://i.ytimg.com/vi_webp/7YSYFTez9Sg/sddefault.webp",
     "videoUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
-    "audioUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/audio.mp3",
+    "audioUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -434,7 +434,7 @@ const SONGS_CATALOG = [
     "duration": 208,
     "thumbnail": "https://i.ytimg.com/vi/7Jrl7jGm_Cw/maxresdefault.jpg",
     "videoUrl": "songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/video.mp4",
-    "audioUrl": "songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/audio.mp3",
+    "audioUrl": "songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -448,7 +448,7 @@ const SONGS_CATALOG = [
     "duration": 234,
     "thumbnail": "https://i.ytimg.com/vi_webp/OZD6H9SGIB8/maxresdefault.webp",
     "videoUrl": "songs/Keane_Everybody_s_Changing_OZD6H9/video.mp4",
-    "audioUrl": "songs/Keane_Everybody_s_Changing_OZD6H9/audio.mp3",
+    "audioUrl": "songs/Keane_Everybody_s_Changing_OZD6H9/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -462,7 +462,7 @@ const SONGS_CATALOG = [
     "duration": 225,
     "thumbnail": "https://i.ytimg.com/vi_webp/sRk4_RvN8X4/maxresdefault.webp",
     "videoUrl": "songs/Monalisa_Jorge_Vercillo_sRk4_R/video.mp4",
-    "audioUrl": "songs/Monalisa_Jorge_Vercillo_sRk4_R/audio.mp3",
+    "audioUrl": "songs/Monalisa_Jorge_Vercillo_sRk4_R/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -476,7 +476,7 @@ const SONGS_CATALOG = [
     "duration": 252,
     "thumbnail": "https://i.ytimg.com/vi_webp/ZvVruySb6ZI/maxresdefault.webp",
     "videoUrl": "songs/NEY_MATOGROSSO_POEMA_ZvVruy/video.mp4",
-    "audioUrl": "songs/NEY_MATOGROSSO_POEMA_ZvVruy/audio.mp3",
+    "audioUrl": "songs/NEY_MATOGROSSO_POEMA_ZvVruy/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -490,7 +490,7 @@ const SONGS_CATALOG = [
     "duration": 260,
     "thumbnail": "https://i.ytimg.com/vi_webp/hHP_GEZIjTg/maxresdefault.webp",
     "videoUrl": "songs/Ne-Yo_Miss_Independent_hHP_GE/video.mp4",
-    "audioUrl": "songs/Ne-Yo_Miss_Independent_hHP_GE/audio.mp3",
+    "audioUrl": "songs/Ne-Yo_Miss_Independent_hHP_GE/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -504,7 +504,7 @@ const SONGS_CATALOG = [
     "duration": 308,
     "thumbnail": "https://i.ytimg.com/vi/HycjqQvu7pM/maxresdefault.jpg",
     "videoUrl": "songs/Pais_e_Filhos_Legi_o_Urbana_HycjqQ/video.mp4",
-    "audioUrl": "songs/Pais_e_Filhos_Legi_o_Urbana_HycjqQ/audio.mp3",
+    "audioUrl": "songs/Pais_e_Filhos_Legi_o_Urbana_HycjqQ/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -518,7 +518,7 @@ const SONGS_CATALOG = [
     "duration": 344,
     "thumbnail": "https://i.ytimg.com/vi_webp/bpkkkXpuuRQ/maxresdefault.webp",
     "videoUrl": "songs/Pearl_Jam_Black_bpkkkX/video.mp4",
-    "audioUrl": "songs/Pearl_Jam_Black_bpkkkX/audio.mp3",
+    "audioUrl": "songs/Pearl_Jam_Black_bpkkkX/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -532,7 +532,7 @@ const SONGS_CATALOG = [
     "duration": 270,
     "thumbnail": "https://i.ytimg.com/vi_webp/C2TTXCXUAaI/maxresdefault.webp",
     "videoUrl": "songs/Queen_The_Show_Must_Go_On_C2TTXC/video.mp4",
-    "audioUrl": "songs/Queen_The_Show_Must_Go_On_C2TTXC/audio.mp3",
+    "audioUrl": "songs/Queen_The_Show_Must_Go_On_C2TTXC/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -546,7 +546,7 @@ const SONGS_CATALOG = [
     "duration": 271,
     "thumbnail": "https://i.ytimg.com/vi_webp/gCrqBZlxSyA/maxresdefault.webp",
     "videoUrl": "songs/R_E_M_Losing_My_Religion_gCrqBZ/video.mp4",
-    "audioUrl": "songs/R_E_M_Losing_My_Religion_gCrqBZ/audio.mp3",
+    "audioUrl": "songs/R_E_M_Losing_My_Religion_gCrqBZ/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -560,7 +560,7 @@ const SONGS_CATALOG = [
     "duration": 249,
     "thumbnail": "https://i.ytimg.com/vi/wp_BRiRiOHo/maxresdefault.jpg",
     "videoUrl": "songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/video.mp4",
-    "audioUrl": "songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/audio.mp3",
+    "audioUrl": "songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -574,7 +574,7 @@ const SONGS_CATALOG = [
     "duration": 283,
     "thumbnail": "https://i.ytimg.com/vi_webp/pGFEj-Dv3-0/maxresdefault.webp",
     "videoUrl": "songs/Robbie_Williams_Angels_pGFEj-/video.mp4",
-    "audioUrl": "songs/Robbie_Williams_Angels_pGFEj-/audio.mp3",
+    "audioUrl": "songs/Robbie_Williams_Angels_pGFEj-/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -588,7 +588,7 @@ const SONGS_CATALOG = [
     "duration": 278,
     "thumbnail": "https://i.ytimg.com/vi_webp/40QgJjmfTBw/maxresdefault.webp",
     "videoUrl": "songs/Robbie_Williams_Feel_40QgJj/video.mp4",
-    "audioUrl": "songs/Robbie_Williams_Feel_40QgJj/audio.mp3",
+    "audioUrl": "songs/Robbie_Williams_Feel_40QgJj/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -602,7 +602,7 @@ const SONGS_CATALOG = [
     "duration": 248,
     "thumbnail": "https://i.ytimg.com/vi/aNZqP4ouvG0/maxresdefault.jpg",
     "videoUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/video.mp4",
-    "audioUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/audio.mp3",
+    "audioUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -616,7 +616,7 @@ const SONGS_CATALOG = [
     "duration": 197,
     "thumbnail": "https://i.ytimg.com/vi/_AvqUg5CMm0/maxresdefault.jpg",
     "videoUrl": "songs/Roupa_Nova_Dona__AvqUg/video.mp4",
-    "audioUrl": "songs/Roupa_Nova_Dona__AvqUg/audio.mp3",
+    "audioUrl": "songs/Roupa_Nova_Dona__AvqUg/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -630,7 +630,7 @@ const SONGS_CATALOG = [
     "duration": 287,
     "thumbnail": "https://i.ytimg.com/vi/NSve9NpTjuA/maxresdefault.jpg",
     "videoUrl": "songs/SKANK_DOIS_RIOS_NSve9N/video.mp4",
-    "audioUrl": "songs/SKANK_DOIS_RIOS_NSve9N/audio.mp3",
+    "audioUrl": "songs/SKANK_DOIS_RIOS_NSve9N/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -644,7 +644,7 @@ const SONGS_CATALOG = [
     "duration": 240,
     "thumbnail": "https://i.ytimg.com/vi/NwHWsH2vNrM/maxresdefault.jpg",
     "videoUrl": "songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/video.mp4",
-    "audioUrl": "songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/audio.mp3",
+    "audioUrl": "songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -658,7 +658,7 @@ const SONGS_CATALOG = [
     "duration": 256,
     "thumbnail": "https://i.ytimg.com/vi_webp/IQVT5onM7m4/maxresdefault.webp",
     "videoUrl": "songs/Skank_T_o_Seu_IQVT5o/video.mp4",
-    "audioUrl": "songs/Skank_T_o_Seu_IQVT5o/audio.mp3",
+    "audioUrl": "songs/Skank_T_o_Seu_IQVT5o/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -672,7 +672,7 @@ const SONGS_CATALOG = [
     "duration": 244,
     "thumbnail": "https://i.ytimg.com/vi_webp/gCuzzJvJrSk/maxresdefault.webp",
     "videoUrl": "songs/Take_That_Back_For_Good_On_Screen_gCuzzJ/video.mp4",
-    "audioUrl": "songs/Take_That_Back_For_Good_On_Screen_gCuzzJ/audio.mp3",
+    "audioUrl": "songs/Take_That_Back_For_Good_On_Screen_gCuzzJ/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -686,7 +686,7 @@ const SONGS_CATALOG = [
     "duration": 223,
     "thumbnail": "https://i.ytimg.com/vi_webp/iXYKvkDtA3M/maxresdefault.webp",
     "videoUrl": "songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/video.mp4",
-    "audioUrl": "songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/audio.mp3",
+    "audioUrl": "songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -700,7 +700,7 @@ const SONGS_CATALOG = [
     "duration": 198,
     "thumbnail": "https://i.ytimg.com/vi/IFX1Dqo9Gls/maxresdefault.jpg",
     "videoUrl": "songs/Take_That_Patience_IFX1Dq/video.mp4",
-    "audioUrl": "songs/Take_That_Patience_IFX1Dq/audio.mp3",
+    "audioUrl": "songs/Take_That_Patience_IFX1Dq/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -714,7 +714,7 @@ const SONGS_CATALOG = [
     "duration": 233,
     "thumbnail": "https://i.ytimg.com/vi_webp/oPEsF8Rj0w8/maxresdefault.webp",
     "videoUrl": "songs/Tempo_Perdido_Legi_o_Urbana_oPEsF8/video.mp4",
-    "audioUrl": "songs/Tempo_Perdido_Legi_o_Urbana_oPEsF8/audio.mp3",
+    "audioUrl": "songs/Tempo_Perdido_Legi_o_Urbana_oPEsF8/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -728,7 +728,7 @@ const SONGS_CATALOG = [
     "duration": 216,
     "thumbnail": "https://i.ytimg.com/vi_webp/Hjx9TJQlBsM/maxresdefault.webp",
     "videoUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
-    "audioUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/audio.mp3",
+    "audioUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -742,7 +742,7 @@ const SONGS_CATALOG = [
     "duration": 228,
     "thumbnail": "https://i.ytimg.com/vi/fUl3-nkH7io/maxresdefault.jpg",
     "videoUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/video.mp4",
-    "audioUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/audio.mp3",
+    "audioUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -756,7 +756,7 @@ const SONGS_CATALOG = [
     "duration": 237,
     "thumbnail": "https://i.ytimg.com/vi_webp/8fm8rnf8THk/maxresdefault.webp",
     "videoUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/video.mp4",
-    "audioUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/audio.mp3",
+    "audioUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -770,7 +770,7 @@ const SONGS_CATALOG = [
     "duration": 218,
     "thumbnail": "https://i.ytimg.com/vi_webp/yZRSFbK7y8E/maxresdefault.webp",
     "videoUrl": "songs/__Que_Nem_Mar__Jorge_Vercillo_yZRSFb/video.mp4",
-    "audioUrl": "songs/__Que_Nem_Mar__Jorge_Vercillo_yZRSFb/audio.mp3",
+    "audioUrl": "songs/__Que_Nem_Mar__Jorge_Vercillo_yZRSFb/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -784,7 +784,7 @@ const SONGS_CATALOG = [
     "duration": 226,
     "thumbnail": "https://i.ytimg.com/vi_webp/GBRLY5DnL3M/sddefault.webp",
     "videoUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/video.mp4",
-    "audioUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/audio.mp3",
+    "audioUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -798,7 +798,7 @@ const SONGS_CATALOG = [
     "duration": 251,
     "thumbnail": "https://i.ytimg.com/vi/3nBAoA5sZC4/maxresdefault.jpg",
     "videoUrl": "songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
-    "audioUrl": "songs/__Te_Esperando_Luan_Santana_3nBAoA/audio.mp3",
+    "audioUrl": "songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   },
@@ -812,7 +812,7 @@ const SONGS_CATALOG = [
     "duration": 200,
     "thumbnail": "https://i.ytimg.com/vi/uiZQt3_COMk/maxresdefault.jpg",
     "videoUrl": "songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
-    "audioUrl": "songs/__Te_Vivo_Luan_Santana_uiZQt3/audio.mp3",
+    "audioUrl": "songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
     "hasVideoLyrics": true,
     "notes": []
   }

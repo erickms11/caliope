@@ -125,32 +125,20 @@ def process_youtube_song(youtube_url, progress_callback=None):
     song_dir.mkdir(parents=True, exist_ok=True)
 
     video_file = song_dir / "video.mp4"
-    audio_file = song_dir / "audio.mp3"
 
-    report("downloading", 40, f"Baixando vídeo com letra de: {title}...")
+    report("downloading", 45, f"Baixando vídeo leve com letra de: {title}...")
     cmd_dl = [
         str(YT_DLP_BIN),
         "--extractor-args", "youtube:player_client=android,web",
-        "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best[height<=720]/18/best",
+        "-f", "bestvideo[height<=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height<=720]+bestaudio/best[height<=720]/best[height<=480]/18/best",
         "--merge-output-format", "mp4",
         "-o", str(video_file),
         "--no-playlist",
         youtube_url
     ]
     run_cmd(cmd_dl)
-    run_cmd(cmd_dl)
 
-    report("separating", 75, "Extraindo áudio estéreo...")
-    cmd_extract = [
-        "ffmpeg", "-y",
-        "-i", str(video_file),
-        "-vn",
-        "-b:a", "192k",
-        str(audio_file)
-    ]
-    run_cmd(cmd_extract)
-
-    report("finalizing", 90, "Registrando no catálogo do Videokê...")
+    report("finalizing", 85, "Registrando no catálogo do Videokê...")
     song_data = {
         "id": safe_folder,
         "title": title,
@@ -161,7 +149,7 @@ def process_youtube_song(youtube_url, progress_callback=None):
         "duration": round(duration, 1),
         "thumbnail": thumbnail,
         "videoUrl": f"songs/{safe_folder}/video.mp4",
-        "audioUrl": f"songs/{safe_folder}/audio.mp3",
+        "audioUrl": f"songs/{safe_folder}/video.mp4",
         "hasVideoLyrics": True,
         "notes": []
     }
