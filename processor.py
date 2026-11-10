@@ -75,14 +75,18 @@ def clean_karaoke_title(raw_title, raw_artist=""):
         parts = re.split(r'\s+by\s+', clean, flags=re.IGNORECASE, maxsplit=1)
         title = parts[0].strip(' -_–|')
         artist = parts[1].strip(' -_–|')
-    elif " - " in clean:
-        parts = clean.split(" - ", 1)
-        artist = parts[0].strip()
-        title = parts[1].strip()
-    elif " – " in clean:
-        parts = clean.split(" – ", 1)
-        artist = parts[0].strip()
-        title = parts[1].strip()
+    elif " - " in clean or " – " in clean:
+        delimiter = " - " if " - " in clean else " – "
+        parts = clean.split(delimiter, 1)
+        p0 = parts[0].strip(' -_–|')
+        p1 = parts[1].strip(' -_–|')
+        # Heurística: se raw_artist corresponder a p1, o formato original era "Música - Artista"
+        if raw_artist and (raw_artist.lower() in p1.lower()) and (raw_artist.lower() not in p0.lower()):
+            title = p0
+            artist = p1
+        else:
+            artist = p0
+            title = p1
 
     title = title.strip(' "\'“”–-')
     artist = artist.strip(' "\'“”–-')

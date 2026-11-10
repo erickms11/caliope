@@ -6,8 +6,8 @@
 const SONGS_CATALOG = [
   {
     "id": "3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl",
-    "title": "Mastruz Com Leite",
-    "artist": "3885 Moto Táxi",
+    "title": "Moto Táxi",
+    "artist": "Mastruz com Leite",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -21,8 +21,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Ainda_Bem_Thiaguinho_kyTDGR",
-    "title": "Thiaguinho",
-    "artist": "Ainda Bem",
+    "title": "Ainda Bem",
+    "artist": "Thiaguinho",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -36,7 +36,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Alcione_Voc__Me_Vira_A_Cabe_a_76foKv",
-    "title": "Você Me Vira A Cabeça",
+    "title": "Você Me Vira a Cabeça",
     "artist": "Alcione",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -81,8 +81,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk",
-    "title": "COISAS QUE EU SEI Dudu Falcão",
-    "artist": "Blitz Videokê",
+    "title": "Coisas Que Eu Sei",
+    "artist": "Dudu Falcão",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -111,7 +111,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj",
-    "title": "Talking To The Moon",
+    "title": "Talking to the Moon",
     "artist": "Bruno Mars",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -126,7 +126,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ",
-    "title": "Like A Stone",
+    "title": "Like a Stone",
     "artist": "Audioslave",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -141,7 +141,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Calcinha_Preta_Liga_pra_mim_Fa2HI8",
-    "title": "Liga pra mim",
+    "title": "Liga Pra Mim",
     "artist": "Calcinha Preta",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -171,8 +171,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Chico_Mineiro_Tonico_e_Tinoco_C4V2TT",
-    "title": "Tonico e Tinoco",
-    "artist": "Chico Mineiro",
+    "title": "Chico Mineiro",
+    "artist": "Tonico & Tinoco",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -231,8 +231,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "EU_E_EU_GUSTAVO_MIOTO_oft0y3",
-    "title": "GUSTAVO MIOTO",
-    "artist": "EU E EU",
+    "title": "Eu e Eu",
+    "artist": "Gustavo Mioto",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -246,7 +246,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Elis_Regina_Como_nossos_pais_f0zT_J",
-    "title": "Como nossos pais",
+    "title": "Como Nossos Pais",
     "artist": "Elis Regina",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -261,8 +261,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Folha_Seca_Amado_Batista_VO6TKT",
-    "title": "Amado Batista",
-    "artist": "Folha Seca",
+    "title": "Folha Seca",
+    "artist": "Amado Batista",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -322,7 +322,7 @@ const SONGS_CATALOG = [
   {
     "id": "Hamilton_Wait_for_It_Uj9-4x",
     "title": "Wait for It",
-    "artist": "Hamilton",
+    "artist": "Hamilton (Musical)",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -366,8 +366,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "JORGE_VERCILLO_MONALISA_qbLnXH",
-    "title": "MONALISA",
-    "artist": "JORGE VERCILLO",
+    "title": "Monalisa",
+    "artist": "Jorge Vercillo",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -381,8 +381,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML",
-    "title": "Fraternidade São João Paulo II - Para se divertir, se alegrar e amar com fé!",
-    "artist": "Jardim",
+    "title": "Jardim",
+    "artist": "Fraternidade São João Paulo II",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -396,8 +396,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL",
-    "title": "Ainda Ontem Chorei De Saudade",
-    "artist": "João Mineiro E Marciano",
+    "title": "Ainda Ontem Chorei de Saudade",
+    "artist": "João Mineiro & Marciano",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -427,7 +427,7 @@ const SONGS_CATALOG = [
   {
     "id": "Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE",
     "title": "Minha Estrela Perdida",
-    "artist": "João Paulo e Daniel",
+    "artist": "João Paulo & Daniel",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -441,7 +441,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT",
-    "title": "Just Give Me A Reason",
+    "title": "Just Give Me a Reason",
     "artist": "P!nk ft. Nate Ruess",
     "genre": "Pop",
     "difficulty": "Dinâmica",
@@ -486,7 +486,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Monalisa_Jorge_Vercillo_sRk4_R",
-    "title": "Monalisa",
+    "title": "Monalisa (Versão 2)",
     "artist": "Jorge Vercillo",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -501,8 +501,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "NEY_MATOGROSSO_POEMA_ZvVruy",
-    "title": "POEMA",
-    "artist": "NEY MATOGROSSO",
+    "title": "Poema",
+    "artist": "Ney Matogrosso",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -531,8 +531,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Pais_e_Filhos_Legi_o_Urbana_HycjqQ",
-    "title": "Legião Urbana",
-    "artist": "Pais e Filhos",
+    "title": "Pais e Filhos",
+    "artist": "Legião Urbana",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -577,7 +577,7 @@ const SONGS_CATALOG = [
   {
     "id": "R_E_M_Losing_My_Religion_gCrqBZ",
     "title": "Losing My Religion",
-    "artist": "R.E.M",
+    "artist": "R.E.M.",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -666,8 +666,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "SKANK_DOIS_RIOS_NSve9N",
-    "title": "DOIS RIOS",
-    "artist": "SKANK",
+    "title": "Dois Rios",
+    "artist": "Skank",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -711,7 +711,7 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Take_That_Back_For_Good_On_Screen_gCuzzJ",
-    "title": "Back For Good",
+    "title": "Back for Good",
     "artist": "Take That",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
@@ -756,8 +756,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Tempo_Perdido_Legi_o_Urbana_oPEsF8",
-    "title": "Legião Urbana",
-    "artist": "Tempo Perdido",
+    "title": "Tempo Perdido",
+    "artist": "Legião Urbana",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,
@@ -786,8 +786,8 @@ const SONGS_CATALOG = [
   },
   {
     "id": "Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n",
-    "title": "Mentes Tao Bem",
-    "artist": "Zeze di Camargo & Luciano",
+    "title": "Mentes Tão Bem",
+    "artist": "Zezé Di Camargo & Luciano",
     "genre": "Videokê Oficial",
     "difficulty": "Dinâmica",
     "bpm": 120,

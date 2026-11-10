@@ -2077,20 +2077,24 @@ input[type="range"] {
   flex: 1;
 }
 
-.song-card-title {
-  font-size: 0.95rem;
+.song-card-artist {
+  font-size: 0.76rem;
   font-weight: 800;
-  color: #f8fafc;
+  color: #a5b4fc;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   margin-bottom: 2px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: block;
 }
 
-.song-card-artist {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  margin-bottom: 10px;
+.song-card-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2401,6 +2405,22 @@ input[type="range"] {
   font-size: 1.6rem;
   display: inline-block;
   margin-bottom: 2px;
+}
+
+.prestart-song-artist {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #a5b4fc;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 4px 0 2px 0;
+}
+
+#prestart-song-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #f8fafc;
+  margin: 0 0 6px 0;
 }
 
 .prestart-song-meta {

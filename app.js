@@ -185,8 +185,8 @@ document.addEventListener('DOMContentLoaded', () => {
   {
     "id": "mw6u1ly9as9w",
     "singer": "Erick Moraes",
-    "songTitle": "GUSTAVO MIOTO",
-    "songArtist": "EU E EU",
+    "songTitle": "Eu e Eu",
+    "songArtist": "Gustavo Mioto",
     "songId": "EU_E_EU_GUSTAVO_MIOTO_oft0y3",
     "score": 8480,
     "accuracy": 83,
@@ -854,8 +854,8 @@ document.addEventListener('DOMContentLoaded', () => {
           <button class="song-card-btn-delete" title="Excluir música do Videokê">🗑️</button>
         </div>
         <div class="song-card-body">
-          <h3 class="song-card-title" title="${song.title}">${song.title}</h3>
           <p class="song-card-artist" title="${song.artist}">${song.artist}</p>
+          <h3 class="song-card-title" title="${song.title}">${song.title}</h3>
           ${keyTag}
           <button class="btn btn-primary btn-start-song">
             🎤 Cantar
@@ -1107,7 +1107,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Preparar contagem regressiva
     if (countdownInterval) clearInterval(countdownInterval);
-    countdownSongTitle.textContent = `${song.title} • ${song.artist}`;
+    countdownSongTitle.textContent = `${song.artist} • ${song.title}`;
     if (countdownDetails) {
       countdownDetails.textContent = `🎹 Tom: ${song.key || 'Detectado'} • Dificuldade: ${diffNames[currentDifficulty] || 'Médio'}`;
     }
@@ -1881,7 +1881,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="podium-badge">${style.medal}</div>
         <h3 class="podium-singer" title="${item.singer}">${item.singer}</h3>
-        <p class="podium-song" title="${item.songTitle} • ${item.songArtist}">${item.songTitle} • ${item.songArtist}</p>
+        <p class="podium-song" title="${item.songArtist} • ${item.songTitle}">${item.songArtist} • ${item.songTitle}</p>
         <div class="podium-score">${item.score} pts</div>
         <div class="podium-meta">
           <span class="badge-difficulty">${diffLabels[item.difficultyId] || item.difficulty}</span>
@@ -1908,8 +1908,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <td><span class="rank-pos-pill ${posClass}">${pos}º</span></td>
         <td class="rank-singer-cell">🎤 ${item.singer}</td>
         <td class="rank-song-cell">
-          <span class="rank-song-title">${item.songTitle}</span>
           <span class="rank-song-artist">${item.songArtist}</span>
+          <span class="rank-song-title">${item.songTitle}</span>
         </td>
         <td><span class="badge-difficulty">${diffLabels[item.difficultyId] || item.difficulty}</span></td>
         <td style="font-family: var(--font-mono); font-weight: 700; color: #38bdf8;">${item.accuracy}%</td>
