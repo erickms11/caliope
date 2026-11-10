@@ -796,7 +796,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       card.innerHTML = `
         <div class="song-card-thumb">
-          <img src="${thumbUrl}" alt="${song.title}" loading="lazy">
+          <img src="${thumbUrl}" alt="${song.title}" loading="lazy" decoding="async">
           <span class="song-card-duration">⏱️ ${formatTime(song.duration)}</span>
           <button class="song-card-btn-delete" title="Excluir música do Videokê">🗑️</button>
         </div>
@@ -888,6 +888,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 5. Transições de Telas (Lobby <-> Palco <-> Ranking)
+  function releaseStageVideoMemory() {
+    const stageVideo = document.getElementById('stage-video');
+    if (stageVideo && stageVideo.src) {
+      try {
+        stageVideo.pause();
+        stageVideo.removeAttribute('src');
+        stageVideo.load();
+      } catch (_) {}
+    }
+  }
+
   function showLobby() {
     if (countdownInterval) {
       clearInterval(countdownInterval);
@@ -898,6 +909,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gameEngine) {
       gameEngine.stop();
     }
+    releaseStageVideoMemory();
 
     viewStage.style.display = 'none';
     if (viewRanking) viewRanking.style.display = 'none';
@@ -918,6 +930,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (gameEngine) {
       gameEngine.stop();
     }
+    releaseStageVideoMemory();
 
     viewStage.style.display = 'none';
     viewLobby.style.display = 'none';

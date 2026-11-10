@@ -54,6 +54,7 @@ class BackingTrackSequencer {
 
     if (this.videoElement) {
       this.videoElement.crossOrigin = "anonymous";
+      this.videoElement.preload = "none";
       this.videoElement.addEventListener('ended', () => {
         if (this.onEnded) this.onEnded();
       });
@@ -65,6 +66,7 @@ class BackingTrackSequencer {
     }
 
     if (this.audioElement) {
+      this.audioElement.preload = "none";
       this.audioElement.addEventListener('ended', () => {
         if (this.onEnded) this.onEnded();
       });
