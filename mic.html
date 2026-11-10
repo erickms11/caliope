@@ -13,8 +13,9 @@
   <style>
     :root {
       --bg-dark: #080c16;
-      --bg-card: #111728;
-      --border: #1f2b45;
+      --bg-card: rgba(15, 23, 42, 0.68);
+      --border: rgba(255, 255, 255, 0.12);
+      --border-specular: rgba(255, 255, 255, 0.28);
       --primary: #6366f1;
       --cyan: #06b6d4;
       --gold: #fbbf24;
@@ -42,8 +43,10 @@
       justify-content: space-between;
       padding: 16px;
       background-image: 
-        radial-gradient(circle at 50% 15%, rgba(99, 102, 241, 0.18) 0%, transparent 60%),
-        radial-gradient(circle at 50% 85%, rgba(6, 182, 212, 0.12) 0%, transparent 60%);
+        radial-gradient(ellipse 70% 50% at 50% 12%, rgba(99, 102, 241, 0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 45% at 50% 88%, rgba(6, 182, 212, 0.18) 0%, transparent 55%),
+        radial-gradient(circle at 10% 50%, rgba(168, 85, 247, 0.12) 0%, transparent 50%);
+      background-attachment: fixed;
     }
 
     .mic-app-wrap {
@@ -86,14 +89,18 @@
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.72rem;
       font-weight: 700;
-      background: #0f172a;
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border);
+      border-top: 1px solid var(--border-specular);
       color: var(--cyan);
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 20px;
       display: flex;
       align-items: center;
       gap: 6px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.18);
     }
 
     .status-dot {
@@ -115,9 +122,13 @@
     /* Card de Identificação do Cantor */
     .singer-card {
       background: var(--bg-card);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-top: 1px solid var(--border-specular);
+      border-radius: 18px;
       padding: 12px 16px;
+      box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
 
     .singer-label {
@@ -142,20 +153,26 @@
 
     .singer-input {
       flex: 1;
-      background: #090e1a;
+      background: rgba(10, 15, 29, 0.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 11px;
       padding: 10px 14px;
       font-size: 1rem;
       font-weight: 700;
       color: #fff;
       font-family: inherit;
       outline: none;
-      transition: border 0.2s;
+      transition: all 0.2s;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.12);
     }
 
     .singer-input:focus {
-      border-color: var(--primary);
+      border-color: var(--cyan);
+      border-top-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
 
     /* Botão Central de Microfone */
@@ -171,8 +188,11 @@
       width: 170px;
       height: 170px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1e293b, #0f172a);
-      border: 3px solid #334155;
+      background: radial-gradient(circle at 35% 30%, rgba(45, 60, 90, 0.8) 0%, rgba(15, 23, 42, 0.95) 75%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      border-top: 2px solid rgba(255, 255, 255, 0.5);
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -180,7 +200,7 @@
       justify-content: center;
       gap: 8px;
       cursor: pointer;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.35);
       transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
     }
@@ -203,9 +223,10 @@
     }
 
     .btn-big-mic.active {
-      background: radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, #1e1b4b 75%);
-      border-color: var(--primary);
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.5), inset 0 0 20px rgba(99, 102, 241, 0.4);
+      background: radial-gradient(circle at 35% 30%, rgba(99, 102, 241, 0.5) 0%, rgba(30, 27, 75, 0.95) 75%);
+      border-color: rgba(99, 102, 241, 0.6);
+      border-top-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 0 0 45px rgba(99, 102, 241, 0.55), inset 0 2px 4px rgba(255, 255, 255, 0.45);
     }
 
     .btn-big-mic.active .mic-status-label {
@@ -214,7 +235,8 @@
 
     .btn-big-mic.singing {
       border-color: var(--cyan);
-      box-shadow: 0 0 50px rgba(6, 182, 212, 0.7), inset 0 0 25px rgba(6, 182, 212, 0.5);
+      border-top-color: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 55px rgba(6, 182, 212, 0.75), inset 0 2px 6px rgba(255, 255, 255, 0.5);
       transform: scale(1.04);
     }
 
@@ -225,20 +247,28 @@
     /* Live Vocal Readout */
     .readout-card {
       background: var(--bg-card);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-top: 1px solid var(--border-specular);
+      border-radius: 20px;
       padding: 16px;
       display: flex;
       flex-direction: column;
       gap: 12px;
+      box-shadow: 0 12px 35px -8px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
 
     .note-display-box {
       text-align: center;
-      background: #090e1a;
-      border: 1px solid var(--border);
-      border-radius: 12px;
+      background: rgba(10, 15, 29, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 14px;
       padding: 14px 10px;
+      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.12);
     }
 
     .note-title {
@@ -285,11 +315,12 @@
     .vu-track {
       width: 100%;
       height: 12px;
-      background: #090e1a;
-      border: 1px solid var(--border);
+      background: rgba(10, 15, 29, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 6px;
       overflow: hidden;
       position: relative;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
     }
 
     .vu-fill {
@@ -340,15 +371,18 @@
 
     /* Card de Digitação Manual da Sala */
     .room-prompt-card {
-      background: linear-gradient(135deg, #161e33 0%, #0d1424 100%);
-      border: 1px solid var(--primary);
-      border-radius: 18px;
-      padding: 18px 16px;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--border);
+      border-top: 1px solid var(--border-specular);
+      border-radius: 20px;
+      padding: 20px 18px;
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      box-shadow: 0 8px 30px rgba(99, 102, 241, 0.25);
+      gap: 12px;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.25);
       animation: fadeIn 0.3s ease;
     }
 
@@ -358,8 +392,11 @@
     .room-input-row { display: flex; gap: 8px; justify-content: center; }
     
     .manual-room-input {
-      background: #090e1a;
+      background: rgba(10, 15, 29, 0.7);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
       border: 1px solid var(--border);
+      border-top: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: 12px;
       padding: 10px 14px;
       font-size: 1.15rem;
@@ -370,12 +407,14 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       width: 140px;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
     }
 
     .manual-room-input:focus {
       outline: none;
       border-color: var(--cyan);
-      box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+      border-top-color: rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 16px rgba(6, 182, 212, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2);
     }
 
     .btn-submit-room {
@@ -486,7 +525,7 @@
 
   <!-- Bibliotecas WebRTC e Algoritmo de Tom -->
   <script src="vendor/peerjs.min.js"></script>
-  <script src="pitch.js?v=50"></script>
+  <script src="pitch.js?v=51"></script>
 
   <script>
     // Parâmetros da Sala via URL
