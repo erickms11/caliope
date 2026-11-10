@@ -117,20 +117,6 @@ const SONGS_CATALOG = [
     "notes": []
   },
   {
-    "id": "Bruno_e_Marrone_Boate_azul_CCSeIh",
-    "title": "Boate azul",
-    "artist": "Bruno e Marrone",
-    "genre": "Videokê Oficial",
-    "difficulty": "Dinâmica",
-    "bpm": 120,
-    "duration": 201,
-    "thumbnail": "https://i.ytimg.com/vi/CCSeIhntmBA/maxresdefault.jpg",
-    "videoUrl": "songs/Bruno_e_Marrone_Boate_azul_CCSeIh/video.mp4",
-    "audioUrl": "songs/Bruno_e_Marrone_Boate_azul_CCSeIh/audio.mp3",
-    "hasVideoLyrics": true,
-    "notes": []
-  },
-  {
     "id": "CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ",
     "title": "Like A Stone",
     "artist": "Audioslave",
