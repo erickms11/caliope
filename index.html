@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>Caliope • O Jogo de Videokê Oficial</title>
-  <link rel="stylesheet" href="style.css?v=54">
+  <link rel="stylesheet" href="style.css?v=55">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&family=JetBrains+Mono:wght@500;700;800;900&display=swap" rel="stylesheet">
@@ -59,6 +59,17 @@
           <p>Selecione um videokê do catálogo abaixo ou adicione qualquer vídeo novo do YouTube!</p>
         </div>
         <div class="lobby-actions">
+          <div class="lobby-category-tabs" id="lobby-category-tabs" role="tablist">
+            <button class="lobby-cat-tab active" data-category="all" role="tab" aria-selected="true">
+              ✨ Todas <span class="cat-count" id="count-all">58</span>
+            </button>
+            <button class="lobby-cat-tab" data-category="nacional" role="tab" aria-selected="false">
+              🇧🇷 Nacionais <span class="cat-count" id="count-nacional">33</span>
+            </button>
+            <button class="lobby-cat-tab" data-category="internacional" role="tab" aria-selected="false">
+              🌎 Internacionais <span class="cat-count" id="count-internacional">25</span>
+            </button>
+          </div>
           <div class="lobby-search-wrap">
             <span class="search-icon">🔍</span>
             <input type="text" id="lobby-search" placeholder="Buscar música ou cantor...">
@@ -582,11 +593,11 @@
   <script src="vendor/peerjs.min.js"></script>
   <script src="vendor/qrcode.min.js"></script>
 
-  <script src="pitch.js?v=54"></script>
-  <script src="calibrator.js?v=54"></script>
-  <script src="songs.js?v=54"></script>
-  <script src="sequencer.js?v=54"></script>
-  <script src="game_engine.js?v=54"></script>
-  <script src="app.js?v=54"></script>
+  <script src="pitch.js?v=55"></script>
+  <script src="calibrator.js?v=55"></script>
+  <script src="songs.js?v=55"></script>
+  <script src="sequencer.js?v=55"></script>
+  <script src="game_engine.js?v=55"></script>
+  <script src="app.js?v=55"></script>
 </body>
 </html>

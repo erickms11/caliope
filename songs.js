@@ -16,7 +16,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/video.mp4",
     "audioUrl": "songs/3885_Moto_T_xi_Mastruz_Com_Leite_SsEpSl/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Ainda_Bem_Thiaguinho_kyTDGR",
@@ -30,7 +31,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Ainda_Bem_Thiaguinho_kyTDGR/video.mp4",
     "audioUrl": "songs/Ainda_Bem_Thiaguinho_kyTDGR/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Alcione_Voc__Me_Vira_A_Cabe_a_76foKv",
@@ -44,7 +46,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Alcione_Voc__Me_Vira_A_Cabe_a_76foKv/video.mp4",
     "audioUrl": "songs/Alcione_Voc__Me_Vira_A_Cabe_a_76foKv/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Backstreet_Boys_Incomplete_Gw-QOB",
@@ -58,7 +61,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Backstreet_Boys_Incomplete_Gw-QOB/video.mp4",
     "audioUrl": "songs/Backstreet_Boys_Incomplete_Gw-QOB/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Bijuteria_Bruno_e_Marrone_qk4w6J",
@@ -72,7 +76,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/video.mp4",
     "audioUrl": "songs/Bijuteria_Bruno_e_Marrone_qk4w6J/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk",
@@ -86,7 +91,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/video.mp4",
     "audioUrl": "songs/Blitz_Videok__COISAS_QUE_EU_SEI_Dudu_Falc_o_ndXtEk/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Bruno_Mars_It_Will_Rain_0g_hKV",
@@ -100,7 +106,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Bruno_Mars_It_Will_Rain_0g_hKV/video.mp4",
     "audioUrl": "songs/Bruno_Mars_It_Will_Rain_0g_hKV/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj",
@@ -114,7 +121,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/video.mp4",
     "audioUrl": "songs/Bruno_Mars_Talking_To_The_Moon_-_Version_from_kdtWMj/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ",
@@ -128,7 +136,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ/video.mp4",
     "audioUrl": "songs/CC_Karaoke_X_Audioslave___Like_A_Stone_WjHMQZ/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Calcinha_Preta_Liga_pra_mim_Fa2HI8",
@@ -142,7 +151,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/video.mp4",
     "audioUrl": "songs/Calcinha_Preta_Liga_pra_mim_Fa2HI8/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Celine_Dion_My_Heart_Will_Go_On_cdgU8Y",
@@ -156,7 +166,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/video.mp4",
     "audioUrl": "songs/Celine_Dion_My_Heart_Will_Go_On_cdgU8Y/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Chico_Mineiro_Tonico_e_Tinoco_C4V2TT",
@@ -170,7 +181,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/video.mp4",
     "audioUrl": "songs/Chico_Mineiro_Tonico_e_Tinoco_C4V2TT/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Creep_Radiohead_iPy2YP",
@@ -184,7 +196,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Creep_Radiohead_iPy2YP/video.mp4",
     "audioUrl": "songs/Creep_Radiohead_iPy2YP/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1",
@@ -198,7 +211,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/video.mp4",
     "audioUrl": "songs/Detonautas_O_Dia_Que_N_o_Terminou_CX2_B1/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Diamonds___Rihanna_GTmvRL",
@@ -212,7 +226,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Diamonds___Rihanna_GTmvRL/video.mp4",
     "audioUrl": "songs/Diamonds___Rihanna_GTmvRL/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "EU_E_EU_GUSTAVO_MIOTO_oft0y3",
@@ -226,7 +241,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/video.mp4",
     "audioUrl": "songs/EU_E_EU_GUSTAVO_MIOTO_oft0y3/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Elis_Regina_Como_nossos_pais_f0zT_J",
@@ -240,7 +256,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Elis_Regina_Como_nossos_pais_f0zT_J/video.mp4",
     "audioUrl": "songs/Elis_Regina_Como_nossos_pais_f0zT_J/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Folha_Seca_Amado_Batista_VO6TKT",
@@ -254,7 +271,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/video.mp4",
     "audioUrl": "songs/Folha_Seca_Amado_Batista_VO6TKT/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Frank_Sinatra_My_Way_tAEek8",
@@ -268,7 +286,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
     "audioUrl": "songs/Frank_Sinatra_My_Way_tAEek8/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "George_Ezra_Shotgun__J9po9",
@@ -282,7 +301,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/George_Ezra_Shotgun__J9po9/video.mp4",
     "audioUrl": "songs/George_Ezra_Shotgun__J9po9/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "George_Michael_Careless_Whisper_1TIeDb",
@@ -296,7 +316,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/George_Michael_Careless_Whisper_1TIeDb/video.mp4",
     "audioUrl": "songs/George_Michael_Careless_Whisper_1TIeDb/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Hamilton_Wait_for_It_Uj9-4x",
@@ -310,7 +331,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
     "audioUrl": "songs/Hamilton_Wait_for_It_Uj9-4x/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Hoobastank_The_Reason_Mk5JYE",
@@ -324,7 +346,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Hoobastank_The_Reason_Mk5JYE/video.mp4",
     "audioUrl": "songs/Hoobastank_The_Reason_Mk5JYE/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "I_Want_It_That_Way_Backstreet_Boys_IjFeGY",
@@ -338,7 +361,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
     "audioUrl": "songs/I_Want_It_That_Way_Backstreet_Boys_IjFeGY/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "JORGE_VERCILLO_MONALISA_qbLnXH",
@@ -352,7 +376,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/video.mp4",
     "audioUrl": "songs/JORGE_VERCILLO_MONALISA_qbLnXH/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML",
@@ -366,7 +391,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/video.mp4",
     "audioUrl": "songs/Jardim_Fraternidade_S_o_Jo_o_Paulo_II_-_Para__uLs_ML/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL",
@@ -380,7 +406,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/video.mp4",
     "audioUrl": "songs/Jo_o_Mineiro_E_Marciano_Ainda_Ontem_Chorei_De__C62mL/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9",
@@ -394,7 +421,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/video.mp4",
     "audioUrl": "songs/Jo_o_Paulo___Daniel_Estou_Apaixonado_r68Ak9/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE",
@@ -408,7 +436,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE/video.mp4",
     "audioUrl": "songs/Jo_o_Paulo_e_Daniel_Minha_Estrela_Perdida_BvTDeE/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT",
@@ -422,7 +451,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
     "audioUrl": "songs/Just_Give_Me_A_Reason_Pink_Ft__Nate_ruess_7YSYFT/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j",
@@ -436,7 +466,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/video.mp4",
     "audioUrl": "songs/Karaok__Melhor_Do_Brasil___At__Que_Durou_P_ri_7Jrl7j/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Keane_Everybody_s_Changing_OZD6H9",
@@ -450,7 +481,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Keane_Everybody_s_Changing_OZD6H9/video.mp4",
     "audioUrl": "songs/Keane_Everybody_s_Changing_OZD6H9/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Monalisa_Jorge_Vercillo_sRk4_R",
@@ -464,7 +496,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Monalisa_Jorge_Vercillo_sRk4_R/video.mp4",
     "audioUrl": "songs/Monalisa_Jorge_Vercillo_sRk4_R/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "NEY_MATOGROSSO_POEMA_ZvVruy",
@@ -478,7 +511,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/NEY_MATOGROSSO_POEMA_ZvVruy/video.mp4",
     "audioUrl": "songs/NEY_MATOGROSSO_POEMA_ZvVruy/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Ne-Yo_Miss_Independent_hHP_GE",
@@ -492,7 +526,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Ne-Yo_Miss_Independent_hHP_GE/video.mp4",
     "audioUrl": "songs/Ne-Yo_Miss_Independent_hHP_GE/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Pais_e_Filhos_Legi_o_Urbana_HycjqQ",
@@ -506,7 +541,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Pais_e_Filhos_Legi_o_Urbana_HycjqQ/video.mp4",
     "audioUrl": "songs/Pais_e_Filhos_Legi_o_Urbana_HycjqQ/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Pearl_Jam_Black_bpkkkX",
@@ -520,7 +556,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Pearl_Jam_Black_bpkkkX/video.mp4",
     "audioUrl": "songs/Pearl_Jam_Black_bpkkkX/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Queen_The_Show_Must_Go_On_C2TTXC",
@@ -534,7 +571,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Queen_The_Show_Must_Go_On_C2TTXC/video.mp4",
     "audioUrl": "songs/Queen_The_Show_Must_Go_On_C2TTXC/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "R_E_M_Losing_My_Religion_gCrqBZ",
@@ -548,7 +586,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/R_E_M_Losing_My_Religion_gCrqBZ/video.mp4",
     "audioUrl": "songs/R_E_M_Losing_My_Religion_gCrqBZ/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi",
@@ -562,7 +601,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/video.mp4",
     "audioUrl": "songs/Ra_a_Negra_Cheia_de_manias_-_2_wp_BRi/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Robbie_Williams_Angels_pGFEj-",
@@ -576,7 +616,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Robbie_Williams_Angels_pGFEj-/video.mp4",
     "audioUrl": "songs/Robbie_Williams_Angels_pGFEj-/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Robbie_Williams_Feel_40QgJj",
@@ -590,7 +631,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Robbie_Williams_Feel_40QgJj/video.mp4",
     "audioUrl": "songs/Robbie_Williams_Feel_40QgJj/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Roberto_Carlos_Lady_Laura_aNZqP4",
@@ -604,7 +646,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/video.mp4",
     "audioUrl": "songs/Roberto_Carlos_Lady_Laura_aNZqP4/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Roupa_Nova_Dona__AvqUg",
@@ -618,7 +661,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Roupa_Nova_Dona__AvqUg/video.mp4",
     "audioUrl": "songs/Roupa_Nova_Dona__AvqUg/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "SKANK_DOIS_RIOS_NSve9N",
@@ -632,7 +676,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/SKANK_DOIS_RIOS_NSve9N/video.mp4",
     "audioUrl": "songs/SKANK_DOIS_RIOS_NSve9N/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH",
@@ -646,7 +691,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/video.mp4",
     "audioUrl": "songs/S__Pra_Contrariar_Essa_tal_liberdade_NwHWsH/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Skank_T_o_Seu_IQVT5o",
@@ -660,7 +706,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Skank_T_o_Seu_IQVT5o/video.mp4",
     "audioUrl": "songs/Skank_T_o_Seu_IQVT5o/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "Take_That_Back_For_Good_On_Screen_gCuzzJ",
@@ -674,7 +721,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Take_That_Back_For_Good_On_Screen_gCuzzJ/video.mp4",
     "audioUrl": "songs/Take_That_Back_For_Good_On_Screen_gCuzzJ/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk",
@@ -688,7 +736,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/video.mp4",
     "audioUrl": "songs/Take_That_How_Deep_Is_Your_Love_-_from_Zoom_iXYKvk/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Take_That_Patience_IFX1Dq",
@@ -702,7 +751,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Take_That_Patience_IFX1Dq/video.mp4",
     "audioUrl": "songs/Take_That_Patience_IFX1Dq/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Tempo_Perdido_Legi_o_Urbana_oPEsF8",
@@ -716,7 +766,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Tempo_Perdido_Legi_o_Urbana_oPEsF8/video.mp4",
     "audioUrl": "songs/Tempo_Perdido_Legi_o_Urbana_oPEsF8/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ",
@@ -730,7 +781,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
     "audioUrl": "songs/When_I_Was_Your_Man_Bruno_Mars_Hjx9TJ/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "internacional"
   },
   {
     "id": "Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n",
@@ -744,7 +796,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/video.mp4",
     "audioUrl": "songs/Zeze_di_Camargo___Luciano_Mentes_Tao_Bem_fUl3-n/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn",
@@ -758,7 +811,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/video.mp4",
     "audioUrl": "songs/__Ca_a_e_Ca_ador_F_bio_Jr__8fm8rn/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "__Que_Nem_Mar__Jorge_Vercillo_yZRSFb",
@@ -772,7 +826,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/__Que_Nem_Mar__Jorge_Vercillo_yZRSFb/video.mp4",
     "audioUrl": "songs/__Que_Nem_Mar__Jorge_Vercillo_yZRSFb/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "__Tarde_Demais_Ra_a_Negra_GBRLY5",
@@ -786,7 +841,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/video.mp4",
     "audioUrl": "songs/__Tarde_Demais_Ra_a_Negra_GBRLY5/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "__Te_Esperando_Luan_Santana_3nBAoA",
@@ -800,7 +856,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
     "audioUrl": "songs/__Te_Esperando_Luan_Santana_3nBAoA/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   },
   {
     "id": "__Te_Vivo_Luan_Santana_uiZQt3",
@@ -814,7 +871,8 @@ const SONGS_CATALOG = [
     "videoUrl": "songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
     "audioUrl": "songs/__Te_Vivo_Luan_Santana_uiZQt3/video.mp4",
     "hasVideoLyrics": true,
-    "notes": []
+    "notes": [],
+    "category": "nacional"
   }
 ];
 

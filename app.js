@@ -775,17 +775,61 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 4. Renderização do Lobby de Músicas (Padrão Jogo)
+  let currentCategory = 'all';
+
+  function updateCategoryCounts() {
+    if (!window.SONGS_CATALOG) return;
+    const total = window.SONGS_CATALOG.length;
+    const nacionalCount = window.SONGS_CATALOG.filter(s => s.category !== 'internacional').length;
+    const internacionalCount = window.SONGS_CATALOG.filter(s => s.category === 'internacional').length;
+
+    const elTotal = document.getElementById('count-all');
+    const elNac = document.getElementById('count-nacional');
+    const elInter = document.getElementById('count-internacional');
+
+    if (elTotal) elTotal.textContent = total;
+    if (elNac) elNac.textContent = nacionalCount;
+    if (elInter) elInter.textContent = internacionalCount;
+  }
+
   function renderLobbySongs(filterText = '') {
     if (!songsGrid) return;
 
-    const filter = filterText.toLowerCase().trim();
-    const songsToDisplay = window.SONGS_CATALOG.filter(s => {
+    updateCategoryCounts();
+
+    const currentQuery = (filterText !== undefined && filterText !== null && typeof filterText === 'string')
+      ? filterText
+      : (lobbySearch ? lobbySearch.value : '');
+    const filter = currentQuery.toLowerCase().trim();
+
+    const songsToDisplay = (window.SONGS_CATALOG || []).filter(s => {
+      // Filtro de categoria
+      if (currentCategory === 'nacional' && s.category === 'internacional') return false;
+      if (currentCategory === 'internacional' && s.category !== 'internacional') return false;
+
+      // Filtro de busca textual
       if (!filter) return true;
       return (s.title && s.title.toLowerCase().includes(filter)) ||
              (s.artist && s.artist.toLowerCase().includes(filter));
     });
 
     const fragment = document.createDocumentFragment();
+
+    if (songsToDisplay.length === 0) {
+      const emptyState = document.createElement('div');
+      emptyState.className = 'lobby-empty-search';
+      emptyState.style.gridColumn = '1 / -1';
+      emptyState.style.textAlign = 'center';
+      emptyState.style.padding = '48px 20px';
+      emptyState.style.color = 'var(--text-muted)';
+      const catLabel = currentCategory === 'nacional' ? ' Nacionais' : (currentCategory === 'internacional' ? ' Internacionais' : '');
+      emptyState.innerHTML = `
+        <div style="font-size: 2.6rem; margin-bottom: 10px;">🔍</div>
+        <h3 style="font-size: 1.15rem; color: var(--text-main); margin-bottom: 6px;">Nenhuma música encontrada</h3>
+        <p style="font-size: 0.9rem;">Não encontramos músicas${catLabel ? ` em <strong>${catLabel.trim()}</strong>` : ''}${filter ? ` para a busca "<strong>${filter}</strong>"` : ''}.</p>
+      `;
+      fragment.appendChild(emptyState);
+    }
 
     songsToDisplay.forEach((song, index) => {
       const card = document.createElement('div');
@@ -794,6 +838,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const thumbUrl = song.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80';
       const isVideo = Boolean(song.videoUrl);
       const keyTag = song.key ? `<span class="song-card-key">🎹 Tom: ${song.key}</span>` : '';
+      const cat = song.category === 'internacional' ? 'internacional' : 'nacional';
+      const catBadge = cat === 'internacional'
+        ? '<span class="song-card-tag tag-internacional">🌎 Internacional</span>'
+        : '<span class="song-card-tag tag-nacional">🇧🇷 Nacional</span>';
       
       // Os primeiros 8 cards visíveis carregam imediatamente sem aguardar viewport
       const loadingAttr = index < 8 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
@@ -801,6 +849,7 @@ document.addEventListener('DOMContentLoaded', () => {
       card.innerHTML = `
         <div class="song-card-thumb">
           <img src="${thumbUrl}" alt="${song.title}" ${loadingAttr} decoding="async" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80';">
+          ${catBadge}
           <span class="song-card-duration">⏱️ ${formatTime(song.duration)}</span>
           <button class="song-card-btn-delete" title="Excluir música do Videokê">🗑️</button>
         </div>
@@ -888,6 +937,21 @@ document.addEventListener('DOMContentLoaded', () => {
     songsGrid.innerHTML = '';
     songsGrid.appendChild(fragment);
   }
+
+  // Event Listeners das Abas de Categoria (Todas, Nacionais, Internacionais)
+  const categoryTabs = document.querySelectorAll('.lobby-cat-tab');
+  categoryTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      categoryTabs.forEach(t => {
+        t.classList.remove('active');
+        t.setAttribute('aria-selected', 'false');
+      });
+      tab.classList.add('active');
+      tab.setAttribute('aria-selected', 'true');
+      currentCategory = tab.dataset.category || 'all';
+      renderLobbySongs(lobbySearch ? lobbySearch.value : '');
+    });
+  });
 
   if (lobbySearch) {
     lobbySearch.addEventListener('input', (e) => {

@@ -138,12 +138,19 @@ def process_youtube_song(youtube_url, progress_callback=None):
     ]
     run_cmd(cmd_dl)
 
+    # Detecção automática de categoria (Nacional vs Internacional)
+    common_en = {'the', 'you', 'love', 'me', 'my', 'and', 'for', 'to', 'in', 'of', 'it', 'on', 'with', 'all', 'like', 'feat', 'ft'}
+    words = set(re.findall(r'[a-zA-Z]+', f"{title} {artist}".lower()))
+    is_international = len(words.intersection(common_en)) >= 2
+    category = "internacional" if is_international else "nacional"
+
     report("finalizing", 85, "Registrando no catálogo do Videokê...")
     song_data = {
         "id": safe_folder,
         "title": title,
         "artist": artist if artist else "Karaokê",
         "genre": "Videokê Oficial",
+        "category": category,
         "difficulty": "Dinâmica",
         "bpm": 120,
         "duration": round(duration, 1),
