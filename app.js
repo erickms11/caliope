@@ -777,7 +777,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. Renderização do Lobby de Músicas (Padrão Jogo)
   function renderLobbySongs(filterText = '') {
     if (!songsGrid) return;
-    songsGrid.innerHTML = '';
 
     const filter = filterText.toLowerCase().trim();
     const songsToDisplay = window.SONGS_CATALOG.filter(s => {
@@ -786,17 +785,22 @@ document.addEventListener('DOMContentLoaded', () => {
              (s.artist && s.artist.toLowerCase().includes(filter));
     });
 
-    songsToDisplay.forEach(song => {
+    const fragment = document.createDocumentFragment();
+
+    songsToDisplay.forEach((song, index) => {
       const card = document.createElement('div');
       card.className = 'song-card';
       
       const thumbUrl = song.thumbnail || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80';
       const isVideo = Boolean(song.videoUrl);
       const keyTag = song.key ? `<span class="song-card-key">🎹 Tom: ${song.key}</span>` : '';
+      
+      // Os primeiros 8 cards visíveis carregam imediatamente sem aguardar viewport
+      const loadingAttr = index < 8 ? 'loading="eager" fetchpriority="high"' : 'loading="lazy"';
 
       card.innerHTML = `
         <div class="song-card-thumb">
-          <img src="${thumbUrl}" alt="${song.title}" loading="lazy" decoding="async">
+          <img src="${thumbUrl}" alt="${song.title}" ${loadingAttr} decoding="async" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80';">
           <span class="song-card-duration">⏱️ ${formatTime(song.duration)}</span>
           <button class="song-card-btn-delete" title="Excluir música do Videokê">🗑️</button>
         </div>
@@ -849,7 +853,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      songsGrid.appendChild(card);
+      fragment.appendChild(card);
     });
 
     // Card Especial para Adicionar do YouTube
@@ -878,7 +882,11 @@ document.addEventListener('DOMContentLoaded', () => {
         importModal.classList.add('active');
       });
     }
-    songsGrid.appendChild(addCard);
+    fragment.appendChild(addCard);
+
+    // Atualização em lote sem múltiplos reflows
+    songsGrid.innerHTML = '';
+    songsGrid.appendChild(fragment);
   }
 
   if (lobbySearch) {
@@ -1659,7 +1667,6 @@ document.addEventListener('DOMContentLoaded', () => {
   async function loadImportedSongs() {
     if (isStaticHosting) {
       updateServerModeUI(false);
-      renderLobbySongs();
       return;
     }
 
@@ -1668,23 +1675,26 @@ document.addEventListener('DOMContentLoaded', () => {
       if (res.ok) {
         updateServerModeUI(true);
         const importedSongs = await res.json();
+        let catalogChanged = false;
+
         importedSongs.forEach(imp => {
           const idx = window.SONGS_CATALOG.findIndex(s => s.id === imp.id);
-          if (idx !== -1) {
-            window.SONGS_CATALOG[idx] = imp;
-          } else {
+          if (idx === -1) {
             window.SONGS_CATALOG.push(imp);
+            catalogChanged = true;
           }
         });
-        renderLobbySongs();
+
+        // Só re-renderiza se houver alguma música importada nova não presente na lista inicial
+        if (catalogChanged) {
+          renderLobbySongs(lobbySearch ? lobbySearch.value : '');
+        }
       } else {
         updateServerModeUI(false);
-        renderLobbySongs();
       }
     } catch (e) {
       console.warn("Aviso carregando músicas importadas:", e);
       updateServerModeUI(false);
-      renderLobbySongs();
     }
   }
 
